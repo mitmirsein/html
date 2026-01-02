@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kerygma Daily Meditation</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #d35400;
+            --bg: #fdfbf7;
+            --panel-bg: #fff;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: var(--bg);
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 200px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            color: #444;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+        }
+
+        .date-sub {
+            font-family: sans-serif;
+            font-size: 0.95rem;
+            color: #888;
+        }
+
+        .verse-card {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .verse-header {
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .verse-ref {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        /* 단어 컨테이너 */
+        .original-text {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            row-gap: 20px;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        /* 단어 블록 */
+        .word-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: 6px;
+            transition: background 0.1s;
+        }
+
+        .word-block:hover {
+            background-color: #fcece4;
+        }
+
+        .word-text {
+            font-size: 1.6rem;
+            margin-bottom: 4px;
+        }
+
+        .word-sound {
+            font-size: 0.75rem;
+            color: #888;
+            font-family: sans-serif;
+        }
+
+        .hebrew {
+            direction: rtl;
+            font-family: 'SBL Hebrew', 'Ezra SIL', serif;
+        }
+
+        .greek {
+            font-family: 'SBL Greek', 'Gentium Plus', serif;
+        }
+
+        /* 번역 섹션 */
+        .trans-section {
+            font-family: sans-serif;
+            font-size: 0.95rem;
+            color: #444;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .std-trans {
+            font-weight: bold;
+            color: #222;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+
+        .eng-trans {
+            color: #555;
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.5;
+        }
+
+        .lit-trans {
+            color: #777;
+            font-size: 0.9em;
+        }
+
+        /* 라벨 */
+        .bsb-label {
+            background: #eef2f5;
+            border: 1px solid #d1d9e6;
+            color: #5c7cfa;
+            font-size: 0.7em;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
+        .lit-label {
+            font-size: 0.75em;
+            border: 1px solid #ccc;
+            padding: 1px 4px;
+            border-radius: 3px;
+            margin-right: 5px;
+            color: #888;
+        }
+
+        /* 묵상 섹션 스타일 */
+        .meditation-card {
+            background: #fff;
+            border-top: 3px solid var(--accent);
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .med-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .med-content {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 25px;
+            font-style: normal;
+            font-family: "Nanum Myeongjo", "Batang", serif;
+        }
+
+        .med-question {
+            background: #fdfbf7;
+            padding: 15px;
+            border-left: 3px solid #2c3e50;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .q-label {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .q-text {
+            font-size: 1rem;
+            color: #333;
+        }
+
+
+        /* 파싱 정보 패널 */
+        #parsing-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--panel-bg);
+            border-top: 3px solid var(--accent);
+            padding: 25px;
+            height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1000;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        #parsing-panel.visible {
+            transform: translateY(0);
+        }
+
+        .panel-content {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .panel-left {
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .panel-word {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--primary);
+            line-height: 1.1;
+        }
+
+        .panel-sound {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .panel-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .panel-lemma {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .panel-morph {
+            color: #d35400;
+            font-weight: bold;
+            font-family: monospace;
+            font-size: 1rem;
+        }
+
+        .panel-gloss {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #27ae60;
+            margin-top: 2px;
+        }
+
+        .close-panel {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 1.8rem;
+            color: #ccc;
+            line-height: 1;
+        }
+
+        .close-panel:hover {
+            color: #888;
+        }
+
+        /* 모바일 반응형 */
+        @media (max-width: 600px) {
+            .panel-content {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .panel-left {
+                min-width: auto;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 10px;
+            }
+
+            .panel-info {
+                align-items: center;
+            }
+
+            #parsing-panel {
+                height: auto;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>케리그마 매일 묵상</h1>
+        <div class="date-sub">2026년 1월 1일 · Kerygma Daily Meditation</div>
+    </header>
+
+    <div id="ot-card" class="verse-card"></div>
+    <div id="nt-card" class="verse-card"></div>
+
+    <!-- 인문학적 묵상 & 질문 섹션 -->
+    <div class="meditation-card">
+        <div class="med-title">오늘의 묵상</div>
+        <div class="med-content">
+            "죽음은 결코 우리 삶의 허무한 종착역이 아니며, 영원한 안식과 생명으로 들어가는 새로운 문입니다. 주님께서 친히 우리의 모든 눈물을 닦아주실 때, 우리가 흘렸던 슬픔은 영원한 찬송이 되고,
+            깊은 절망의 밤은 찬란한 부활의 소망으로 변화됩니다. 이 거룩한 생명의 약속은 오늘 우리가 마주한 고난과 시련을 넉넉히 이길 힘을 주며, 유한하고 덧없는 세상 속에서도 변치 않는 영원의 가치를
+            발견하게 합니다. 죽음을 삼키고 승리하신 예수 그리스도의 부활은 단순한 과거의 사건이 아니라, 지금 우리 삶을 지탱하는 가장 강력한 능력입니다. 그러므로 두려움과 염려를 내려놓고 주님의 신실한
+            약속을 굳게 붙드십시오. 그분의 변함없는 사랑이 당신의 하루를 온전히 감싸며, 영원한 생명의 빛이 당신의 모든 걸음을 가장 선한 길로 인도하시길 간절히 소망합니다. 주님 안에서 당신은 결코
+            혼자가 아닙니다."
+        </div>
+
+        <div class="med-question">
+            <div class="q-text">
+                오늘 당신의 삶에서 '죽음을 삼키는 생명'의 능력을 경험해야 할 영역은 무엇입니까?
+            </div>
+        </div>
+    </div>
+
+    <!-- 하단 파싱 정보 패널 -->
+    <div id="parsing-panel">
+        <span class="close-panel" onclick="hideParsing()">×</span>
+        <div class="panel-content">
+            <div class="panel-left">
+                <div id="p-word" class="panel-word">-</div>
+                <div id="p-sound" class="panel-sound">-</div>
+            </div>
+            <div class="panel-info">
+                <div id="p-lemma" class="panel-lemma">기본형: -</div>
+                <div id="p-morph" class="panel-morph">문법 정보</div>
+                <div id="p-gloss" class="panel-gloss">의미</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dailyData = {
+            ot: {
+                ref: "이사야 25:8",
+                lang: "hebrew", text_dir: "rtl", lang_class: "hebrew",
+                kor_std: "사망을 영원히 멸하실 것이라 주 여호와께서 모든 얼굴에서 눈물을 씻기시며",
+                kor_lit: "그분께서 죽음을 영원히 삼키셨다 그리고 주 여호와께서 모든 얼굴에서 눈물을 닦으셨다",
+                eng_bsb: "He will swallow up death forever. The Lord GOD will wipe away the tears from every face.",
+                words: [
+                    { text: "בִּלַּ֤ע", sound: "빌라", lemma: "בָּלַע", morph: "동사 피엘(강조) 완료 3남단", gloss: "삼키셨다" },
+                    { text: "הַמָּ֙וֶת֙", sound: "함마웻", lemma: "מָוֶת", morph: "관사 + 명사 남성 단수", gloss: "그 죽음을" },
+                    { text: "לָנֶ֔צַח", sound: "라네차흐", lemma: "נֶצַח", morph: "전치사 + 명사", gloss: "영원히" },
+                    { text: "וּמָחָה", sound: "우마하", lemma: "מָחָה", morph: "접속사 + 동사 칼 완료 3남단", gloss: "그리고 닦으실 것이다" },
+                    { text: "אֲדֹנָי", sound: "아도나이", lemma: "אֲדֹנָי", morph: "고유명사", gloss: "주" },
+                    { text: "יְהוִה", sound: "야훼", lemma: "יהוה", morph: "고유명사", gloss: "여호와" },
+                    { text: "דִּמְעָה", sound: "딤아", lemma: "דִּמְעָה", morph: "명사 여성 단수", gloss: "눈물을" },
+                    { text: "מֵעַל", sound: "메알", lemma: "עַל", morph: "전치사", gloss: "~위로부터" },
+                    { text: "כָּל־פָּנִים", sound: "콜-파님", lemma: "פָּנִים", morph: "명사 남성 복수", gloss: "모든 얼굴" }
+                ]
+            },
+            nt: {
+                ref: "요한1서 4:9",
+                lang: "greek", text_dir: "ltr", lang_class: "greek",
+                kor_std: "하나님의 사랑이 우리에게 이렇게 나타난 바 되었다",
+                kor_lit: "이로써 하나님의 사랑이 우리에게 나타난 바 되었다",
+                eng_bsb: "This is how God’s love was revealed among us: God sent His one and only Son into the world, so that we might live through Him.",
+                words: [
+                    { text: "ἐν", sound: "엔", lemma: "ἐν", morph: "전치사 (여격 지배)", gloss: "~안에" },
+                    { text: "τούτῳ", sound: "투토", lemma: "οὗτος", morph: "지시대명사 여격 중성 단수", gloss: "이것에/이로써" },
+                    { text: "ἐφανερώθη", sound: "에파네로떼", lemma: "φανερόω", morph: "동사 부정과거 수동태 3단", gloss: "나타났다" },
+                    { text: "ἡ", sound: "헤", lemma: "ὁ", morph: "관사 주격 여성 단수", gloss: "그" },
+                    { text: "ἀγάπη", sound: "아가페", lemma: "ἀγάπη", morph: "명사 주격 여성 단수", gloss: "사랑이" },
+                    { text: "τοῦ", sound: "투", lemma: "ὁ", morph: "관사 소유격 남성 단수", gloss: "그" },
+                    { text: "θεοῦ", sound: "테우", lemma: "θεός", morph: "명사 소유격 남성 단수", gloss: "하나님의" },
+                    { text: "ἐν", sound: "엔", lemma: "ἐν", morph: "전치사", gloss: "~안에/에게" },
+                    { text: "ἡμῖν", sound: "헤민", lemma: "ἐγώ", morph: "인칭대명사 여격 1복수", gloss: "우리" }
+                ]
+            }
+        };
+
+        renderCard(document.getElementById('ot-card'), dailyData.ot, 'ot');
+        renderCard(document.getElementById('nt-card'), dailyData.nt, 'nt');
+
+        function renderCard(container, data, cardId) {
+            let wordsHtml = data.words.map((word, idx) => {
+                return `
+                <div class="word-block" onclick="showWordInfo('${cardId}', ${idx})">
+                    <span class="word-text">${word.text}</span>
+                    <span class="word-sound">${word.sound}</span>
+                </div>`;
+            }).join('');
+
+            const html = `
+            <div class="verse-header">
+                <span class="verse-ref">${data.ref}</span>
+            </div>
+            <div class="original-text ${data.lang_class}" dir="${data.text_dir}">
+                ${wordsHtml}
+            </div>
+            <div class="trans-section">
+                <div class="std-trans">${data.kor_std}</div>
+                <div class="eng-trans"><span class="bsb-label">BSB</span> ${data.eng_bsb}</div>
+                <div class="lit-trans"><span class="lit-label">직역</span> ${data.kor_lit}</div>
+            </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function showWordInfo(cardId, wordIdx) {
+            const data = dailyData[cardId].words[wordIdx];
+            document.getElementById('p-word').innerText = data.text;
+            document.getElementById('p-sound').innerText = `[${data.sound}]`;
+            document.getElementById('p-lemma').innerText = `기본형: ${data.lemma}`;
+            document.getElementById('p-morph').innerText = data.morph;
+            document.getElementById('p-gloss').innerText = data.gloss;
+
+            const isHebrew = dailyData[cardId].lang === 'hebrew';
+            const wordEl = document.getElementById('p-word');
+            wordEl.style.fontFamily = isHebrew ? "'SBL Hebrew', serif" : "'SBL Greek', serif";
+            wordEl.style.direction = isHebrew ? "rtl" : "ltr";
+            document.getElementById('parsing-panel').classList.add('visible');
+        }
+
+        function hideParsing() {
+            document.getElementById('parsing-panel').classList.remove('visible');
+        }
+    </script>
+</body>
+
+</html>
