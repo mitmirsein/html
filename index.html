@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theological Battleground Archive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&family=Noto+Sans+KR:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Outfit', 'Noto Sans KR', sans-serif; background-color: #020617; color: #f8fafc; }
+        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .card-grad { background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-grad:hover { transform: translateY(-8px); border-color: rgba(56, 189, 248, 0.4); box-shadow: 0 20px 40px -20px rgba(56, 189, 248, 0.3); }
+        .neon-text { text-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
+    </style>
+</head>
+<body class="min-h-screen selection:bg-sky-500/30 overflow-x-hidden">
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-sky-500/10 blur-[120px] rounded-full"></div>
+        <div class="absolute -bottom-[10%] -right-[10%] w-[40%] h-[40%] bg-purple-500/10 blur-[120px] rounded-full"></div>
+    </div>
+
+    <div class="relative max-w-6xl mx-auto px-6 py-20">
+        <header class="mb-24 text-center">
+            <h1 class="text-6xl md:text-8xl font-black mb-8 tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-500">
+                THEOLOGICAL<br>BATTLEGROUNDS
+            </h1>
+            <p class="text-sky-400 font-mono tracking-[0.3em] uppercase text-sm">Principium Cognoscendi & Strategic Archive</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Revelation v3.1 (Main) -->
+            <a href="revelation.html" class="card-grad p-8 rounded-3xl border border-white/5 flex flex-col justify-between h-[340px]">
+                <div>
+                    <span class="text-[10px] font-black bg-sky-600 px-2 py-0.5 rounded tracking-widest text-white uppercase mb-4 inline-block">Primary Sector</span>
+                    <h2 class="text-3xl font-black mb-2 tracking-tight">계시론 (Revelation)</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed">하나님을 아는 지식의 제1원리. 7인의 거장이 대결하는 최종 전략 지휘소 v3.1</p>
+                </div>
+                <div class="text-sky-400 font-bold text-xs flex items-center gap-2">DEPLOY COMMAND CENTER →</div>
+            </a>
+
+            <!-- Baptism -->
+            <a href="baptism_battleground.html" class="card-grad p-8 rounded-3xl border border-white/5 flex flex-col justify-between h-[340px]">
+                <div>
+                    <span class="text-[10px] font-black bg-emerald-600 px-2 py-0.5 rounded tracking-widest text-white uppercase mb-4 inline-block">Active Sector</span>
+                    <h2 class="text-3xl font-black mb-2 tracking-tight">세례론 (Baptism)</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed">성례전적 표징과 신학적 실재의 충돌. 언약 신학의 최전방 지형도 분석.</p>
+                </div>
+                <div class="text-emerald-400 font-bold text-xs flex items-center gap-2">OPEN BATTLEGROUND →</div>
+            </a>
+
+            <!-- Justification -->
+            <a href="justification_debate.html" class="card-grad p-8 rounded-3xl border border-white/5 flex flex-col justify-between h-[340px]">
+                <div>
+                    <span class="text-[10px] font-black bg-rose-600 px-2 py-0.5 rounded tracking-widest text-white uppercase mb-4 inline-block">Conflict Zone</span>
+                    <h2 class="text-3xl font-black mb-2 tracking-tight">칭의론 (Justification)</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed">바울 신학의 핵심 쟁점. 법정적 선언과 실재적 변화 사이의 신학적 텐션 분석.</p>
+                </div>
+                <div class="text-rose-400 font-bold text-xs flex items-center gap-2">ANALYZE DOCTRINE →</div>
+            </a>
+
+            <!-- Resurrection -->
+            <a href="resurrection_battleground.html" class="card-grad p-8 rounded-3xl border border-white/5 flex flex-col justify-between h-[340px]">
+                <div>
+                    <span class="text-[10px] font-black bg-purple-600 px-2 py-0.5 rounded tracking-widest text-white uppercase mb-4 inline-block">Hope Vector</span>
+                    <h2 class="text-3xl font-black mb-2 tracking-tight">부활론 (Resurrection)</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed">역사적 사실성과 종말론적 희망의 교차점. 새로운 창조의 지형도.</p>
+                </div>
+                <div class="text-purple-400 font-bold text-xs flex items-center gap-2">RECONNAISSANCE →</div>
+            </a>
+            
+            <!-- Pending -->
+            <div class="card-grad p-8 rounded-3xl border border-white/5 opacity-40 flex flex-col justify-between h-[340px]">
+                <div>
+                    <h2 class="text-2xl font-black mb-2 tracking-tight text-slate-500 italic uppercase">More Sectors Pending</h2>
+                    <p class="text-slate-600 text-[11px] italic tracking-tighter">새로운 신학적 전선들이 구축 대기 중입니다. 지휘체계가 수립되는 대로 공개됩니다.</p>
+                </div>
+                <div class="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="w-1/3 h-full bg-slate-700"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-40 pt-10 border-t border-white/5 text-center text-slate-600">
+            <p class="text-[10px] font-mono tracking-widest uppercase">© 2026 KERYGMA STRATEGIC ARCHIVE | INTELLIGENCE GATEWAY</p>
+        </footer>
+    </div>
+</body>
+</html>
