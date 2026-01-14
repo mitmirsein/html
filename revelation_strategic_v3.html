@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>계시(Revelation) 신학 전략 작전 지휘소 v3.1</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Outfit', 'Noto Sans KR', sans-serif; background-color: #010413; color: #f8fafc; }
+        .glass-card { background: rgba(10, 15, 30, 0.85); backdrop-filter: blur(30px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 1.5rem; }
+        .strategic-btn { transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.03); }
+        .strategic-btn.active { border-color: currentColor; background: rgba(255, 255, 255, 0.1); box-shadow: 0 0 15px -5px currentColor; }
+        .matchup-btn { transition: all 0.3s ease; border: 1px solid rgba(249, 115, 22, 0.3); }
+        .matchup-btn:hover { background: rgba(249, 115, 22, 0.1); border-color: #f97316; }
+        .scroll-custom::-webkit-scrollbar { width: 4px; }
+        .scroll-custom::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        .radar-container { filter: drop-shadow(0 0 40px rgba(0, 0, 0, 0.6)); }
+    </style>
+</head>
+<body class="p-4 md:p-12 min-h-screen">
+    <div class="max-w-[1750px] mx-auto">
+        <!-- Dashboard Header -->
+        <header class="mb-12 border-b border-white/5 pb-10 flex flex-col xl:flex-row justify-between items-start xl:items-end gap-8">
+            <div class="space-y-3">
+                <div class="flex items-center gap-3">
+                    <span class="px-2 py-0.5 bg-rose-600 text-[10px] font-black tracking-widest rounded-sm">TOP SECRET</span>
+                    <h1 class="text-5xl font-black bg-clip-text text-transparent bg-gradient-to-br from-slate-100 to-slate-500 uppercase tracking-tighter">Revelation Strategic HQ</h1>
+                </div>
+                <p class="text-slate-500 text-sm font-light uppercase tracking-[0.3em]">Theological Principium Cognoscendi Analysis Platform v3.1</p>
+            </div>
+            <div id="matchupContainer" class="grid grid-cols-2 gap-3">
+                <!-- Matchup buttons will be rendered here -->
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-10">
+            <!-- Left: Unit Deployment Only -->
+            <div class="xl:col-span-3">
+                <div class="glass-card p-8 sticky top-12">
+                    <h2 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] mb-8 border-l-2 border-orange-600 pl-4">Tactical Units</h2>
+                    <div id="layerSelector" class="space-y-3 pr-2 scroll-custom">
+                        <!-- JS Renders -->
+                    </div>
+                    <div class="mt-10 pt-6 border-t border-white/5 flex gap-4">
+                        <button onclick="toggleAll(true)" class="flex-1 py-3 text-[9px] font-black text-sky-500 border border-sky-900/30 rounded-lg hover:bg-sky-950/20 uppercase tracking-widest transition-all">All Deploy</button>
+                        <button onclick="toggleAll(false)" class="flex-1 py-3 text-[9px] font-black text-slate-500 border border-slate-800 rounded-lg hover:bg-slate-900/40 uppercase tracking-widest transition-all">Clear All</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center: The Radar Battleground -->
+            <div class="xl:col-span-6 flex flex-col gap-8">
+                <div class="glass-card p-12 flex-1 radar-container min-h-[700px] relative">
+                    <canvas id="mainRadarChart"></canvas>
+                    <div class="absolute bottom-6 left-6 text-[10px] text-slate-700 font-mono">GRID SYSTEM ALPHA-9 / SECTOR: REVELATION</div>
+                </div>
+            </div>
+
+            <!-- Right: Strategic Command (High-Density Analysis) -->
+            <div class="xl:col-span-3">
+                <div id="briefCard" class="glass-card h-full p-10 flex flex-col border-r-2 border-orange-500/20 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-6 opacity-10">
+                        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mb-10 relative z-10">
+                        <h2 class="text-2xl font-black tracking-tighter flex items-center gap-3">
+                            <span id="briefIcon" class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-sm">A</span>
+                            STRATEGIC BRIEF
+                        </h2>
+                        <span id="briefCode" class="text-[10px] font-mono text-orange-500/70 tracking-widest">READY-01</span>
+                    </div>
+                    
+                    <div id="strategicBriefContent" class="flex-1 overflow-y-auto scroll-custom pr-4 space-y-8 relative z-10">
+                        <div class="opacity-20 text-center py-40">
+                            <p class="text-xs uppercase tracking-[0.5em] mb-4 font-black">Standing by for command</p>
+                            <p class="text-[10px] text-slate-600">학자를 선택하거나 매치업을 클릭하십시오.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-mono text-slate-700 tracking-[0.2em] uppercase">
+            <div class="flex items-center gap-6">
+                <span>RISE PRO ENGINE ACTIVE</span>
+                <span>SECURE THEOLOGICAL ANALYSIS GATEWAY</span>
+            </div>
+            <div>© 2026 Kerygma Strategic Intelligence Bureau</div>
+        </footer>
+    </div>
+
+    <script>
+        const scholars = [
+            { 
+                id: 0, name: '아우구스티누스', color: '#38bdf8', data: [7, 6, 6, 8, 10, 7, 8], group: 'Patristic',
+                strategy: "[Principium: Interiority] 계시를 정보가 아닌 '인식의 빛'으로 정의합니다. 외부의 역사적 증거보다 내적인 성령의 조명을 강조하며, 인간의 지성이 비로소 하나님을 '보게' 만드는 빛의 투사 전략을 취합니다. 이는 신앙이 이성을 완성한다는 보수적 조화론의 근원입니다."
+            },
+            { 
+                id: 1, name: '판넨베르크', color: '#10b981', data: [10, 5, 9, 4, 3, 8, 4], group: 'History',
+                strategy: "[Strategy: Public Revelation] 계시는 보편적 이성에 투명하게 공개되어야 한다는 '역사 신학'의 총력전입니다. 역사적 매개성을 통해 계시를 학문적으로 검증 가능한 범주로 끌어올림으로써, 신학을 고립된 신앙의 사적 영역에서 공적 역사의 장으로 전격 투입한 확장적 전략입니다."
+            },
+            { 
+                id: 2, name: '루터', color: '#ef4444', data: [8, 8, 2, 9, 9, 10, 10], group: 'Reformation',
+                strategy: "[Methodus: Paradox] 계시는 영광이 아닌 십자가의 역설 뒤에 숨어있습니다. 인간의 자연신학을 철저히 무력화시키고, 오직 기독론적 집중을 통해 '숨어 계신 하나님'을 역설적으로 드러내어 인간의 종교적 교만을 격파하는 방어적-공격적 역설 전략입니다."
+            },
+            { 
+                id: 3, name: '본회퍼', color: '#a855f7', data: [9, 4, 3, 8, 6, 10, 7], group: 'Modern',
+                strategy: "[Tactics: Concreteness] 계시는 형이상학적 교리가 아닌 '현존하는 인격'입니다. 기독론적 완성을 역사적 현장으로 침투시켜, 계시의 장소를 교회가 아닌 '현실 세계'의 한복판으로 강제 이동시키는 구체적 저항 신학의 전술적 배치를 보여줍니다."
+            },
+            { 
+                id: 4, name: 'C.S. 루이스', color: '#fbbf24', data: [7, 7, 8, 7, 5, 7, 6], group: 'Apologist',
+                strategy: "[Strategy: Cosmic Signature] 자연신학을 '태양 빛'에 비유하며, 보편적 갈망과 도덕률을 계시의 흔적으로 포섭합니다. 현대의 세속주의에 맞서 계시의 명제적 진실을 인간의 보편적 상식선에 연결하는 포용적 변증 전략을 특징으로 합니다."
+            },
+            { 
+                id: 5, name: '바르트', color: '#ec4899', data: [5, 7, 0, 8, 10, 10, 9], group: 'Neo-Orthodox',
+                strategy: "[Strategy: Transcendent Event] 계시는 인간의 모든 시도에 대한 거룩한 '아니오(Nein!)'입니다. 자연신학의 완벽한 붕괴를 전제로 오직 수직적으로만 임하는 말씀의 독점적 주권을 주장합니다. 계시를 인간이 소유할 수 없는 '사건'으로 규정하는 강력한 초월 전략입니다."
+            },
+            { 
+                id: 6, name: '불트만', color: '#94a3b8', data: [2, 3, 4, 10, 8, 8, 7], group: 'Existential',
+                strategy: "[Methodus: Existential Impact] 역사적 사실은 계시의 껍데기에 불과합니다. 계시의 침투 방식은 정보의 전달이 아닌 '자아의 붕괴와 결단'입니다. 십자가의 케리그마가 지금 여기의 나를 타격하게 만드는 실존적 게릴라 전술을 전술의 핵심으로 삼습니다."
+            }
+        ];
+
+        const matchups = [
+            { 
+                title: "역사의 전장인가, 말씀의 심판인가?", ids: [1, 5], 
+                analysis: "판넨베르크(역사주의) vs 바르트(신정통주의). 이 비교는 **'검증 가능성' vs '주권적 사건'**의 대결입니다. 판넨베르크가 역사(Axis 1)를 통해 하나님을 증명하려 한다면, 바르트는 역사의 모든 시도를 무력화하고 말씀을 단독 파견합니다. 전략적 포인트: 계시를 '우리가 찾아낼 수 있는지도'로 보느냐, '우리를 찾아온 사태'로 보느냐가 핵심입니다."
+            },
+            { 
+                title: "은혜의 빛인가, 십자가의 위장인가?", ids: [0, 2], 
+                analysis: "아우구스티누스 vs 루터. 정통 신학의 두 기둥이지만 인식의 방식이 다릅니다. 이 비교는 **'조명(Axis 5)' vs '역설(Axis 7)'**의 충돌입니다. 아우구스티누스가 지성을 고양시켜 빛으로 이끌려 한다면, 루터는 인간의 이성을 십자가 아래에서 처형하고 오직 그 고통의 자리에서만 하나님을 보게 합니다."
+            },
+            { 
+                title: "실존의 타격인가, 사회의 응전인가?", ids: [6, 3], 
+                analysis: "불트만(실존주의) vs 본회퍼(현대 신학). 개인의 내면적 결단(Axis 4: 10점)을 강조하는 불트만과, 그리스도의 사회적-역사적 현존(Axis 1: 9점)을 중시하는 본회퍼의 대결입니다. 전략적 포인트: 계시를 '나에게 일어나는 사건'으로 보느냐, '우리 가운데 계시는 인격'으로 보느냐의 차이를 분석하십시오."
+            },
+            { 
+                title: "보편적 서명인가, 독점적 계시인가?", ids: [4, 5], 
+                analysis: "C.S. 루이스(변증학) vs 바르트(신정통주의). 보편적 이성과 자연계시(Axis 3: 8점)를 긍정하는 루이스와, 이를 단호히 거부(Axis 3: 0점)하고 오직 말씀의 독점적 권위를 세우려는 바르트의 충돌입니다. 전략적 포인트: 인간 본성 속의 하나님의 흔적(Sign)을 인정할 것인가, 아니면 전적 타자(Total Other)로서의 하나님만을 고집할 것인가를 관찰하십시오."
+            }
+        ];
+
+        let activeLayers = [true, true, true, true, true, true, true];
+        let focusedIdx = -1;
+        let chart;
+
+        const ctx = document.getElementById('mainRadarChart').getContext('2d');
+
+        function initChart() {
+            chart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['역사적 매개성', '언어적 명제성', '자연신학 가능성', '실존적 수용성', '성령의 조명', '기독론적 집중', '종말론적 은폐'],
+                    datasets: scholars.map((s, idx) => ({
+                        label: s.name,
+                        data: s.data,
+                        borderColor: s.color,
+                        backgroundColor: s.color + '10',
+                        fill: true,
+                        hidden: !activeLayers[idx],
+                        pointRadius: 4,
+                        borderWidth: 2
+                    }))
+                },
+                options: {
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(255,255,255,0.05)' },
+                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            pointLabels: { color: '#475569', font: { size: 10, weight: '700' } },
+                            ticks: { display: false, max: 10, min: 0 }
+                        }
+                    },
+                    plugins: { legend: { display: false } },
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+            renderUI();
+            renderMatchups();
+        }
+
+        function renderUI() {
+            const container = document.getElementById('layerSelector');
+            container.innerHTML = scholars.map((s, idx) => `
+                <button onclick="focusScholar(${idx})" 
+                        class="strategic-btn w-full flex items-center gap-4 p-4 rounded-2xl text-left ${activeLayers[idx] ? 'active' : ''}" 
+                        style="color: ${s.color}">
+                    <div class="w-3 h-3 rounded-full shadow-[0_0_10px_currentColor]" style="background-color: ${s.color}"></div>
+                    <div class="flex-1">
+                        <div class="text-[12px] font-bold text-slate-100">${s.name}</div>
+                        <div class="text-[8px] text-slate-500 font-mono uppercase tracking-widest">${s.group}</div>
+                    </div>
+                    ${activeLayers[idx] ? '<span class="text-[8px] bg-slate-900 px-2 py-0.5 rounded text-slate-400">ON</span>' : ''}
+                </button>
+            `).join('');
+        }
+
+        function focusScholar(idx) {
+            // 클릭한 학자를 포커스하고 레이어를 토글함
+            activeLayers[idx] = !activeLayers[idx];
+            chart.data.datasets[idx].hidden = !activeLayers[idx];
+            chart.update();
+            renderUI();
+            
+            // 우측 리포트 업데이트
+            const container = document.getElementById('strategicBriefContent');
+            const icon = document.getElementById('briefIcon');
+            const code = document.getElementById('briefCode');
+            const s = scholars[idx];
+
+            icon.innerText = "🧐";
+            icon.style.backgroundColor = s.color;
+            code.innerText = `UNIT-0${idx + 1}`;
+
+            container.innerHTML = `
+                <div class="space-y-8 animate-in slide-in-from-right-4 duration-500">
+                    <header>
+                        <h3 class="text-xs font-black uppercase tracking-[0.3em] mb-4" style="color: ${s.color}">${s.group} STRATEGIC Intel</h3>
+                        <h4 class="text-5xl font-black text-white leading-none tracking-tighter mb-4">${s.name}</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed border-l-2 border-slate-700 pl-4 py-2 italic font-serif">"${s.strategy.split(']')[0]}]"</p>
+                    </header>
+                    
+                    <div class="space-y-8">
+                        <section>
+                            <h5 class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Tactical Doctrine</h5>
+                            <p class="text-slate-200 text-sm leading-[1.8]">${s.strategy}</p>
+                        </section>
+
+                        <section class="p-6 bg-slate-900/80 border border-slate-800 rounded-2xl">
+                             <h5 class="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-4">Field Observation</h5>
+                             <p class="text-xs text-slate-400 leading-relaxed">
+                                <strong>${s.name}</strong> 요원은 현재 <strong>${chart.data.labels[s.data.indexOf(Math.max(...s.data))]}</strong> 분야에서 압도적인 장악력을 보여줍니다. 
+                                반면 <strong>${chart.data.labels[s.data.indexOf(Math.min(...s.data))]}</strong> 분야는 전략적으로 방치되어 있어, 이 지점이 타 학자들과의 주요 교전지가 될 것입니다.
+                             </p>
+                        </section>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMatchups() {
+            const container = document.getElementById('matchupContainer');
+            container.innerHTML = matchups.map((m, idx) => `
+                <button onclick="applyMatchup(${idx})" 
+                        class="matchup-btn px-6 py-3 rounded-full text-[9px] font-black uppercase tracking-[0.2em] text-orange-500">
+                    ${m.title}
+                </button>
+            `).join('');
+        }
+
+        function applyMatchup(idx) {
+            const matchup = matchups[idx];
+            activeLayers = activeLayers.map((_, i) => matchup.ids.includes(i));
+            chart.data.datasets.forEach((d, i) => d.hidden = !matchup.ids.includes(i));
+            chart.update();
+            renderUI();
+            
+            const container = document.getElementById('strategicBriefContent');
+            const icon = document.getElementById('briefIcon');
+            const code = document.getElementById('briefCode');
+
+            icon.innerText = "⚔️";
+            icon.style.backgroundColor = "#ea580c";
+            code.innerText = `MATCH-0${idx + 1}`;
+
+            container.innerHTML = `
+                <div class="space-y-8 animate-in slide-in-from-right-4 duration-700">
+                    <header>
+                        <h3 class="text-orange-500 font-black text-[10px] uppercase tracking-[0.3em] mb-4">Tactical Engagement Report</h3>
+                        <h4 class="text-4xl font-black text-white leading-tight tracking-tighter">${matchup.title}</h4>
+                    </header>
+                    <div class="prose prose-invert">
+                        <p class="text-slate-300 text-sm leading-[1.8]">${matchup.analysis}</p>
+                    </div>
+                    <div class="p-6 bg-blue-900/10 border border-blue-500/20 rounded-2xl">
+                         <h5 class="text-[10px] font-black text-sky-400 uppercase tracking-widest mb-4">Command Strategy</h5>
+                         <p class="text-xs text-slate-400 leading-relaxed">이 대치 상황에서는 특히 <strong>${chart.data.labels[scholars[matchup.ids[0]].data.indexOf(Math.max(...scholars[matchup.ids[0]].data))]}</strong> 분야의 수치 격차를 통해 두 신학자의 '인식론적 단절'을 추적하십시오. 이는 현대 신학의 가장 치열한 전선입니다.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function toggleAll(val) {
+            activeLayers = activeLayers.map(() => val);
+            chart.data.datasets.forEach(d => d.hidden = !val);
+            chart.update();
+            renderUI();
+        }
+
+        initChart();
+    </script>
+</body>
+</html>
