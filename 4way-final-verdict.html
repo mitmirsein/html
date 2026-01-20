@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4-Way Quality Comparison Report: Schechina Research</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            /* Color Palette */
+            --bg-body: #090c10;
+            --bg-card: #161b22;
+            --bg-card-hover: #1c2128;
+            --border-color: #30363d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-accent: #58a6ff;
+
+            --color-gold: #e3b341;
+            --color-gold-glow: rgba(227, 179, 65, 0.2);
+            --color-success: #3fb950;
+            --color-danger: #f85149;
+
+            /* Spacing */
+            --spacing-md: 1.5rem;
+            --radius-lg: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Google Sans Flex', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+            padding: 40px 20px;
+        }
+
+        /* Container */
+        .report-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Headings */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #58a6ff, #a371f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.03em;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            border-left: 4px solid var(--text-accent);
+            padding-left: 1rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #c9d1d9;
+        }
+
+        /* Code & Monospace */
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(110, 118, 129, 0.2);
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #ff7b72;
+        }
+
+        /* Tables (The Star of the Show) */
+        .table-wrapper {
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--bg-card);
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: linear-gradient(180deg, #21262d 0%, #161b22 100%);
+            color: var(--text-primary);
+            font-weight: 600;
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: #c9d1d9;
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: var(--bg-card-hover);
+        }
+
+        /* Column Specific Styling */
+        td:first-child {
+            font-weight: 600;
+            color: var(--text-accent);
+        }
+
+        /* Alignment utilities */
+        th[align="center"],
+        td[align="center"] {
+            text-align: center;
+        }
+
+        th[align="right"],
+        td[align="right"] {
+            text-align: right;
+        }
+
+        /* Lists */
+        ul,
+        ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        li::marker {
+            color: var(--text-secondary);
+        }
+
+        /* Quality Stars & Icons */
+        td:contains("⭐") {
+            color: var(--color-gold);
+            text-shadow: 0 0 10px var(--color-gold-glow);
+        }
+
+        /* Note: :contains is not standard CSS, handled by Emoji vividness below */
+
+        /* Features Section - Cards */
+        ul {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            list-style: none;
+            margin-left: 0;
+        }
+
+        /* Target the feature list specifically */
+        h2+ul>li>strong {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 1.1em;
+            color: var(--text-accent);
+        }
+
+        h2+ul>li {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1.25rem;
+            border-radius: var(--radius-lg);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        h2+ul>li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border-color: var(--text-secondary);
+        }
+
+        h2+ul>li ul {
+            display: block;
+            /* Nested lists are normal lists */
+            margin-top: 0.5rem;
+            padding-left: 1.2rem;
+            list-style: disc;
+        }
+
+        h2+ul>li ul li {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin-bottom: 0.3rem;
+            box-shadow: none;
+        }
+
+        h2+ul>li ul li:hover {
+            transform: none;
+        }
+
+
+        /* Final Verdict - The Hero Section */
+        h2:nth-of-type(6) {
+            /* Targeting Final Conclusion */
+            border-left-color: var(--color-gold);
+        }
+
+        ol {
+            counter-reset: verdict-counter;
+            list-style: none;
+            margin: 0;
+            display: grid;
+            gap: 1rem;
+        }
+
+        ol li {
+            counter-increment: verdict-counter;
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Rank #1 Highlighting */
+        ol li:first-child {
+            background: linear-gradient(135deg, rgba(88, 166, 255, 0.1) 0%, rgba(22, 27, 34, 1) 100%);
+            border: 1px solid var(--text-accent);
+            box-shadow: 0 0 30px rgba(88, 166, 255, 0.15);
+        }
+
+        ol li::before {
+            content: counter(verdict-counter);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-secondary);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #21262d;
+            border-radius: 50%;
+        }
+
+        ol li:first-child::before {
+            background: var(--text-accent);
+            color: #fff;
+        }
+
+        /* Quote Block */
+        blockquote {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: linear-gradient(90deg, #161b22, #0d1117);
+            border-left: 5px solid var(--color-gold);
+            border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--text-primary);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        blockquote p {
+            color: #e6edf3;
+            font-weight: 500;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: var(--border-color);
+            margin: 3rem 0;
+        }
+
+        /* Emoji / Symbol colors */
+        .check {
+            color: var(--color-success);
+        }
+
+        .cross {
+            color: var(--color-danger);
+            opacity: 0.5;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .table-wrapper {
+                margin: 0 -15px;
+                border-radius: 0;
+                border-left: 0;
+                border-right: 0;
+            }
+
+            ol li {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="report-container">
+
+        <h1>4-Way 품질 비교 리포트</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;">Schechina Research Analysis • Final Verdict</p>
+
+        <h2>1. 기본 개요 및 환경 (Overview & Context)</h2>
+        <p>모든 결과물은 동일한 <strong>Gemini 3.0 Pro</strong> 모델을 기반으로 생성되었습니다.</p>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th align="left">항목</th>
+                        <th align="left">Deep Research (DR)</th>
+                        <th align="left">AI Studio (v1.3)</th>
+                        <th align="left">CLI (v1.3)</th>
+                        <th align="left">Article (v6.4)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>파일명</td>
+                        <td><code>schechina_raw.md</code></td>
+                        <td><code>Schechina_research_studio.md</code></td>
+                        <td><code>schechina_nash_equilibrium.md</code></td>
+                        <td><code>schechina_Article_Full.md</code></td>
+                    </tr>
+                    <tr>
+                        <td>실행 환경</td>
+                        <td>Gemini 딥리서치 (Web)</td>
+                        <td>AI Studio (Web)</td>
+                        <td>Terminal (CLI)</td>
+                        <td>신학사전 집필 프로젝트</td>
+                    </tr>
+                    <tr>
+                        <td>프롬프트</td>
+                        <td>딥리서치 자동 생성</td>
+                        <td>동일 프롬프트 (Theological Research)</td>
+                        <td>동일 프롬프트 (Theological Research)</td>
+                        <td>사전 집필 특화 프롬프트</td>
+                    </tr>
+                    <tr>
+                        <td>작동 방식</td>
+                        <td><strong>Google Scholar 시맨틱 검색</strong>으로<br>각주/레퍼런스 보정</td>
+                        <td><strong>전문 페르소나 미작동</strong><br>(모델 자율 수행)</td>
+                        <td>전문 페르소나 정상 작동<br>(논리 구조 강화)</td>
+                        <td>최종 출판 목적<br>구조화 집필</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>2. 분량 및 효율성 상세 분석</h2>
+
+        <h3>2.1. 실측 분량 비교</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th align="left">결과물</th>
+                        <th align="left">바이트</th>
+                        <th align="left">줄 수</th>
+                        <th align="left">글자수 (추정)</th>
+                        <th align="left">200자 원고지 환산</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Deep Research</td>
+                        <td>43,555</td>
+                        <td>256</td>
+                        <td>~28,000자</td>
+                        <td><strong>약 140매</strong></td>
+                    </tr>
+                    <tr>
+                        <td>AI Studio v1.3</td>
+                        <td>14,636</td>
+                        <td>177</td>
+                        <td>~9,500자</td>
+                        <td>약 48매</td>
+                    </tr>
+                    <tr>
+                        <td>CLI v1.3</td>
+                        <td>14,057</td>
+                        <td>127</td>
+                        <td>~9,000자</td>
+                        <td>약 45매</td>
+                    </tr>
+                    <tr>
+                        <td>Article v6.4</td>
+                        <td>11,575</td>
+                        <td>131</td>
+                        <td>~7,500자</td>
+                        <td><strong>약 38매</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>2.2. 효율성 (품질 ÷ 분량)</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th align="left">결과물</th>
+                        <th align="left">분량</th>
+                        <th align="left">품질 평가</th>
+                        <th align="left">효율성 등급</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Deep Research</td>
+                        <td>📈📈📈📈 (과다)</td>
+                        <td>⭐⭐⭐⭐</td>
+                        <td><span class="cross">낮음</span></td>
+                    </tr>
+                    <tr>
+                        <td>AI Studio v1.3</td>
+                        <td>📈📈</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td><span class="check">높음</span></td>
+                    </tr>
+                    <tr>
+                        <td>CLI v1.3</td>
+                        <td>📈📈</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td><strong class="check">최고</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Article v6.4</td>
+                        <td>📈 (최적)</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <td><strong class="check">최고</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>3. 구조적 특징 비교 (Structure)</h2>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th align="left">비교 항목</th>
+                        <th align="center">DR</th>
+                        <th align="center">Studio v1.3</th>
+                        <th align="center">CLI v1.3</th>
+                        <th align="center">Article v6.4</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Executive Summary</td>
+                        <td align="center" class="cross">❌</td>
+                        <td align="center" class="check">✅</td>
+                        <td align="center" class="check">✅</td>
+                        <td align="center" class="check">✅ (Abstract)</td>
+                    </tr>
+                    <tr>
+                        <td>학문분야 포괄 (I-X)</td>
+                        <td align="center" class="cross">❌</td>
+                        <td align="center" class="cross">❌</td>
+                        <td align="center" class="cross">❌</td>
+                        <td align="center" class="check">✅ (7섹션)</td>
+                    </tr>
+                    <tr>
+                        <td>논증 추적 맵</td>
+                        <td align="center" class="cross">❌</td>
+                        <td align="center" class="check">✅</td>
+                        <td align="center" class="check">✅</td>
+                        <td align="center" class="cross">❌</td>
+                    </tr>
+                    <tr>
+                        <td>Red Team 방어</td>
+                        <td align="center" class="cross">❌</td>
+                        <td align="center" class="check">✅</td>
+                        <td align="center" class="check">✅</td>
+                        <td align="center" class="check">✅ (Method Note)</td>
+                    </tr>
+                    <tr>
+                        <td>Golden Thread</td>
+                        <td align="center" class="cross">❌</td>
+                        <td align="center" class="cross">❌</td>
+                        <td align="center" class="cross">❌</td>
+                        <td align="center" class="check" style="color: var(--color-gold);">✅ (핵심)</td>
+                    </tr>
+                    <tr>
+                        <td>Source Ledger</td>
+                        <td align="center" class="cross">❌</td>
+                        <td align="center" class="cross">❌</td>
+                        <td align="center" class="cross">❌</td>
+                        <td align="center" class="check">✅ (CSV)</td>
+                    </tr>
+                    <tr>
+                        <td>각주 (Inline)</td>
+                        <td align="center">54개</td>
+                        <td align="center">4개</td>
+                        <td align="center">4개</td>
+                        <td align="center">10개 (본문내)</td>
+                    </tr>
+                    <tr>
+                        <td>독일어 문헌 50%</td>
+                        <td align="center" class="cross">❌</td>
+                        <td align="center">⚪</td>
+                        <td align="center">⚪</td>
+                        <td align="center" class="check">✅ (달성)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>4. 품질 평가 (Quality Assessment)</h2>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th align="left">평가 항목</th>
+                        <th align="center">DR</th>
+                        <th align="center">Studio</th>
+                        <th align="center">CLI</th>
+                        <th align="center">Article</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>학술적 엄밀성</td>
+                        <td align="center">⭐⭐⭐⭐</td>
+                        <td align="center">⭐⭐⭐⭐⭐</td>
+                        <td align="center">⭐⭐⭐⭐⭐</td>
+                        <td align="center">⭐⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td>에큐메니컬 균형</td>
+                        <td align="center">⭐⭐⭐</td>
+                        <td align="center">⭐⭐⭐⭐</td>
+                        <td align="center">⭐⭐⭐⭐</td>
+                        <td align="center">⭐⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td>Golden Thread</td>
+                        <td align="center" class="cross">❌</td>
+                        <td align="center">⚪</td>
+                        <td align="center">⚪</td>
+                        <td align="center" style="color: var(--color-gold); font-weight:bold;">✅ 최상</td>
+                    </tr>
+                    <tr>
+                        <td>출처 다양성</td>
+                        <td align="center">⭐⭐⭐⭐⭐</td>
+                        <td align="center">⭐⭐⭐</td>
+                        <td align="center">⭐⭐⭐</td>
+                        <td align="center">⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td>백과사전적 톤</td>
+                        <td align="center">⭐⭐⭐</td>
+                        <td align="center">⭐⭐⭐⭐</td>
+                        <td align="center">⭐⭐⭐⭐</td>
+                        <td align="center">⭐⭐⭐⭐⭐</td>
+                    </tr>
+                    <tr>
+                        <td>간결성</td>
+                        <td align="center">⭐⭐</td>
+                        <td align="center">⭐⭐⭐⭐</td>
+                        <td align="center">⭐⭐⭐⭐⭐</td>
+                        <td align="center">⭐⭐⭐⭐⭐</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>5. 특징 및 맥락 요약</h2>
+        <ul>
+            <li>
+                <strong>Deep Research</strong>
+                <ul>
+                    <li>성격: 원시 데이터 수집 및 검증 단계</li>
+                    <li>강점: Google Scholar 시맨틱 검색을 활용해 레퍼런스(각주)의 신뢰도를 대폭 강화함.</li>
+                    <li>약점: 내용이 산만하고 편집되지 않은 Raw Data 형태.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>AI Studio (v1.3)</strong>
+                <ul>
+                    <li>성격: <strong>자율 수행 (Autonomous Mode)</strong></li>
+                    <li>특징: 환경적 요인으로 <strong>전문 페르소나가 로드되지 않음.</strong> 모델 자체의 일반 지능에 의존하여 응답 생성.</li>
+                    <li>결과: 논리적 정합성은 높으나, 페르소나 특유의 날카로운 관점(Viewpoint) 제시는 약함.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>CLI (v1.3)</strong>
+                <ul>
+                    <li>성격: 페르소나 기반 논리 실험</li>
+                    <li>특징: 전문 페르소나 프롬프트가 정상 작동하여 논리 구조(Nash Equilibrium)를 충실히 수행.</li>
+                    <li>강점: 텍스트 처리 효율이 높고 간결하며 가독성이 우수함.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Article (v6.4)</strong>
+                <ul>
+                    <li>성격: <strong>신학사전 집필 프로젝트 최종 산출물</strong></li>
+                    <li>강점: 사전 등재를 목적으로 하여 Golden Thread, Source Ledger, 백과사전적 톤을 완벽히 갖춤.</li>
+                    <li>약점: 본문 내 각주 수가 상대적으로 적음 (편집 과정에서 통합 필요).</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>6. 최종 결론 (Final Verdict)</h2>
+        <ol>
+            <li>
+                <div>
+                    <strong>Article v6.4</strong>
+                    <br><span style="color: var(--text-secondary); font-size: 0.9em;">신학사전/백과사전 항목용 - <span
+                            style="color: var(--color-success)">목적 적합성 1위</span></span>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <strong>CLI v1.3</strong>
+                    <br><span style="color: var(--text-secondary); font-size: 0.9em;">논쟁적 연구/논문 초안 - 페르소나 작동으로 논리성
+                        우수</span>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <strong>Studio v1.3</strong>
+                    <br><span style="color: var(--text-secondary); font-size: 0.9em;">일반적 고성능 AI 응답 - 페르소나 미작동으로
+                        평이함</span>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <strong>Deep Research</strong>
+                    <br><span style="color: var(--text-secondary); font-size: 0.9em;">신뢰할 수 있는 레퍼런스 수집용 원천 자료</span>
+                </div>
+            </li>
+        </ol>
+
+        <h2>7. 사용자 총평 (User's Insight)</h2>
+        <blockquote>
+            <p>"모델은 지능(Intelligence)을 제공하지만, 결과물의 품격(Excellence)을 결정하는 것은 여전히 '프롬프트 엔지니어링'의 정교함입니다."</p>
+            <br>
+            <span style="font-size: 0.95em; color: var(--text-secondary); font-style: normal;">
+                동일한 Gemini 3.0 Pro 모델을 사용했음에도 불구하고, 자율 수행에 맡긴 <code>Studio</code>와 정교한 페르소나를 설계한
+                <code>CLI</code>/<code>Article</code>의 품질 격차는 컸습니다. 이는 AI 시대에도 인간의 <strong>구조적
+                    기획력(Architecting)</strong>이 여전히 결과물의 품질을 좌우하는 핵심 변수임을 증명합니다.
+            </span>
+        </blockquote>
+
+    </div>
+
+</body>
+
+</html>

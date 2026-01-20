@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCHECHINA: RESEARCH REPORT</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Serif+KR:wght@300;400;600&family=Outfit:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['"Noto Serif KR"', 'serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        paper: '#f8fafc', /* Slate 50 */
+                        ink: '#0f172a',   /* Slate 900 */
+                        accent: {
+                            teal: '#0f766e', /* Teal 700 */
+                            gold: '#b45309', /* Amber 700 */
+                            red: '#be123c'   /* Rose 700 */
+                        }
+                    },
+                    cursor: {
+                        none: 'none',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* --- Reset & Base --- */
+        :root {
+            --sidenote-width: 280px;
+        }
+
+        html.lenis {
+            height: auto;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto;
+        }
+
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+
+        .lenis.lenis-scrolling iframe {
+            pointer-events: none;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #0f172a;
+            /* cursor: none; Removed to fix visibility issue */
+            overflow-x: hidden;
+        }
+
+        /* Custom Cursor */
+        #cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #0f766e;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            mix-blend-mode: multiply;
+        }
+
+        #cursor.hovered {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(15, 118, 110, 0.1);
+            border-color: transparent;
+        }
+
+        /* Canvas Background */
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        /* Noise Overlay */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 50;
+            mix-blend-mode: multiply;
+            opacity: 0.05;
+        }
+
+        /* --- Layout Grid --- */
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1fr min(65ch, 90%) 1fr;
+            gap: 0;
+        }
+
+        @media (min-width: 1536px) {
+            .layout-grid {
+                grid-template-columns: 1fr 65ch minmax(300px, 1fr);
+            }
+
+            .sidenote-container {
+                position: relative;
+            }
+
+            .sidenote {
+                position: absolute;
+                right: calc(var(--sidenote-width) * -1 - 3rem);
+                width: var(--sidenote-width);
+                top: 0;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.75rem;
+                line-height: 1.4;
+                color: #64748b;
+                /* Slate 500 */
+                border-left: 1px solid #cbd5e1;
+                /* Slate 300 */
+                padding-left: 1rem;
+                transition: all 0.2s;
+            }
+
+            .sidenote:hover {
+                color: #0f766e;
+                border-left-color: #0f766e;
+            }
+        }
+
+        @media (max-width: 1535px) {
+            .sidenote {
+                display: block;
+                margin: 1rem 0;
+                padding: 1rem;
+                background: #f1f5f9;
+                /* Slate 100 */
+                border: 1px solid #e2e8f0;
+                /* Slate 200 */
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.8rem;
+                color: #475569;
+                /* Slate 600 */
+            }
+
+            .sidenote::before {
+                content: "NOTE: ";
+                color: #0f766e;
+                font-weight: bold;
+            }
+        }
+
+        /* --- Typography & Elements --- */
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Outfit', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -0.03em;
+            color: #0f172a;
+        }
+
+        .mono-tag {
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+        }
+
+        .brutalist-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            /* Slate 200 */
+            padding: 2rem;
+            transition: all 0.2s cubic-bezier(0, 0, 0.2, 1);
+        }
+
+        .brutalist-card:hover {
+            border-color: #0f766e;
+            transform: translate(-4px, -4px);
+            box-shadow: 4px 4px 0 0 #0f766e;
+        }
+
+        ::selection {
+            background: #0f766e;
+            color: #ffffff;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f8fafc;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0f766e;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <div id="cursor"></div>
+    <canvas id="canvas-bg"></canvas>
+    <div class="noise-overlay"></div>
+
+    <!-- HUD Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 border-b border-black/5 bg-paper/90 backdrop-blur-sm">
+        <div class="flex justify-between items-center px-6 py-3">
+            <div class="flex items-center gap-4">
+                <div class="w-3 h-3 bg-accent-teal animate-pulse"></div>
+                <span class="mono-tag text-ink scramble-text">THEO_RESEARCH_UNIT_01</span>
+            </div>
+            <div class="hidden md:flex gap-8">
+                <a href="#intro" class="mono-tag text-slate-500 hover:text-ink transition-colors nav-link">[00]
+                    INTRO</a>
+                <a href="#origins" class="mono-tag text-slate-500 hover:text-ink transition-colors nav-link">[01]
+                    ORIGINS</a>
+                <a href="#modern" class="mono-tag text-slate-500 hover:text-ink transition-colors nav-link">[02]
+                    MODERN</a>
+                <a href="#praxis" class="mono-tag text-slate-500 hover:text-ink transition-colors nav-link">[03]
+                    PRAXIS</a>
+                <a href="#references" class="mono-tag text-slate-500 hover:text-ink transition-colors nav-link">[04]
+                    DATA</a>
+            </div>
+            <div class="mono-tag text-accent-teal scramble-text">
+                STATUS: ACTIVE
+            </div>
+        </div>
+        <div class="h-[1px] w-full bg-black/5">
+            <div id="progress-bar" class="h-full bg-accent-teal w-0"></div>
+        </div>
+    </nav>
+
+    <main class="layout-grid pt-32 pb-32">
+
+        <!-- Hero -->
+        <header id="intro"
+            class="col-start-2 flex flex-col justify-center min-h-[80vh] mb-32 border-l border-black/10 pl-8 md:pl-16 relative">
+            <div class="absolute -left-[1px] top-0 h-32 w-[1px] bg-accent-teal"></div>
+
+            <span class="mono-tag text-accent-teal mb-6 block scramble-text">/// SYSTEM: DIVINE_PRESENCE_ANALYSIS</span>
+
+            <h1 class="text-6xl md:text-8xl lg:text-9xl font-black leading-none mb-8 text-ink tracking-tighter scramble-text"
+                data-scramble-speed="2">
+                SCHECHINA
+            </h1>
+
+            <div class="flex flex-col md:flex-row gap-8 items-start border-t border-black/10 pt-8">
+                <div class="md:w-1/3">
+                    <span class="mono-tag text-slate-500 block mb-2">SUBTITLE</span>
+                    <p class="font-serif text-xl italic text-slate-700">Einwohnung</p>
+                </div>
+                <div class="md:w-2/3">
+                    <span class="mono-tag text-slate-500 block mb-2">ABSTRACT</span>
+                    <p class="text-lg text-slate-600 leading-relaxed max-w-md">
+                        신학적 현존의 변증법과 현대 조직신학의 담론.<br>
+                        초월의 침묵에서 내재의 절규로 나아가는 급진적 재구성.
+                    </p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Section 01 -->
+        <section id="origins" class="col-start-2 space-y-24 mb-40">
+            <div class="flex items-baseline gap-4 border-b border-black/10 pb-4 mb-12">
+                <span class="text-4xl font-black text-slate-300">01</span>
+                <h2 class="text-4xl font-bold text-ink scramble-text">LINGUISTIC LAYERS</h2>
+            </div>
+
+            <div class="sidenote-container">
+                <p class="text-xl md:text-2xl font-serif leading-relaxed text-slate-800 mb-8">
+                    홀로코스트 이후, 하늘에 계신 하나님의 '절대 타자성'은 인간의 고통 앞에 침묵하는 듯 보였다.
+                    이에 신학은 유대교 신비주의의 <span class="text-accent-teal border-b border-accent-teal/30">셰키나(Schechina)</span>
+                    개념을 재발견한다.
+                </p>
+                <div class="sidenote">
+                    <span class="text-accent-teal font-bold">[REF_01]</span><br>
+                    Michael Lodahl, <em>Shekhinah/Spirit</em> (2012). 신의 현존이 고통의 현장과 분리될 수 없음을 역설.
+                </div>
+            </div>
+
+            <div class="grid gap-8">
+                <div class="brutalist-card group">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-3xl font-bold text-ink">SHAKAN</h3>
+                        <span class="mono-tag text-accent-teal border border-accent-teal px-2 py-1">HEBREW</span>
+                    </div>
+                    <p class="font-serif text-slate-600 mb-4 text-lg">"To Tent / To Dwell"</p>
+                    <p class="text-sm text-slate-500 font-mono leading-relaxed border-t border-slate-200 pt-4">
+                        >> 정착된 건물이 아닌, 이동 가능하며 백성의 유랑 생활에 동참하는 역동적인 거주.
+                    </p>
+                </div>
+
+                <div class="brutalist-card group">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-3xl font-bold text-ink">SKĒNŌSEN</h3>
+                        <span class="mono-tag text-blue-600 border border-blue-600 px-2 py-1">GREEK</span>
+                    </div>
+                    <p class="font-serif text-slate-600 mb-4 text-lg">"Tabernacled (John 1:14)"</p>
+                    <p class="text-sm text-slate-500 font-mono leading-relaxed border-t border-slate-200 pt-4">
+                        >> 셰키나의 '장소적 현존'이 예수라는 '인격적 현존'으로 전이되는 성육신의 언어.
+                    </p>
+                </div>
+
+                <div class="brutalist-card group">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-3xl font-bold text-ink">EINWOHNUNG</h3>
+                        <span class="mono-tag text-accent-gold border border-accent-gold px-2 py-1">GERMAN</span>
+                    </div>
+                    <p class="font-serif text-slate-600 mb-4 text-lg">"Indwelling"</p>
+                    <p class="text-sm text-slate-500 font-mono leading-relaxed border-t border-slate-200 pt-4">
+                        >> 단순한 '안에 있음'을 넘어, 대상을 변화시키며 침투하는 신비적 연합(Unio Mystica).
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 02 -->
+        <section id="modern" class="col-start-2 space-y-24 mb-40">
+            <div class="flex items-baseline gap-4 border-b border-black/10 pb-4 mb-12">
+                <span class="text-4xl font-black text-slate-300">02</span>
+                <h2 class="text-4xl font-bold text-ink scramble-text">RECONSTRUCTION</h2>
+            </div>
+
+            <div class="sidenote-container">
+                <p class="text-xl font-serif leading-relaxed text-slate-800">
+                    20세기 파국 속에서 신의 현존은 어떻게 재정의되었는가?
+                    바르트의 '사건'에서 몰트만의 '내재'로 나아가는 여정.
+                </p>
+                <div class="sidenote">
+                    <span class="text-accent-teal font-bold">[NOTE]</span><br>
+                    독일 신학은 존재론적 사건에 집중하는 반면, 영미권 신학은 과정과 체험(Process/Experience)에 집중하는 경향이 있다.
+                </div>
+            </div>
+
+            <div class="relative border-l border-black/10 pl-8 space-y-16">
+                <div class="relative">
+                    <div class="absolute -left-[37px] top-2 w-4 h-4 bg-paper border border-ink"></div>
+                    <span class="mono-tag text-slate-500 mb-2 block">DIALECTICAL</span>
+                    <h3 class="text-2xl font-bold text-ink mb-2">KARL BARTH</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        "사건(Ereignis)으로서의 현존". 하나님의 거주는 인간의 소유물이 아니다. 수직적 침입이다.
+                    </p>
+                </div>
+
+                <div class="relative">
+                    <div class="absolute -left-[37px] top-2 w-4 h-4 bg-paper border border-blue-600"></div>
+                    <span class="mono-tag text-blue-600 mb-2 block">TRANSCENDENTAL</span>
+                    <h3 class="text-2xl font-bold text-ink mb-2">KARL RAHNER</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        "자기소통(Selbstmitteilung)". 은총은 하나님 자신이다. 인간의 실존 안에 이미 내주하신다.
+                    </p>
+                </div>
+
+                <div class="relative">
+                    <div
+                        class="absolute -left-[37px] top-2 w-4 h-4 bg-accent-teal border border-accent-teal shadow-[0_0_10px_#0f766e]">
+                    </div>
+                    <span class="mono-tag text-accent-teal mb-2 block">HOPE</span>
+                    <h3 class="text-2xl font-bold text-ink mb-2">JÜRGEN MOLTMANN</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        "짐줌(Zimzum)과 셰키나". 하나님은 창조를 위해 자신을 수축하시고, 그 공간에 거주하며 피조물과 함께 고통받으신다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quote Break -->
+        <section class="col-start-1 col-end-4 bg-ink text-paper py-24 my-24 overflow-hidden relative">
+            <div class="layout-grid">
+                <div class="col-start-2 text-center relative z-10">
+                    <i data-lucide="quote" class="w-12 h-12 mx-auto mb-8"></i>
+                    <p class="text-4xl md:text-6xl font-black uppercase leading-tight tracking-tighter mb-8">
+                        "God is a Migrant.<br>
+                        Shekhinah crosses borders."
+                    </p>
+                    <span class="mono-tag bg-paper text-ink px-3 py-1">PETER C. PHAN</span>
+                </div>
+            </div>
+            <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                <div class="absolute top-10 left-10 text-9xl font-black">MIGRATOR</div>
+                <div class="absolute bottom-10 right-10 text-9xl font-black">REFUGEE</div>
+            </div>
+        </section>
+
+        <!-- Section 03 -->
+        <section id="praxis" class="col-start-2 space-y-24 mb-40">
+            <div class="flex items-baseline gap-4 border-b border-black/10 pb-4 mb-12">
+                <span class="text-4xl font-black text-slate-300">03</span>
+                <h2 class="text-4xl font-bold text-ink scramble-text">PRAXIS & VISION</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="brutalist-card border-l-4 border-l-accent-red">
+                    <h3 class="text-xl font-bold text-ink mb-4">FEMININE DIVINE</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        전통적 남성 신관을 넘어, 셰키나는 하나님의 '여성적 얼굴'을 드러낸다. 지배가 아닌 '상호 내주'의 관계 모델.
+                    </p>
+                </div>
+                <div class="brutalist-card border-l-4 border-l-accent-teal">
+                    <h3 class="text-xl font-bold text-ink mb-4">ECOLOGICAL</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        지구는 자원 저장고가 아닌 '하나님의 몸'이다. 환경 파괴는 곧 신성모독(Sacrilege)이 된다.
+                    </p>
+                </div>
+                <div class="brutalist-card border-l-4 border-l-accent-gold md:col-span-2">
+                    <h3 class="text-xl font-bold text-ink mb-4">INTER-INDWELLING</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        결국 '하나님의 거주'는 완료된 상태가 아니라, 우리가 타자를 위해 공간을 비우는(Kenosis) 행위 속에서 일어나는 사건이다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 04: Data Archive -->
+        <section id="references" class="col-start-2 space-y-12 mb-40 border-t border-black/10 pt-24">
+            <div class="flex items-baseline gap-4 mb-8">
+                <span class="text-4xl font-black text-slate-300">04</span>
+                <h2 class="text-4xl font-bold text-ink scramble-text">DATA ARCHIVE</h2>
+            </div>
+
+            <div class="brutalist-card bg-slate-50 border-slate-200">
+                <div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-6">
+                    <span class="mono-tag text-accent-teal">FULL_CITATION_INDEX</span>
+                    <span class="mono-tag text-slate-500">COUNT: 33</span>
+                </div>
+
+                <div
+                    class="grid gap-4 font-mono text-xs text-slate-500 leading-relaxed h-[600px] overflow-y-auto pr-4 custom-scrollbar">
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[01]</span>
+                        Michael Lodahl, <em>Shekhinah/Spirit: Divine Presence in Jewish and Christian Traditions</em>
+                        (Minneapolis: Fortress Press, 2012).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[02]</span>
+                        Jürgen Moltmann, <em>God in Creation: A New Theology of Creation and the Spirit of God</em>
+                        (Minneapolis: Fortress Press, 1993).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[03]</span>
+                        Bunmi Ogon, "The Concept of Truth in the Gospel of John," <em>ProQuest Dissertations and
+                            Theses</em> (2020); R. D. Middleton, "Logos and Shekinah in the Fourth Gospel," <em>The
+                            Jewish Quarterly Review</em> 29, no. 2 (1938): 101–33.</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[04]</span>
+                        Bruce D. Chilton, "The Temple in the Isaiah Targum," in <em>Jesus in Context: Temple, Purity,
+                            and Restoration</em> (Leiden: Brill, 1997); Adam J. Howell, "Finding Christ in the Old
+                        Testament Through the Aramaic Memra, Shekinah, and Yeqara of the Targums," <em>The Southern
+                            Baptist Theological Seminary Dissertations</em> (2015).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[05]</span>
+                        Daniel Schoenfeld, "'You Will Seek From There': The Cycle of Exile and Return in Classical
+                        Jewish Theology," in <em>Theology of Migration in the Abrahamic Religions</em> (Cham: Palgrave
+                        Macmillan, 2014).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[06]</span>
+                        Sudheer Kasula, "A Shadow Replaced by Realities: The Theme of Temple in Relation to Christology,
+                        Pneumatology and Ecclesiology in John's Gospel" (PhD diss., University of Glasgow, 2016).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[07]</span>
+                        Kari Troost-Cramer, <em>Jesus as Means and Locus of Worship in the Fourth Gospel: Sacrifice and
+                            Worship Space in John</em> (Pickwick Publications, 2017).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[08]</span>
+                        Wilson Paroschi, <em>Incarnation and Covenant in the Prologue to the Fourth Gospel (John
+                            1:1-18)</em> (Peter Lang, 2006); Angus Paddison, "Engaging Scripture: Incarnation and the
+                        Gospel of John," <em>Scottish Journal of Theology</em> 60, no. 1 (2007): 113–15.</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[09]</span>
+                        Wilhelm Koepp, "Wurzel und Ursprung der orthodoxen Lehre von der unio mystica," <em>Zeitschrift
+                            für Theologie und Kirche</em> 29, no. 1 (1921).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[10]</span>
+                        Robert J. Dobie, "Meister Eckhart's 'Ontological Philosophy of Religion'," <em>The Journal of
+                            Religion</em> 82, no. 4 (2002): 563-585; Amber L. Griffioen, "Meister Eckhart," <em>Stanford
+                            Encyclopedia of Philosophy</em> (2023).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[11]</span>
+                        Steven Ozment, "Eckhart and Luther: German Mysticism and Protestantism," <em>The Thomist</em>
+                        42, no. 2 (1978): 259–80.</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[12]</span>
+                        David Boehmer, "The Capax in a New Key: Kierkegaard's Development of Classical Lutheran
+                        Christology," <em>Toronto Journal of Theology</em> 33, no. 2 (2017).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[13]</span>
+                        Jan Haga, <em>Was there a Lutheran Metaphysics?: The interpretation of communicatio idiomatum in
+                            Early Modern Lutheranism</em> (Vandenhoeck & Ruprecht, 2012).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[14]</span>
+                        Dennis Bielfeldt, "Martin Luther and Ontology," <em>Oxford Research Encyclopedia of
+                            Religion</em> (2016).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[15]</span>
+                        Andrew M. McGinnis, <em>The Son of God Beyond the Flesh: A Historical and Theological Study of
+                            the Extra Calvinisticum</em> (Bloomsbury T&T Clark, 2014); E. David Willis, <em>Calvin's
+                            Catholic Christology: The Function of the So-Called Extra Calvinisticum in Calvin's
+                            Theology</em> (Leiden: Brill, 1966).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[16]</span>
+                        Reiner Klein, "Sovereignty," <em>St Andrews Encyclopaedia of Theology</em> (2023).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[17]</span>
+                        Paul D. Molnar, "Moltmann's Post-Modern Messianic Christology: A Review Discussion," <em>The
+                            Thomist</em> 56, no. 4 (1992): 669–93.</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[18]</span>
+                        Harry Shea, "Internal difficulties in the theology of Karl Rahner," <em>Modern Theology</em> 37,
+                        no. 2 (2021).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[19]</span>
+                        David Coffey, "The Whole Rahner on the Supernatural Existential," <em>Theological Studies</em>
+                        65, no. 1 (2004): 95–118; Oliver Putz, <em>God's Self-Communication in an Evolving World</em>
+                        (ProQuest, 2016).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[20]</span>
+                        Peter Van Kleeck Jr, "Eschatological space and triune kenosis: Jürgen Moltmann on the nature of
+                        created and eschatological space," <em>Liberty University Dissertations</em> (2021); Jürgen
+                        Moltmann, <em>God in Creation</em> (1993).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[21]</span>
+                        Niels Henrik Gregersen, "Deep Incarnation and Kenosis: In, With, Under, and As: A Response to
+                        Ted Peters," <em>Dialog</em> 52, no. 3 (2013).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[22]</span>
+                        Paul D. Molnar, "The Function of the Trinity in Moltmann's Ecological Doctrine of Creation,"
+                        <em>Theological Studies</em> 51, no. 4 (1990): 673-697.
+                    </div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[23]</span>
+                        Moltmann, <em>God in Creation</em> (1993).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[24]</span>
+                        Ronald S. Cole-Turner, <em>God's Experience: The Trinitarian Theology of Jürgen Moltmann in
+                            Conversation with Charles Hartshorne</em> (1983).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[25]</span>
+                        Molnar, "Moltmann's Post-Modern Messianic Christology" (1992).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[26]</span>
+                        Liora Devine, "How Shekhinah Became the God(dess) of Jewish Feminism," <em>Feminist
+                            Theology</em> 23, no. 1 (2014).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[27]</span>
+                        Mukti Barton, "Gender-bender god: Masculine or feminine?," <em>Black Theology</em> 7, no. 2
+                        (2009).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[28]</span>
+                        Hava Tirosh-Samuelson, "Gender in Jewish mysticism," in <em>Jewish Mysticism and Kabbalah: New
+                            Perspectives</em> (2011); Moshe Idel, <em>The Privileged Divine Feminine in Kabbalah</em>
+                        (De Gruyter, 2018).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[29]</span>
+                        Leore Sachs-Shmueli, "Shekhinah and the Revival of Feminine God Language," <em>Modern
+                            Judaism</em> 39, no. 2 (2019).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[30]</span>
+                        Molnar, "The Function of the Trinity" (1990).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[31]</span>
+                        Daniel Schoenfeld, "You Will Seek From There" (2014); John C. Merkle, "Challenging the Idea of
+                        Divine Omnipotence: Jewish Voices and a Christian Response," <em>Journal of Ecumenical
+                            Studies</em> 57, no. 1 (2022).</div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[32]</span>
+                        Peter C. Phan, "Deus Migrator—God the Migrant: Migration of Theology and Theology of Migration,"
+                        <em>Theological Studies</em> 77, no. 4 (2016); Elaine Padilla, "Border-Crossing and Exile: A
+                        Latina's Theological Encounter with Shekhinah," <em>CrossCurrents</em> 60, no. 4 (2010).
+                    </div>
+                    <div class="group hover:text-ink transition-colors"><span class="text-accent-teal mr-2">[33]</span>
+                        Daniel Joslyn-Siemiatkoski, "Divine Suffering and Covenantal Belonging," in <em>Comparative
+                            Theology</em> (2021).</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="col-start-1 col-end-4 border-t border-black/10 py-24 bg-ink text-paper">
+            <div class="layout-grid">
+                <div class="col-start-2 flex flex-col md:flex-row justify-between items-end">
+                    <div>
+                        <h2 class="text-5xl font-black text-paper mb-4">END OF REPORT</h2>
+                        <p class="text-slate-400 font-mono text-sm">
+                            THEOLOGICAL DATA ANALYSIS UNIT<br>
+                            POWERED BY GEMINI
+                        </p>
+                    </div>
+                    <div class="mt-8 md:mt-0">
+                        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+                            class="mono-tag border border-white/30 px-6 py-3 hover:bg-paper hover:text-ink transition-colors">
+                            BACK TO TOP [↑]
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // --- 1. Lenis Smooth Scroll ---
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // --- 2. Custom Cursor ---
+        const cursor = document.getElementById('cursor');
+        const links = document.querySelectorAll('a, button, .brutalist-card');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            link.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+
+        // --- 3. Text Scramble Effect ---
+        class TextScramble {
+            constructor(el) {
+                this.el = el;
+                this.chars = '!<>-_\\/[]{}—=+*^?#________';
+                this.update = this.update.bind(this);
+            }
+            setText(newText) {
+                const oldText = this.el.innerText;
+                const length = Math.max(oldText.length, newText.length);
+                const promise = new Promise((resolve) => this.resolve = resolve);
+                this.queue = [];
+                for (let i = 0; i < length; i++) {
+                    const from = oldText[i] || '';
+                    const to = newText[i] || '';
+                    const start = Math.floor(Math.random() * 40);
+                    const end = start + Math.floor(Math.random() * 40);
+                    this.queue.push({ from, to, start, end });
+                }
+                cancelAnimationFrame(this.frameRequest);
+                this.frame = 0;
+                this.update();
+                return promise;
+            }
+            update() {
+                let output = '';
+                let complete = 0;
+                for (let i = 0, n = this.queue.length; i < n; i++) {
+                    let { from, to, start, end, char } = this.queue[i];
+                    if (this.frame >= end) {
+                        complete++;
+                        output += to;
+                    } else if (this.frame >= start) {
+                        if (!char || Math.random() < 0.28) {
+                            char = this.randomChar();
+                            this.queue[i].char = char;
+                        }
+                        output += `<span class="text-accent-teal">${char}</span>`;
+                    } else {
+                        output += from;
+                    }
+                }
+                this.el.innerHTML = output;
+                if (complete === this.queue.length) {
+                    this.resolve();
+                } else {
+                    this.frameRequest = requestAnimationFrame(this.update);
+                    this.frame++;
+                }
+            }
+            randomChar() {
+                return this.chars[Math.floor(Math.random() * this.chars.length)];
+            }
+        }
+
+        // Initialize Scramble
+        const phrases = document.querySelectorAll('.scramble-text');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const fx = new TextScramble(el);
+                    fx.setText(el.innerText);
+                    observer.unobserve(el);
+                }
+            });
+        });
+        phrases.forEach(el => observer.observe(el));
+
+        // --- 4. Interactive Canvas (Divine Network) ---
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; // Dark particles for light theme
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+
+            particles.forEach((p, index) => {
+                p.update();
+                p.draw();
+
+                // Connections
+                for (let j = index + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 150) {
+                        ctx.strokeStyle = `rgba(15, 118, 110, ${0.1 - dist / 1500})`; // Teal connections
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        // --- 5. Scroll Progress ---
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        });
+
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
