@@ -129,6 +129,25 @@
         }
         .line.short { width: 60%; }
         
+        .input-files {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+            margin-bottom: -5px;
+            justify-content: center;
+        }
+        .file-icon {
+            background: rgba(255,255,255,0.05);
+            padding: 4px 6px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .file-icon.md { border-color: #3b82f6; color: #93c5fd; }
+        .file-icon.json { border-color: #f59e0b; color: #fcd34d; }
+
         /* Input Scanning Effect */
         .stage-input::after {
             content: '';
@@ -465,15 +484,17 @@
         
         <!-- 1. Raw Input -->
         <div class="box stage-input">
-            <h3>1. Raw Text</h3>
-            <p>_INBOX.md 덤프</p>
+            <h3>1. Raw Input</h3>
+            <p>텍스트/데이터 소스</p>
+            <div class="input-files">
+                <div class="file-icon md">📄.md</div>
+                <div class="file-icon json">📄.json</div>
+            </div>
             <div class="document-lines">
                 <div class="line"></div>
                 <div class="line"></div>
                 <div class="line short"></div>
                 <div class="line"></div>
-                <div class="line"></div>
-                <div class="line short"></div>
             </div>
         </div>
 
