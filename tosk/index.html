@@ -68,7 +68,8 @@
             height: 500px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
+            gap: 40px;
             padding: 0 40px;
             margin-top: 50px;
         }
@@ -147,6 +148,22 @@
         }
         .file-icon.md { border-color: #3b82f6; color: #93c5fd; }
         .file-icon.json { border-color: #f59e0b; color: #fcd34d; }
+
+        .document-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+            justify-content: center;
+        }
+        .doc-type {
+            font-size: 0.55rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 8px;
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
 
         /* Input Scanning Effect */
         .stage-input::after {
@@ -307,6 +324,7 @@
             opacity: 0;
             transform: translateX(50px);
             animation: slideInLeft 1s forwards 16.5s;
+            margin-left: 140px;
         }
 
         .stage-output h3 { color: #0f111a; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px; font-size: 0.9rem;}
@@ -356,7 +374,7 @@
         }
 
         /* 1 to 2 Group */
-        .path-1 { top: 50%; left: 180px; width: 50px; animation: fadeIn 0.5s forwards 2.5s; }
+        .path-1 { top: 50%; left: 180px; width: 40px; animation: fadeIn 0.5s forwards 2.5s; }
         
         /* 2 to 3 (Inside Group) Particles */
         .element-stream {
@@ -383,13 +401,13 @@
         .stream-dot.e5 { background: var(--accent-red); top: 75px; box-shadow: 0 0 8px red; animation: streamMove 1s forwards 5.7s; }
 
         /* 3(Group) to 4 */
-        .path-3 { top: 50%; left: 715px; width: 60px; animation: fadeIn 0.5s forwards 9s; }
+        .path-3 { top: 50%; left: 654px; width: 40px; animation: fadeIn 0.5s forwards 9s; }
         
         /* 4 to 5 */
-        .path-4 { top: 50%; left: 935px; width: 50px; animation: fadeIn 0.5s forwards 12.5s; }
+        .path-4 { top: 50%; left: 854px; width: 40px; animation: fadeIn 0.5s forwards 12.5s; }
 
         /* 5 to 6 */
-        .path-5 { top: 50%; left: 1155px; width: 60px; animation: fadeIn 0.5s forwards 16s; }
+        .path-5 { top: 50%; left: 1064px; width: 180px; animation: fadeIn 0.5s forwards 16s; }
 
 
         /* --- Keyframes --- */
@@ -489,6 +507,12 @@
             <div class="input-files">
                 <div class="file-icon md">📄.md</div>
                 <div class="file-icon json">📄.json</div>
+            </div>
+            <div class="document-types">
+                <span class="doc-type">논문</span>
+                <span class="doc-type">설교</span>
+                <span class="doc-type">에세이</span>
+                <span class="doc-type">메모</span>
             </div>
             <div class="document-lines">
                 <div class="line"></div>
