@@ -471,9 +471,10 @@
             width: 100%;
             display: flex;
             justify-content: center;
+            gap: 15px;
             z-index: 20;
         }
-        button {
+        .btn {
             background: rgba(255,255,255,0.1);
             color: white;
             border: 1px solid rgba(255,255,255,0.2);
@@ -484,8 +485,11 @@
             cursor: pointer;
             backdrop-filter: blur(5px);
             transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
         }
-        button:hover {
+        .btn:hover {
             background: rgba(255,255,255,0.2);
             box-shadow: 0 0 15px rgba(255,255,255,0.3);
             text-shadow: 0 0 5px white;
@@ -614,7 +618,8 @@
     </div>
 
     <div class="controls">
-        <button onclick="replayAnimation()">🔄 Run Pipeline Simulation</button>
+        <button class="btn" onclick="replayAnimation()">🔄 Run Pipeline Simulation</button>
+        <a class="btn" href="https://github.com/mitmirsein/theology-ontology-starter-kit" target="_blank">💻 View GitHub Repo</a>
     </div>
 
     <script>
