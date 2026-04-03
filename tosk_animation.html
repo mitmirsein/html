@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOSK: Theology Ontology Starter Kit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #060910;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent-blue: #3b82f6;
+            --accent-purple: #a855f7;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --accent-sky: #0ea5e9;
+            --text-main: #f1f5f9;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 6rem 0;
+            overflow-x: hidden;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.05) 0%, transparent 40%),
+                #060910;
+        }
+
+        header {
+            text-align: center;
+            z-index: 100;
+            margin-bottom: 4rem;
+        }
+
+        .v-tag {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+            padding: 2px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            font-weight: 300;
+            max-width: 800px;
+            line-height: 1.6;
+            margin: 0 auto;
+        }
+
+        .pipeline-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0; /* Gaps handled by connectors */
+            position: relative;
+        }
+
+        /* --- Global Box Styles --- */
+        .box {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 28px;
+            width: 220px;
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .box h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .box p {
+            font-size: 0.75rem; /* Slightly smaller to fit more text */
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .box .step-num {
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            width: 28px;
+            height: 28px;
+            background: #fff;
+            color: #000;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 900;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        /* --- Connectors (Vertical) --- */
+        .connector {
+            width: 2px;
+            height: 60px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+            position: relative;
+            opacity: 0;
+        }
+        
+        .p-move {
+            position: absolute;
+            top: -30px; left: -2px;
+            width: 6px; height: 30px;
+            background: linear-gradient(180deg, transparent, #fff, transparent);
+            filter: blur(2px);
+            border-radius: 3px;
+        }
+
+        /* --- Stage Specifics --- */
+        .stage-1 { animation: slideInV 0.8s forwards 0.5s; }
+        .c-1 { animation: fadeIn 0.5s forwards 1.5s; }
+        .c-1 .p-move { animation: flowDown 2s infinite 1.5s; }
+
+        .stage-2 { animation: slideInV 0.8s forwards 2.5s; border-color: var(--accent-blue); }
+        .c-2 { animation: fadeIn 0.5s forwards 3.5s; }
+        .c-2 .p-move { animation: flowDown 2s infinite 3.5s; }
+
+        .stage-3 { animation: popIn 0.6s forwards 5s; border: 2px solid var(--accent-emerald); background: rgba(16, 185, 129, 0.05); }
+        .stage-3.active { animation: gatePulse 2s infinite alternate 5.5s, popIn 0.6s forwards 5s; }
+        .c-3 { animation: fadeIn 0.5s forwards 6.5s; }
+        .c-3 .p-move { animation: flowDown 2s infinite 6.5s; }
+
+        .stage-4 { animation: slideInV 0.8s forwards 7.5s; }
+        .c-4 { animation: fadeIn 0.5s forwards 8.5s; }
+        .c-4 .p-move { animation: flowDown 2s infinite 8.5s; }
+
+        .stage-5 { animation: slideInV 0.8s forwards 9.5s; border-color: var(--accent-amber); }
+        .c-5 { animation: fadeIn 0.5s forwards 10.5s; }
+        .c-5 .p-move { animation: flowDown 2s infinite 10.5s; }
+
+        .stage-6 { animation: slideInV 0.8s forwards 11.5s; border-color: var(--accent-purple); }
+        .c-6 { animation: fadeIn 0.5s forwards 12.5s; }
+        .c-6 .p-move { animation: flowDown 2s infinite 12.5s; }
+
+        .stage-7 { animation: slideInV 0.8s forwards 13.5s; background: var(--glass-bg); border-color: #fff; }
+
+        /* Icon & UI Elements */
+        .icon-box { font-size: 2.2rem; margin-bottom: 12px; }
+        .granularity-label { font-size: 0.65rem; margin-top: 10px; color: var(--accent-blue); font-weight: 600; }
+        
+        .purity-badge {
+            margin-top: 15px;
+            background: var(--accent-emerald);
+            color: #000;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards 6s;
+        }
+
+        .data-list { width: 100%; display: flex; flex-direction: column; gap: 6px; margin-top: 15px; }
+        .data-item { font-size: 0.65rem; background: rgba(255,255,255,0.05); padding: 6px; border-radius: 6px; font-family: monospace; border-left: 2px solid var(--text-muted); text-align: left;}
+        
+        .braid-container { width: 50px; height: 50px; position: relative; margin-bottom: 10px;}
+        .ring { position: absolute; width: 100%; height: 100%; border: 2px solid var(--accent-amber); border-radius: 50%; border-top-color: transparent; animation: spin 2s linear infinite; }
+        
+        .res-preview { width: 100%; margin-top: 20px; background: #fff; border-radius: 8px; padding: 12px; color: #000; text-align: left;}
+        .res-line { height: 6px; background: #e2e8f0; border-radius: 3px; margin-bottom: 6px; }
+        .res-line.short { width: 60%; background: var(--accent-blue); }
+
+        /* --- Animations --- */
+        @keyframes slideInV { to { opacity: 1; transform: translateY(0); } }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.9) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes flowDown { 0% { top: -30px; opacity: 0; } 50% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+        @keyframes gatePulse { to { box-shadow: 0 0 30px rgba(16, 185, 129, 0.4); border-color: rgba(16, 185, 129, 1); } }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Controls */
+        .controls { margin-top: 5rem; z-index: 1000; }
+        .btn {
+            background: var(--accent-blue);
+            border: none;
+            padding: 14px 32px;
+            border-radius: 30px;
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s;
+            font-size: 1rem;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(59, 130, 246, 0.5); background: #2563eb; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="v-tag">Engine v5.7</div>
+        <h1>Theology Ontology Starter Kit</h1>
+        <p class="subtitle">신학적 텍스트를 지식 그래프(Ontology)로 정밀하게 해체하고,<br>Purity Gate의 순수성 검증을 거쳐 의미의 논리적 융합을 완결하는 입체적 지능 엔진</p>
+    </header>
+
+    <div class="pipeline-container" id="pipeline">
+        
+        <!-- 1. Input -->
+        <div class="box stage-1">
+            <div class="step-num">1</div>
+            <div class="icon-box">📄</div>
+            <h3>Raw Input</h3>
+            <p>신학 논문, 설교,<br>주해 텍스트 입수</p>
+            <div class="data-list" style="margin-top: 25px;">
+                <div class="data-item">Source: 고전1장.pdf</div>
+                <div class="data-item">Source: 칼빈주해.md</div>
+            </div>
+        </div>
+
+        <div class="connector c-1"><div class="p-move"></div></div>
+
+        <!-- 2. Parser -->
+        <div class="box stage-2">
+            <div class="step-num">2</div>
+            <div class="icon-box">⚙️</div>
+            <h3>Ontology Builder</h3>
+            <p>12종 EntityType 기반<br>미세 입자성 해체</p>
+            <div class="granularity-label">Granularity: 98%</div>
+        </div>
+
+        <div class="connector c-2"><div class="p-move"></div></div>
+
+        <!-- 3. Purity Gate -->
+        <div class="box stage-3 active">
+            <div class="step-num">3</div>
+            <div class="icon-box">🛡️</div>
+            <h3>Purity Gate</h3>
+            <p>OL-001 ~ OL-008<br>데이터 순수성 정화</p>
+            <div class="purity-badge">PURE: 92.4%</div>
+        </div>
+
+        <div class="connector c-3"><div class="p-move"></div></div>
+
+        <!-- 4. Knowledge Base -->
+        <div class="box stage-4">
+            <div class="step-num">4</div>
+            <div class="icon-box">🏛️</div>
+            <h3>Knowledge Base</h3>
+            <p>정규화된 지식의<br>영구 아카이브화</p>
+            <div class="data-list">
+                <div class="data-item">Entities {12-Type}</div>
+                <div class="data-item">Relations [scope]</div>
+                <div class="data-item">Claims [bound]</div>
+            </div>
+        </div>
+
+        <div class="connector c-4"><div class="p-move"></div></div>
+
+        <!-- 5. Inference -->
+        <div class="box stage-5">
+            <div class="step-num">5</div>
+            <div class="braid-container">
+                <div class="ring"></div>
+                <div class="ring" style="transform: scale(0.65);"></div>
+            </div>
+            <h3>Inference Engine</h3>
+            <p>Aporia Audit 및 개별 렌즈<br>(Reformed, Catholic 등)<br>위상학적 심층 추론</p>
+            <div class="data-list" style="margin-top: 12px; width: 100%;">
+                <div class="data-item">Active Lens: reformed</div>
+                <div class="data-item">Active Lens: catholic</div>
+            </div>
+        </div>
+
+        <div class="connector c-5"><div class="p-move"></div></div>
+
+        <!-- 6. Weaver -->
+        <div class="box stage-6">
+            <div class="step-num">6</div>
+            <div class="icon-box">🧬</div>
+            <h3>Theology Weaver</h3>
+            <p>프레임워크 템플릿<br>최종 의미 직조</p>
+        </div>
+
+        <div class="connector c-6"><div class="p-move"></div></div>
+
+        <!-- 7. Output -->
+        <div class="box stage-7">
+            <div class="step-num">7</div>
+            <div class="icon-box">✨</div>
+            <h3>Final Result</h3>
+            <p>설교, 에세이, 큐티(QT),<br>성경공부 교재 등<br>다양한 입체적 산출물</p>
+            <div class="res-preview">
+                <div class="res-line short"></div>
+                <div class="res-line"></div>
+                <div class="res-line" style="width: 80%;"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="controls">
+        <button class="btn" onclick="restartAnimation()">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192z"/>
+            </svg>
+            Restart Pipeline Animation
+        </button>
+    </div>
+
+    <script>
+        function restartAnimation() {
+            const el = document.getElementById('pipeline');
+            const newEl = el.cloneNode(true);
+            el.parentNode.replaceChild(newEl, el);
+        }
+    </script>
+</body>
+</html>
