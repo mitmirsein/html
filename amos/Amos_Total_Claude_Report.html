@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아모스 전권 묵상 리포트 (1-9장) - Claude Full Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@500;700&family=Pretendard:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --parchment: #f5f4ed; --ivory: #faf9f5; --near-black: #141413;
+            --olive-gray: #5e5d59; --terracotta: #c96442; --border-warm: #e8e6dc;
+            --serif: 'Playfair Display', 'Noto Serif KR', serif;
+            --sans: 'Inter', 'Pretendard', sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--parchment); color: var(--near-black); font-family: var(--sans); line-height: 1.6; padding: 80px 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        header { margin-bottom: 100px; text-align: center; }
+        .category-label { font-family: var(--sans); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: var(--terracotta); margin-bottom: 20px; display: block; }
+        h1.main-title { font-family: var(--serif); font-size: 56px; font-weight: 500; line-height: 1.1; margin-bottom: 32px; letter-spacing: -0.02em; }
+        .main-subtitle { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--olive-gray); max-width: 600px; margin: 0 auto 40px; }
+        .toc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; border-top: 1px solid var(--border-warm); border-bottom: 1px solid var(--border-warm); padding: 40px 0; margin-bottom: 80px; text-align: left; }
+        .toc-item { font-size: 14px; color: var(--olive-gray); text-decoration: none; transition: color 0.2s; }
+        .toc-item:hover { color: var(--terracotta); }
+        .chapter-block { margin-bottom: 120px; scroll-margin-top: 40px; }
+        .chapter-num { font-family: var(--serif); font-size: 64px; color: var(--border-warm); line-height: 1; margin-bottom: -15px; font-style: italic; opacity: 0.5; }
+        h2.chapter-title { font-family: var(--serif); font-size: 32px; font-weight: 700; margin-bottom: 24px; position: relative; }
+        .chapter-quote { background-color: var(--ivory); border: 1px solid var(--border-warm); padding: 24px; border-radius: 8px; margin-bottom: 32px; font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--near-black); line-height: 1.6; }
+        p.summary-text { font-size: 17px; margin-bottom: 20px; text-align: justify; }
+        .insight-tag { display: inline-block; font-size: 13px; font-weight: 600; color: var(--terracotta); margin-bottom: 8px; }
+        .synthesis { background-color: var(--ivory); border: 1px solid var(--border-warm); border-radius: 12px; padding: 48px; margin: 100px 0; }
+        .synthesis h2 { font-family: var(--serif); font-size: 36px; text-align: center; margin-bottom: 40px; }
+        .synthesis-grid { display: grid; gap: 32px; }
+        .synthesis-node { border-bottom: 1px solid var(--border-warm); padding-bottom: 24px; }
+        .synthesis-node:last-child { border-bottom: none; }
+        .synthesis-node strong { font-family: var(--serif); font-size: 20px; display: block; margin-bottom: 12px; color: var(--terracotta); }
+        footer { margin-top: 150px; padding-top: 60px; border-top: 1px solid var(--border-warm); text-align: center; }
+        .footer-logo { font-family: var(--serif); font-size: 24px; margin-bottom: 16px; letter-spacing: 0.1em; }
+        .footer-note { font-size: 13px; color: var(--olive-gray); max-width: 400px; margin: 0 auto; }
+        @media (max-width: 768px) { h1.main-title { font-size: 40px; } .chapter-num { font-size: 48px; } .synthesis { padding: 24px; } .toc { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <span class="category-label">Theological Archive: Amos Collection</span>
+            <h1 class="main-title">사자의 포효에서<br>다윗의 장막까지</h1>
+            <p class="main-subtitle">아모스 1장-9장 전체 묵상의 궤적:<br>심판의 철저함과 회복의 신실함에 관한 전체 리포트</p>
+            <div class="toc">
+                <a href="#ch1" class="toc-item">01. 사자의 포효</a>
+                <a href="#ch2" class="toc-item">02. 경계를 허무는 심판</a>
+                <a href="#ch3" class="toc-item">03. 덫을 넘어서는 말씀</a>
+                <a href="#ch4" class="toc-item">04. 하나님의 패배</a>
+                <a href="#ch5" class="toc-item">05. 마르지 않는 강</a>
+                <a href="#ch6" class="toc-item">06. 부를 수 없는 이름</a>
+                <a href="#ch7" class="toc-item">07. 긍휼의 한계선</a>
+                <a href="#ch8" class="toc-item">08. 말씀의 기갈</a>
+                <a href="#ch9" class="toc-item">09. 최후의 본심</a>
+            </div>
+        </header>
+
+        <article id="ch1" class="chapter-block">
+            <div class="chapter-num">01</div>
+            <h2 class="chapter-title">사자의 포효, 그 소리의 근원을 묻다</h2>
+            <div class="chapter-quote">"주님께서 시온에서 부르짖으시며 예루살렘에서 큰소리로 외치시니..." (1:2)</div>
+            <span class="insight-tag">#신적계시 #자기비움</span>
+            <p class="summary-text">성서를 읽는 것은 정글숲을 걷는 것과 같다. 아모스의 '사자의 포효'는 인간의 욕망이나 해석이 상향식으로 투사된 메아리가 아니라, 위에서 아래로 압도적으로 임하는 하향식 계시다. 이 음성은 우리를 자기 확장(self-expansion)이 아닌 자기 비움(kenosis)으로 초대한다.</p>
+        </article>
+
+        <article id="ch2" class="chapter-block">
+            <div class="chapter-num">02</div>
+            <h2 class="chapter-title">경계를 허무는 심판, 가장 아픈 이름</h2>
+            <div class="chapter-quote">"신 한 켤레 값에 빈민을 팔았기 때문이다." (2:6)</div>
+            <span class="insight-tag">#선민사상비판 #보편적정의</span>
+            <p class="summary-text">심판은 이방 국가에서 시작하여 이스라엘의 심장부로 좁혀온다. 하나님이 이스라엘을 선택하신 것은 모범 사례로서의 '역할'을 위함이었으나, 그들은 이를 배타적 특권이라는 '잘못된 파생상품'으로 변질시켰다. 공의의 심판은 신앙적 특권이라는 인간의 어리석은 경계선을 파괴한다.</p>
+        </article>
+
+        <article id="ch3" class="chapter-block">
+            <div class="chapter-num">03</div>
+            <h2 class="chapter-title">덫을 넘어서는 말씀, 불예측의 은총</h2>
+            <div class="chapter-quote">"사자가 부르짖은즉 누가 두려워하지 아니하겠느냐?" (3:8)</div>
+            <span class="insight-tag">#DeusDixit #인과율저항</span>
+            <p class="summary-text">심판의 말씀에는 인과응보라는 필연적 이유가 있다. 하지만 하나님의 창조와 구원은 원인을 요구하지 않는 '이유 없는 사역(Deus Dixit)'이다. 인과율의 덫 안에 하나님을 가두려는 모든 신학적 우상을 깨부수고, 이유 없이 은혜로 다가오는 그분의 구원만이 진정한 희망이다.</p>
+        </article>
+
+        <article id="ch4" class="chapter-block">
+            <div class="chapter-num">04</div>
+            <h2 class="chapter-title">하나님의 패배, 그 최후의 기획</h2>
+            <div class="chapter-quote">"이스라엘아, 너는 너의 하나님을 만날 준비를 하여라." (4:12)</div>
+            <span class="insight-tag">#성육신 #주권과자유</span>
+            <p class="summary-text">여호와께서 온갖 재앙을 내리시지만 인간의 완고함은 경고를 끝내 무시한다. 마치 인간의 악함이 하나님을 이긴 것처럼 보인다. 그러나 바로 그 징벌적 만남의 실패 지점에서, 인간의 자리로 직접 내려오시는 '성육신'이라는 더 위대하고 역설적인 다른 만남이 기획된다.</p>
+        </article>
+
+        <article id="ch5" class="chapter-block">
+            <div class="chapter-num">05</div>
+            <h2 class="chapter-title">마르지 않는 강은 어디까지 흐르는가</h2>
+            <div class="chapter-quote">"오직 공법을 물 같이, 정의를 하수 같이 흘릴찌로다." (5:24)</div>
+            <span class="insight-tag">#생활신앙 #남은자 #보편적구원</span>
+            <p class="summary-text">회칠한 무덤처럼 삶과 분리된 종교 예식은 하나님 앞에 악취일 뿐이다. 주님은 재물보다 매일의 법정과 시장에서의 정의를 원하신다. 나아가, 구원받는 '남은 자'는 폐쇄적 극소수가 아니라 전 인류를 은혜의 강으로 이끌어 가시려는 만물을 향한 하나님의 열심이다.</p>
+        </article>
+
+        <article id="ch6" class="chapter-block">
+            <div class="chapter-num">06</div>
+            <h2 class="chapter-title">이름을 부를 수 없는 자들의 침묵</h2>
+            <div class="chapter-quote">"조용히 하라! 주님의 이름을 함부로 불러서는 안 된다." (6:10)</div>
+            <span class="insight-tag">#삶의제단 #관계단절</span>
+            <p class="summary-text">공의를 독약으로 바꾼 이들은 멸망의 한가운데서 그토록 사랑받던 야훼의 이름조차 공포에 질려 입에 담지 못한다. 참된 예배는 의식에 있지 않고 일상에 존재한다. 판사의 법정, 상인의 저울, 부모의 식탁이 바로 각자에게 맡겨진 무너지지 말아야 할 가장 거룩한 제단이다.</p>
+        </article>
+
+        <article id="ch7" class="chapter-block">
+            <div class="chapter-num">07</div>
+            <h2 class="chapter-title">긍휼의 한계선에서 희망을 묻다</h2>
+            <div class="chapter-quote">"내 백성 이스라엘 가운데 다림줄을 하나 세우겠다." (7:8)</div>
+            <span class="insight-tag">#다성악적신학 #심판받는심판자</span>
+            <p class="summary-text">선지자의 중보로 두 번이나 뜻을 돌이키셨던 분이, 마침내 다림줄 앞에서 절대를 선언하신다. 결코 뒤로 물러서지 않는 이 무서운 공의와 포기할 줄 모르는 사랑의 대립은, 결국 그리스도의 십자가 위에서 '심판하시는 분 스스로 심판을 받으심'으로써 비로소 화해된다.</p>
+        </article>
+
+        <article id="ch8" class="chapter-block">
+            <div class="chapter-num">08</div>
+            <h2 class="chapter-title">가장 무서운 형벌, 하나님과의 단절</h2>
+            <div class="chapter-quote">"주의 말씀을 듣지 못하여서, 사람들이 굶주리고 목말라 할 것이다." (8:11)</div>
+            <span class="insight-tag">#영적단절 #빈공간과계시</span>
+            <p class="summary-text">여름 과일(케츠)의 환상은 임박한 끝장(카이츠)을 고시한다. 가장 두려운 형벌은 기아가 아니라 영적 단절, 영원한 평행선의 침묵이다. 묵상이 영적 자가발전이 되지 않으려면, 인간 사유의 투사를 넘어서 먼저 우리에게 건너오시는 창조주의 계시적 개입이 절실히 요구된다.</p>
+        </article>
+
+        <article id="ch9" class="chapter-block">
+            <div class="chapter-num">09</div>
+            <h2 class="chapter-title">파국 속에서 찾아낸 하나님의 본심</h2>
+            <div class="chapter-quote">"그 날에 내가 다윗의 무너진 천막을 일으키고..." (9:11)</div>
+            <span class="insight-tag">#궁극적회복 #다윗의장막</span>
+            <p class="summary-text">아모스의 마지막은 파멸의 확인 사살이 아니다. 무너진 다윗의 장막을 이전같이 세우고 심은 것을 다신 뽑지 않겠다는 눈물겨운 선언이다. 하나님의 공의로운 분노조차 결국은 인간의 완악함을 부수고, 영원토록 사랑의 언약 속에 연합시키기 위한 그분의 치열한 '본심'의 발로였다.</p>
+        </article>
+
+        <div class="synthesis">
+            <h2>Amos: Core Synthesis (Full)</h2>
+            <div class="synthesis-grid">
+                <div class="synthesis-node">
+                    <strong>1. 덫을 부수는 자유 (Freedom of Grace)</strong>
+                    <p>심판은 인간이 만든 불의의 필연적 인과율이지만, 구원은 어떠한 인과율에도 얽매이지 않는 하나님의 절대 주권에 속한 창조적 '말씀(Deus dixit)'이다.</p>
+                </div>
+                <div class="synthesis-node">
+                    <strong>2. 참된 제단 (Altar of Daily Justice)</strong>
+                    <p>회칠한 종교는 역겹고, 부르심의 축복은 족쇄로 변질되었다. 하나님은 종교라는 도피처가 아닌, 상식과 윤리와 정직이 실천되는 매일의 생활 속 마르지 않는 강을 원하신다.</p>
+                </div>
+                <div class="synthesis-node">
+                    <strong>3. 심판자, 심판대 위로 (The Judge Judged)</strong>
+                    <p>9장에 걸친 처절한 단절의 위협과 파괴의 공포는, 결국 대립물의 일치를 위해 심판자가 친히 형벌을 감당(십자가)하고 만물을 회복(장막)시키려는 치열한 구속의 청사진이다.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-logo">MS_BRAIN SANCTUARY</div>
+            <p class="footer-note">아모스 1-9장 전체 묵상 과정을 Claude Editorial v4.1 표준에 따라 단권화한 리포트입니다 (무결성 복구 완료 버젼).</p>
+            <div class="footer-sig" style="margin-top: 20px; font-family: var(--serif); font-style: italic;">
+                Done by Peppone, Chief of Staff
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
