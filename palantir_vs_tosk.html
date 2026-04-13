@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palantir vs TOSK — 온톨로지 아키텍처 비교</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* 팔란티어 컬러 */
+            --pal-primary: #3b82f6;
+            --pal-accent: #6366f1;
+            --pal-surface: #1e293b;
+            --pal-border: rgba(99,102,241,0.3);
+            --pal-glow: rgba(59,130,246,0.15);
+
+            /* TOSK 컬러 */
+            --tosk-primary: #10b981;
+            --tosk-accent: #f59e0b;
+            --tosk-surface: #1a1f2e;
+            --tosk-border: rgba(16,185,129,0.3);
+            --tosk-glow: rgba(16,185,129,0.12);
+
+            /* 공통 */
+            --bg: #0b0f1a;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-base: rgba(255,255,255,0.06);
+            --radius: 14px;
+            --radius-sm: 8px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── 배경 파티클 느낌 ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 50% 35% at 20% 15%, rgba(59,130,246,0.07) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 35% at 80% 85%, rgba(16,185,129,0.07) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 48px 24px 80px;
+        }
+
+        /* ── HEADER ── */
+        .page-header {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-base);
+            border-radius: 99px;
+            padding: 6px 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .page-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin-bottom: 14px;
+        }
+
+        .page-title .pal { color: var(--pal-primary); }
+        .page-title .tosk { color: var(--tosk-primary); }
+        .page-title .vs {
+            color: var(--text-muted);
+            font-weight: 300;
+            font-size: 0.7em;
+            padding: 0 12px;
+        }
+
+        .page-subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* ── TAB ── */
+        .view-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 48px;
+        }
+
+        .tab-btn {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border-base);
+            color: var(--text-muted);
+            padding: 10px 24px;
+            border-radius: 99px;
+            font-size: 14px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active-pal {
+            background: rgba(59,130,246,0.15);
+            border-color: var(--pal-primary);
+            color: #fff;
+        }
+
+        .tab-btn.active-tosk {
+            background: rgba(16,185,129,0.15);
+            border-color: var(--tosk-primary);
+            color: #fff;
+        }
+
+        .tab-btn.active-compare {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+            color: #fff;
+        }
+
+        /* ── VIEW PANELS ── */
+        .view-panel { display: none; }
+        .view-panel.active { display: block; }
+
+        /* ── SPLIT LAYOUT ── */
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .split-layout { grid-template-columns: 1fr; }
+        }
+
+        /* ── COLUMN HEADER ── */
+        .col-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 22px;
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            border: 1px solid;
+        }
+
+        .col-header.pal {
+            background: linear-gradient(135deg, rgba(59,130,246,0.12), rgba(99,102,241,0.08));
+            border-color: rgba(59,130,246,0.3);
+        }
+
+        .col-header.tosk {
+            background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(245,158,11,0.06));
+            border-color: rgba(16,185,129,0.3);
+        }
+
+        .col-header-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .col-header.pal .col-header-icon { background: rgba(59,130,246,0.25); color: #93c5fd; }
+        .col-header.tosk .col-header-icon { background: rgba(16,185,129,0.25); color: #6ee7b7; }
+
+        .col-header-text h2 { font-size: 1.1rem; font-weight: 700; }
+        .col-header-text p { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+        .col-header.pal .col-header-text h2 { color: #93c5fd; }
+        .col-header.tosk .col-header-text h2 { color: #6ee7b7; }
+
+        /* ── LAYER STACK ── */
+        .layer-stack { display: flex; flex-direction: column; gap: 10px; }
+
+        .layer-card {
+            border-radius: var(--radius);
+            border: 1px solid;
+            padding: 18px 20px;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .layer-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+
+        .layer-card:hover::before { opacity: 1; }
+
+        /* 팔란티어 카드 */
+        .layer-card.pal {
+            background: var(--pal-surface);
+            border-color: var(--pal-border);
+        }
+
+        .layer-card.pal::before {
+            background: radial-gradient(ellipse at center, var(--pal-glow), transparent 70%);
+        }
+
+        .layer-card.pal:hover {
+            transform: translateX(4px);
+            border-color: rgba(99,102,241,0.6);
+            box-shadow: -4px 0 20px rgba(59,130,246,0.2);
+        }
+
+        /* TOSK 카드 */
+        .layer-card.tosk {
+            background: var(--tosk-surface);
+            border-color: var(--tosk-border);
+        }
+
+        .layer-card.tosk::before {
+            background: radial-gradient(ellipse at center, var(--tosk-glow), transparent 70%);
+        }
+
+        .layer-card.tosk:hover {
+            transform: translateX(-4px);
+            border-color: rgba(16,185,129,0.6);
+            box-shadow: 4px 0 20px rgba(16,185,129,0.2);
+        }
+
+        .layer-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            opacity: 0.5;
+            margin-bottom: 6px;
+        }
+
+        .layer-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+            line-height: 1.3;
+        }
+
+        .layer-subtitle {
+            font-size: 0.72rem;
+            margin-bottom: 10px;
+            opacity: 0.7;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .layer-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            border: 1px solid;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .pill:hover { transform: translateY(-2px); }
+
+        .pill.pal {
+            background: rgba(59,130,246,0.1);
+            border-color: rgba(59,130,246,0.3);
+            color: #93c5fd;
+        }
+        .pill.pal:hover { background: rgba(59,130,246,0.25); border-color: rgba(59,130,246,0.6); }
+
+        .pill.tosk {
+            background: rgba(16,185,129,0.1);
+            border-color: rgba(16,185,129,0.3);
+            color: #6ee7b7;
+        }
+        .pill.tosk:hover { background: rgba(16,185,129,0.25); border-color: rgba(16,185,129,0.6); }
+
+        .pill.tosk-amber {
+            background: rgba(245,158,11,0.1);
+            border-color: rgba(245,158,11,0.3);
+            color: #fcd34d;
+        }
+
+        /* ── CONNECTOR ── */
+        .connector {
+            display: flex;
+            justify-content: center;
+            padding: 2px 0;
+            color: rgba(255,255,255,0.15);
+        }
+
+        /* ── SPLIT IN PAL (Gotham/Foundry) ── */
+        .split-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        /* ── SPLIT IN TOSK (Semantic/Kinetic) ── */
+        .sub-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .sub-card {
+            background: rgba(0,0,0,0.25);
+            border-radius: 8px;
+            border: 1px solid;
+            padding: 12px;
+        }
+
+        .sub-card.pal-emerald { border-color: rgba(16,185,129,0.3); }
+        .sub-card.pal-teal { border-color: rgba(20,184,166,0.3); }
+        .sub-card.tosk-violet { border-color: rgba(139,92,246,0.3); }
+        .sub-card.tosk-rose { border-color: rgba(244,63,94,0.28); }
+
+        .sub-card-title {
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 6px;
+        }
+
+        /* ── COMPARE VIEW ── */
+        .compare-table-wrapper {
+            overflow-x: auto;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-base);
+            background: rgba(255,255,255,0.02);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead tr {
+            background: rgba(255,255,255,0.04);
+            border-bottom: 1px solid var(--border-base);
+        }
+
+        thead th {
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        thead th.pal-col { color: #93c5fd; }
+        thead th.tosk-col { color: #6ee7b7; }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border-base);
+            transition: background 0.15s;
+        }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr:hover { background: rgba(255,255,255,0.03); }
+
+        tbody td {
+            padding: 16px 20px;
+            font-size: 0.85rem;
+            vertical-align: top;
+            line-height: 1.6;
+        }
+
+        tbody td:first-child {
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            width: 140px;
+        }
+
+        .match-badge {
+            display: inline-block;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .match-direct { background: rgba(16,185,129,0.18); color: #6ee7b7; }
+        .match-partial { background: rgba(245,158,11,0.18); color: #fcd34d; }
+        .match-unique { background: rgba(139,92,246,0.18); color: #c4b5fd; }
+
+        /* ── MODAL ── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: #131825;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 18px;
+            padding: 32px;
+            max-width: 480px;
+            width: 90%;
+            transform: translateY(16px) scale(0.97);
+            transition: transform 0.25s ease;
+            position: relative;
+        }
+
+        .modal-overlay.open .modal-box {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255,255,255,0.07);
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .modal-close:hover { background: rgba(255,255,255,0.14); color: #fff; }
+
+        .modal-tag {
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            opacity: 0.6;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        .modal-body {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border-base);
+            border-radius: 10px;
+            padding: 18px;
+            font-size: 0.88rem;
+            line-height: 1.75;
+            color: #cbd5e1;
+        }
+
+        /* ── LEGEND ── */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+        }
+
+        /* ── SUMMARY SECTION ── */
+        .summary-section {
+            margin-top: 56px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border: 1px solid var(--border-base);
+            border-radius: var(--radius);
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--tosk-primary);
+        }
+
+        .summary-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            color: #fff;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        /* ── DETAILED REPORT ── */
+        .detailed-report {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            margin-bottom: 40px;
+        }
+
+        .report-item {
+            display: flex;
+            gap: 20px;
+            background: rgba(255,255,255,0.02);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s;
+        }
+
+        .report-item:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(16,185,129,0.2);
+            transform: translateX(5px);
+        }
+
+        .report-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(16,185,129,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--tosk-primary);
+            flex-shrink: 0;
+            border: 1px solid rgba(16,185,129,0.2);
+        }
+
+        .report-content h5 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 10px;
+            letter-spacing: -0.01em;
+        }
+
+        .report-content p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            line-height: 1.8;
+            text-align: justify;
+            hyphens: auto;
+        }
+
+        .report-content b {
+            color: var(--tosk-primary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 900px) {
+            .summary-grid { grid-template-columns: 1fr; }
+        }
+
+        .summary-item h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .summary-item h4::before {
+            content: '•';
+            margin-right: 8px;
+            color: var(--tosk-primary);
+        }
+
+        .summary-item p {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.7;
+        }
+
+        .summary-conclusion {
+            text-align: center;
+            padding: 24px;
+            background: rgba(16,185,129,0.05);
+            border: 1px dashed rgba(16,185,129,0.2);
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #6ee7b7;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .split-cards { grid-template-columns: 1fr; }
+            .sub-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- HEADER -->
+    <header class="page-header">
+        <div class="header-badge">
+            <i class="fas fa-code-compare"></i>
+            Architecture Comparison · 2026
+        </div>
+        <h1 class="page-title">
+            <span class="pal">Palantir</span>
+            <span class="vs">vs</span>
+            <span class="tosk">TOSK v5.7</span>
+        </h1>
+        <p class="page-subtitle">
+            기업용 작전 플랫폼(팔란티어)과 신학 연구용 지식 그래프 엔진(TOSK)의<br>
+            온톨로지 아키텍처를 6계층 구조로 비교합니다.
+        </p>
+    </header>
+
+    <!-- TABS -->
+    <div class="view-tabs">
+        <button class="tab-btn active-pal" onclick="switchView('pal')">
+            <i class="fas fa-network-wired mr-1"></i> 팔란티어
+        </button>
+        <button class="tab-btn" onclick="switchView('tosk')">
+            <i class="fas fa-diagram-project"></i> TOSK v5.7
+        </button>
+        <button class="tab-btn" onclick="switchView('compare')">
+            <i class="fas fa-code-compare"></i> 비교표
+        </button>
+    </div>
+
+    <!-- ═══════════════════════════ PALANTIR VIEW ═══════════════════════════ -->
+    <div class="view-panel active" id="view-pal">
+        <div class="col-header pal">
+            <div class="col-header-icon"><i class="fas fa-network-wired"></i></div>
+            <div class="col-header-text">
+                <h2>팔란티어 온톨로지 아키텍처</h2>
+                <p>Gotham · Foundry · AIP · Apollo — 엔터프라이즈 작전 플랫폼</p>
+            </div>
+        </div>
+
+        <div class="layer-stack">
+
+            <!-- L6 -->
+            <div class="layer-card pal" data-term="피드백 루프 (기억과 학습)" data-system="pal">
+                <div class="layer-num">LAYER 06 / TOP</div>
+                <div class="layer-title">의사결정 및 피드백 루프</div>
+                <div class="layer-subtitle">Decision, Write-back &amp; Feedback</div>
+                <div class="layer-desc">
+                    라이트백(Write-back)으로 결정을 SAP/Salesforce 등 외부 현실 시스템에 집행하고, 결과가 다시 데이터로 유입되는 <b>자기 진화 루프</b>를 완성합니다.
+                </div>
+                <div class="pill-row">
+                    <span class="pill pal" data-term="라이트백 (현실 세계 집행)" data-system="pal"><i class="fas fa-pen-to-square"></i>라이트백</span>
+                    <span class="pill pal" data-term="피드백 루프 (기억과 학습)" data-system="pal"><i class="fas fa-rotate"></i>피드백 루프</span>
+                    <span class="pill pal" data-term="진화하는 디지털 트윈" data-system="pal"><i class="fas fa-infinity"></i>진화하는 디지털 트윈</span>
+                </div>
+            </div>
+
+            <div class="connector"><i class="fas fa-chevron-up fa-sm"></i></div>
+
+            <!-- L5 -->
+            <div class="layer-card pal" data-term="워크숍 (Workshop)" data-system="pal">
+                <div class="layer-num">LAYER 05</div>
+                <div class="layer-title">온톨로지 기반 앱 및 툴체인</div>
+                <div class="layer-subtitle">Ontology-Aware Apps &amp; Toolchain</div>
+                <div class="layer-desc">
+                    완성된 온톨로지와 AI 레이어 위에서 구동되는 <b>사용자 접점</b>입니다. OSDK로 앱을 코딩하거나, Workshop에서 노코드로 대시보드를 구성합니다.
+                </div>
+                <div class="pill-row">
+                    <span class="pill pal" data-term="OOSD & OSDK" data-system="pal"><i class="fas fa-code"></i>OOSD &amp; OSDK</span>
+                    <span class="pill pal" data-term="워크숍 (Workshop)" data-system="pal"><i class="fas fa-desktop"></i>워크숍</span>
+                    <span class="pill pal" data-term="객체 탐색기 (Object Explorer)" data-system="pal"><i class="fas fa-magnifying-glass-chart"></i>Object Explorer</span>
+                </div>
+            </div>
+
+            <div class="connector"><i class="fas fa-chevron-up fa-sm"></i></div>
+
+            <!-- L4 -->
+            <div class="layer-card pal" data-term="AIP (AI Platform)" data-system="pal">
+                <div class="layer-num">LAYER 04</div>
+                <div class="layer-title">AI 및 추론 레이어 (AIP)</div>
+                <div class="layer-subtitle">AI &amp; Reasoning Layer</div>
+                <div class="layer-desc">
+                    온톨로지 접지(OAG)로 LLM 환각을 제어합니다. 자연어로 AI 함수를 설계하고, Evals로 신뢰성을 시험한 뒤 배포합니다.
+                </div>
+                <div class="pill-row">
+                    <span class="pill pal" data-term="AIP (AI Platform)" data-system="pal"><i class="fas fa-robot"></i>AIP</span>
+                    <span class="pill pal" data-term="온톨로지 접지 (Ontology Grounding)" data-system="pal"><i class="fas fa-anchor"></i>Ontology Grounding</span>
+                    <span class="pill pal" data-term="AIP 로직 & Evals" data-system="pal"><i class="fas fa-microchip"></i>AIP 로직 &amp; Evals</span>
+                </div>
+            </div>
+
+            <div class="connector"><i class="fas fa-chevron-up fa-sm"></i></div>
+
+            <!-- L3 -->
+            <div class="layer-card pal" data-term="객체 타입 (Objects)" data-system="pal">
+                <div class="layer-num">LAYER 03 / CORE</div>
+                <div class="layer-title">공통 온톨로지 코어</div>
+                <div class="layer-subtitle">The Unifying Ontology — Semantic + Kinetic</div>
+                <div class="layer-desc">
+                    고담·파운드리 데이터가 수렴하는 공통의 장. 조직의 <b>'명사'(Semantic)</b>와 <b>'동사'(Kinetic)</b>가 결합하여 살아 움직이는 디지털 트윈을 형성합니다.
+                </div>
+                <div class="sub-grid">
+                    <div class="sub-card pal-emerald">
+                        <div class="sub-card-title" style="color:#6ee7b7">
+                            <i class="fas fa-sitemap"></i> 시맨틱 레이어
+                        </div>
+                        <div class="pill-row">
+                            <span class="pill pal" data-term="객체 타입 (Objects)" data-system="pal" style="font-size:10px">Objects</span>
+                            <span class="pill pal" data-term="속성 (Properties)" data-system="pal" style="font-size:10px">Properties</span>
+                            <span class="pill pal" data-term="링크 타입 (Links)" data-system="pal" style="font-size:10px">Links</span>
+                        </div>
+                    </div>
+                    <div class="sub-card pal-teal">
+                        <div class="sub-card-title" style="color:#5eead4">
+                            <i class="fas fa-bolt"></i> 키네틱 레이어
+                        </div>
+                        <div class="pill-row">
+                            <span class="pill pal" data-term="액션 타입 (Actions)" data-system="pal" style="font-size:10px">Actions</span>
+                            <span class="pill pal" data-term="함수 (Functions)" data-system="pal" style="font-size:10px">Functions</span>
+                            <span class="pill pal" data-term="모델 (Models)" data-system="pal" style="font-size:10px">Models</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector"><i class="fas fa-chevron-up fa-sm"></i></div>
+
+            <!-- L2 -->
+            <div class="layer-card pal" style="padding:0; background:transparent; border:none;">
+                <div class="split-cards">
+                    <div class="layer-card pal" style="margin:0" data-term="고담 (Gotham)" data-system="pal">
+                        <div class="layer-num">LAYER 02A</div>
+                        <div class="layer-title" style="color:#fbbf24">고담 (Gotham)</div>
+                        <div class="layer-subtitle" style="color:#fcd34d99">Defense &amp; Intelligence</div>
+                        <div class="layer-desc">국방·정보기관용 작전 플랫폼. 첩보·위성 이미지·적군 동향 분석에 최적화.</div>
+                        <div class="pill-row">
+                            <span class="pill" style="background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.3);color:#fcd34d;font-size:10px">군사</span>
+                            <span class="pill" style="background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.3);color:#fcd34d;font-size:10px">정보기관</span>
+                        </div>
+                    </div>
+                    <div class="layer-card pal" style="margin:0" data-term="파운드리 (Foundry)" data-system="pal">
+                        <div class="layer-num">LAYER 02B</div>
+                        <div class="layer-title" style="color:#38bdf8">파운드리 (Foundry)</div>
+                        <div class="layer-subtitle" style="color:#38bdf899">Commercial &amp; Business</div>
+                        <div class="layer-desc">민간 기업용 플랫폼. ERP·공급망·센서 데이터를 연결해 비즈니스 효율 극대화.</div>
+                        <div class="pill-row">
+                            <span class="pill" style="background:rgba(56,189,248,.1);border-color:rgba(56,189,248,.3);color:#7dd3fc;font-size:10px">B2B</span>
+                            <span class="pill" style="background:rgba(56,189,248,.1);border-color:rgba(56,189,248,.3);color:#7dd3fc;font-size:10px">ERP/공급망</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector"><i class="fas fa-chevron-up fa-sm"></i></div>
+
+            <!-- L1 -->
+            <div class="layer-card pal" data-term="아폴로 (Apollo)" data-system="pal">
+                <div class="layer-num">LAYER 01 / FOUNDATION</div>
+                <div class="layer-title">공통 기반 인프라 및 데이터 통합</div>
+                <div class="layer-subtitle">Common Infrastructure &amp; Data Integration</div>
+                <div class="layer-desc">
+                    고담·파운드리의 공통 뿌리. 어디서든 소프트웨어를 자율 배포(Apollo)하고, 파편화된 데이터를 자동 연결(HyperAuto)합니다.
+                </div>
+                <div class="pill-row">
+                    <span class="pill pal" data-term="아폴로 (Apollo)" data-system="pal"><i class="fas fa-satellite"></i>Apollo (CD)</span>
+                    <span class="pill pal" data-term="커넥터 및 데이터 세트" data-system="pal"><i class="fas fa-plug"></i>커넥터 &amp; 데이터셋</span>
+                    <span class="pill pal" data-term="하이퍼오토 (HyperAuto)" data-system="pal"><i class="fas fa-wand-magic-sparkles"></i>HyperAuto</span>
+                </div>
+            </div>
+
+        </div>
+    </div><!-- /view-pal -->
+
+
+    <!-- ═══════════════════════════ TOSK VIEW ═══════════════════════════ -->
+    <div class="view-panel" id="view-tosk">
+        <div class="col-header tosk">
+            <div class="col-header-icon"><i class="fas fa-diagram-project"></i></div>
+            <div class="col-header-text">
+                <h2>TOSK v5.7 아키텍처</h2>
+                <p>Purity Gate · Hybrid BFO · 신학 추론 엔진 — AI-Native Research Toolkit</p>
+            </div>
+        </div>
+
+        <div class="layer-stack">
+
+            <!-- T6 -->
+            <div class="layer-card tosk" data-term="tosk-feedback" data-system="tosk">
+                <div class="layer-num">LAYER 06 / OUTPUT</div>
+                <div class="layer-title">지식 출력 및 피드백 루프</div>
+                <div class="layer-subtitle">Export, Feedback &amp; Framework Layer</div>
+                <div class="layer-desc">
+                    RDF(TTL)·Obsidian·JSON 등 다양한 형식으로 출력합니다. 설교·논문·칼럼 프레임워크가 여기서 구동되며, 피드백은 다시 Inbox로 유입되어 지식을 복리 증식합니다.
+                </div>
+                <div class="pill-row">
+                    <span class="pill tosk" data-term="tosk-rdf"><i class="fas fa-share-nodes"></i>RDF Export (TTL)</span>
+                    <span class="pill tosk" data-term="tosk-obsidian"><i class="fas fa-vault"></i>Obsidian Export</span>
+                    <span class="pill tosk-amber" data-term="tosk-frameworks"><i class="fas fa-feather-pointed"></i>설교/논문 프레임워크</span>
+                </div>
+            </div>
+
+            <div class="connector"><i class="fas fa-chevron-up fa-sm"></i></div>
+
+            <!-- T5 -->
+            <div class="layer-card tosk" data-term="tosk-apps" data-system="tosk">
+                <div class="layer-num">LAYER 05</div>
+                <div class="layer-title">렌즈 시스템 및 에이전트 인터페이스</div>
+                <div class="layer-subtitle">Lens System v4.0 &amp; Agent CLI (manager.py)</div>
+                <div class="layer-desc">
+                    <b>Lens(렌즈)</b>는 개혁주의·목회·학술 등 해석학적 가드레일로 AI의 추론 방향을 통제합니다. <code>manager.py</code> 파사드가 모든 엔진 호출의 단일 창구입니다.
+                </div>
+                <div class="pill-row">
+                    <span class="pill tosk" data-term="tosk-lens"><i class="fas fa-eye"></i>Lens (reformed/pastoral/academic)</span>
+                    <span class="pill tosk" data-term="tosk-cli"><i class="fas fa-terminal"></i>manager.py CLI</span>
+                    <span class="pill tosk-amber" data-term="tosk-ontology-skills"><i class="fas fa-robot"></i>ontology-builder 스킬</span>
+                </div>
+            </div>
+
+            <div class="connector"><i class="fas fa-chevron-up fa-sm"></i></div>
+
+            <!-- T4 -->
+            <div class="layer-card tosk" data-term="tosk-ai" data-system="tosk">
+                <div class="layer-num">LAYER 04</div>
+                <div class="layer-title">추론 엔진 (Analyze · Reflect)</div>
+                <div class="layer-subtitle">Post-Analysis: Topological + Inference Engine</div>
+                <div class="layer-desc">
+                    Analyze는 <b>networkx PageRank</b>로 지식의 뼈대를 수학적으로 탐지하고, Reflect는 <b>Inference Engine</b>으로 명시되지 않은 관계('사후 동맹')를 자동 추론합니다.
+                </div>
+                <div class="pill-row">
+                    <span class="pill tosk" data-term="tosk-pagerank"><i class="fas fa-chart-network"></i>Weighted PageRank</span>
+                    <span class="pill tosk" data-term="tosk-reflect"><i class="fas fa-lightbulb"></i>Reflect (Gap Filling)</span>
+                    <span class="pill tosk" data-term="tosk-aporia"><i class="fas fa-yin-yang"></i>Aporia Auditor</span>
+                    <span class="pill tosk-amber" data-term="tosk-cross"><i class="fas fa-arrows-split-up-and-left"></i>Cross-Source 파이프라인</span>
+                </div>
+            </div>
+
+            <div class="connector"><i class="fas fa-chevron-up fa-sm"></i></div>
+
+            <!-- T3 -->
+            <div class="layer-card tosk" data-term="tosk-ontology" data-system="tosk">
+                <div class="layer-num">LAYER 03 / CORE</div>
+                <div class="layer-title">공통 온톨로지 코어 (TOSK Data Model)</div>
+                <div class="layer-subtitle">Hybrid BFO · Argument-Centric · Structured Aporia</div>
+                <div class="layer-desc">
+                    팔란티어가 <em>'기업 객체'</em>를 다룬다면, TOSK는 <em>'신학 주장'</em>을 1급 시민으로 다룹니다. BFO 이원론(Continuant/Occurrent) 위에 Claim-Evidence-Aporia를 배치합니다.
+                </div>
+                <div class="sub-grid">
+                    <div class="sub-card tosk-violet">
+                        <div class="sub-card-title" style="color:#c4b5fd">
+                            <i class="fas fa-cube"></i> 시맨틱 (명사)
+                        </div>
+                        <div class="pill-row">
+                            <span class="pill tosk" data-term="tosk-entity" style="font-size:10px">Entity (12종)</span>
+                            <span class="pill tosk" data-term="tosk-relation" style="font-size:10px">Relation</span>
+                            <span class="pill tosk" data-term="tosk-scope" style="font-size:10px">TheologicalScope</span>
+                        </div>
+                    </div>
+                    <div class="sub-card tosk-rose">
+                        <div class="sub-card-title" style="color:#fda4af">
+                            <i class="fas fa-bolt"></i> 아포리아 (역설)
+                        </div>
+                        <div class="pill-row">
+                            <span class="pill tosk" data-term="tosk-claim" style="font-size:10px">Claim</span>
+                            <span class="pill tosk" data-term="tosk-evidence" style="font-size:10px">Evidence</span>
+                            <span class="pill tosk-amber" data-term="tosk-aporia-model" style="font-size:10px">Aporia</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector"><i class="fas fa-chevron-up fa-sm"></i></div>
+
+            <!-- T2 -->
+            <div class="layer-card tosk" style="padding:0; background:transparent; border:none;">
+                <div class="split-cards">
+                    <div class="layer-card tosk" style="margin:0" data-term="tosk-lint" data-system="tosk">
+                        <div class="layer-num">LAYER 02A</div>
+                        <div class="layer-title" style="color:#6ee7b7">Soft Lint 엔진</div>
+                        <div class="layer-subtitle" style="color:#6ee7b799">Integrity Gate (advisory)</div>
+                        <div class="layer-desc" style="font-size:0.78rem">BFO 검증, Provenance Gate, Evidence-Claim 커버리지 검사.</div>
+                        <div class="pill-row">
+                            <span class="pill tosk" style="font-size:10px">BFO 검증</span>
+                            <span class="pill tosk" style="font-size:10px">Coverage Gate</span>
+                        </div>
+                    </div>
+                    <div class="layer-card tosk" style="margin:0" data-term="tosk-purity" data-system="tosk">
+                        <div class="layer-num">LAYER 02B</div>
+                        <div class="layer-title" style="color:#fcd34d">Purity Gate (v5.7)</div>
+                        <div class="layer-subtitle" style="color:#fcd34d99">OL-001~OL-008 (enforce/advisory)</div>
+                        <div class="layer-desc" style="font-size:0.78rem">온톨로지 순수성 8규칙. CI 파이프라인 차단 가능(exit 2).</div>
+                        <div class="pill-row">
+                            <span class="pill tosk-amber" style="font-size:10px">OL-002 enforce</span>
+                            <span class="pill tosk-amber" style="font-size:10px">OL-006 enforce</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector"><i class="fas fa-chevron-up fa-sm"></i></div>
+
+            <!-- T1 -->
+            <div class="layer-card tosk" data-term="tosk-inbox" data-system="tosk">
+                <div class="layer-num">LAYER 01 / FOUNDATION</div>
+                <div class="layer-title">원재료 수집 및 데이터 통합</div>
+                <div class="layer-subtitle">_INBOX.md → JSONL → data/{source}/</div>
+                <div class="layer-desc">
+                    _INBOX.md에 아무 텍스트나 붙여넣으면 <b>ontology-builder 에이전트</b>가 Entity·Relation·Claim·Evidence·Aporia를 JSONL로 추출합니다. 소스 격리로 복수 본문의 병렬 수집이 가능합니다.
+                </div>
+                <div class="pill-row">
+                    <span class="pill tosk" data-term="tosk-inbox-detail"><i class="fas fa-file-import"></i>_INBOX.md (Any Text)</span>
+                    <span class="pill tosk" data-term="tosk-jsonl"><i class="fas fa-database"></i>JSONL Store (5종)</span>
+                    <span class="pill tosk-amber" data-term="tosk-source"><i class="fas fa-folder-tree"></i>Source 격리</span>
+                </div>
+            </div>
+
+        </div>
+    </div><!-- /view-tosk -->
+
+
+    <!-- ═══════════════════════════ COMPARE VIEW ═══════════════════════════ -->
+    <div class="view-panel" id="view-compare">
+        <div class="compare-table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>계층</th>
+                        <th class="pal-col"><i class="fas fa-network-wired"></i> 팔란티어</th>
+                        <th class="tosk-col"><i class="fas fa-diagram-project"></i> TOSK v5.7</th>
+                        <th>대응 수준</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>도메인</td>
+                        <td>기업·국방 운영 의사결정</td>
+                        <td>신학·인문학 지식 연구</td>
+                        <td><span class="match-badge match-partial">이종 도메인 동형</span></td>
+                    </tr>
+                    <tr>
+                        <td>L1 기반</td>
+                        <td>Apollo(CD) + 커넥터 + HyperAuto<br><small style="opacity:0.6">물리 인프라, 레거시 시스템 통합</small></td>
+                        <td>_INBOX.md + JSONL Store<br><small style="opacity:0.6">어떤 텍스트든 바로 수집</small></td>
+                        <td><span class="match-badge match-direct">직접 대응</span></td>
+                    </tr>
+                    <tr>
+                        <td>L2 분기</td>
+                        <td>Gotham(국방) / Foundry(상업)<br><small style="opacity:0.6">도메인별 분리 플랫폼</small></td>
+                        <td>Soft Lint / Purity Gate<br><small style="opacity:0.6">데이터 품질 이중 관문</small></td>
+                        <td><span class="match-badge match-partial">기능 분기 유사</span></td>
+                    </tr>
+                    <tr>
+                        <td>L3 코어</td>
+                        <td>Objects · Properties · Links<br>Actions · Functions · Models</td>
+                        <td>Entity(12종) · Relation · Claim<br>Evidence · Aporia · TheologicalScope</td>
+                        <td><span class="match-badge match-direct">직접 대응 (1:1)</span></td>
+                    </tr>
+                    <tr>
+                        <td>L3 차별점</td>
+                        <td>Semantic(명사) + Kinetic(동사) 분리</td>
+                        <td>Continuant/Occurrent (BFO) + <b>Aporia</b> (역설 모델)</td>
+                        <td><span class="match-badge match-unique">TOSK 독자 기능</span></td>
+                    </tr>
+                    <tr>
+                        <td>L4 AI층</td>
+                        <td>AIP (LLM 통합) + Ontology Grounding<br>환각 제어, Evals</td>
+                        <td>Analyze (PageRank) + Reflect (Gap Filling)<br>Structural Ally 자동 추론</td>
+                        <td><span class="match-badge match-direct">직접 대응</span></td>
+                    </tr>
+                    <tr>
+                        <td>L5 앱층</td>
+                        <td>OSDK + Workshop (노코드 대시보드)</td>
+                        <td>Lens v4.0 + manager.py 파사드</td>
+                        <td><span class="match-badge match-partial">부분 대응</span></td>
+                    </tr>
+                    <tr>
+                        <td>L6 피드백</td>
+                        <td>Write-back → ERP/실 세계 집행<br>진화하는 디지털 트윈</td>
+                        <td>RDF/Obsidian Export → Inbox 재순환<br>설교·논문 프레임워크 산출</td>
+                        <td><span class="match-badge match-direct">직접 대응</span></td>
+                    </tr>
+                    <tr>
+                        <td>규모</td>
+                        <td>수천만 객체, 엔터프라이즈 IaC</td>
+                        <td>수백~수만 Entity, 단일 연구자</td>
+                        <td><span class="match-badge match-partial">규모 차이, 구조 동형</span></td>
+                    </tr>
+                    <tr>
+                        <td>품질 관문</td>
+                        <td>Foundry Data Health (비공개)</td>
+                        <td>OL-001~OL-008 Purity Gate (오픈소스)</td>
+                        <td><span class="match-badge match-unique">TOSK 공개 명세 우위</span></td>
+                    </tr>
+                    <tr>
+                        <td>역설 처리</td>
+                        <td>미지원 (일관성 지향)</td>
+                        <td><b>Structured Aporia</b> 1급 시민 모델</td>
+                        <td><span class="match-badge match-unique">TOSK 독자 기능</span></td>
+                    </tr>
+                    <tr>
+                        <td>배포 환경</td>
+                        <td>Cloud / On-premise / Edge / 위성</td>
+                        <td>로컬 CLI + AI Agent (Antigravity)</td>
+                        <td><span class="match-badge match-partial">규모 차이</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#6ee7b7"></div>직접 대응 — 동일한 목적의 계층</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#fcd34d"></div>부분 대응 — 유사하나 구현 방식 상이</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#c4b5fd"></div>독자 기능 — 한 쪽에만 존재하는 고유 특성</div>
+        </div>
+
+        <!-- ── EXECUTIVES SUMMARY ── -->
+        <div class="summary-section">
+            <h3 class="summary-title"><i class="fas fa-microchip mr-2" style="color:var(--tosk-primary)"></i>Architecture Whitepaper: 오케스트레이터 심층 비평</h3>
+            
+            <div class="detailed-report">
+                <!-- Point 1 -->
+                <div class="report-item">
+                    <div class="report-icon"><i class="fas fa-bullseye"></i></div>
+                    <div class="report-content">
+                        <h5>1. 대상의 실체적 전환: 물리적 공간에서 담론의 공간으로</h5>
+                        <p>팔란티어는 '항공기', '군인', '비즈니스 트랜잭션' 등 물리적 실체와 그 위치를 추적하는 <b>Entity-Centric</b> 온톨로지입니다. 반면 TOSK는 신학적 <b>주장(Claim)</b>과 그에 대한 <b>근거(Evidence)</b>를 시스템의 최우선 시민(first-class citizen)으로 격상시켰습니다. 이는 '무엇이 있는가'를 넘어 '무엇이 논증되는가'를 다루는 담론적 지능으로의 진화입니다.</p>
+                    </div>
+                </div>
+
+                <!-- Point 2 -->
+                <div class="report-item">
+                    <div class="report-icon"><i class="fas fa-yin-yang"></i></div>
+                    <div class="report-content">
+                        <h5>2. 진실의 처리: 논리적 파편화 vs 구조화된 역설(Aporia)</h5>
+                        <p>팔란티어와 같은 엔터프라이즈 시스템은 데이터의 일관성(Consistency)을 절대 가치로 여기며, 충돌하는 데이터는 '오류'로 간주하여 정제합니다. 그러나 TOSK는 <b>Structured Aporia</b> 모델을 통해 삼위일체나 신인양성성과 같은 신학적 역설을 오류로 처리하지 않고, 양극단(Pole A/B)의 긴장을 유지한 채 지식화합니다. 이는 인간 논리를 초월하는 '신비'를 데이터 모델링의 범주로 끌어들인 획기적 시도입니다.</p>
+                    </div>
+                </div>
+
+                <!-- Point 3 -->
+                <div class="report-item">
+                    <div class="report-icon"><i class="fas fa-brain"></i></div>
+                    <div class="report-content">
+                        <h5>3. 추론 메커니즘: 결정론적 접지 vs 위상적 발견</h5>
+                        <p>팔란티어의 AIP는 LLM을 물리 데이터에 단단히 묶는 <b>Grounding</b>을 통해 정확도를 확보합니다. TOSK는 한 걸음 더 나아가 <b>Weighted PageRank</b>를 통한 위상 분석으로 사상의 중심축을 수학적으로 찾아내고, <b>Reflect 엔진</b>을 통해 명시되지 않은 '행간의 관계(Structural Ally)'를 스스로 추론합니다. 이는 '정적인 기록'으로서의 온톨로지를 '동적인 추론 엔진'으로 승격시킨 것입니다.</p>
+                    </div>
+                </div>
+
+                <!-- Point 4 -->
+                <div class="report-item">
+                    <div class="report-icon"><i class="fas fa-shield-halved"></i></div>
+                    <div class="report-content">
+                        <h5>4. 품질 보증: 거대 자본의 검증 vs 연구자의 순수성 게이트</h5>
+                        <p>팔란티어의 신뢰도가 수조 원 규모의 엔터프라이즈 인프라에서 나온다면, TOSK는 <b>Purity Gate(OL-001~OL-008)</b>라는 투명한 순수성 규약을 통해 데이터의 무결성을 보장합니다. 에이전트가 자동 추출한 데이터는 이 8단계 관문을 통과해야만 '지식'으로 승격될 수 있으며, 이는 AI 주도형 연구에서 발생할 수 있는 GIGO를 원천 차단하는 가장 강력한 가드레일입니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary-conclusion">
+                "팔란티어가 승리를 위해 세상을 디지털로 복제한다면,<br>TOSK는 진리를 수호하기 위해 사유를 그래프로 구축한다."
+            </div>
+        </div>
+    </div><!-- /view-compare -->
+
+</div><!-- /container -->
+
+<!-- ── MODAL ── -->
+<div class="modal-overlay" id="modal">
+    <div class="modal-box">
+        <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+        <div class="modal-tag" id="modal-tag">TERM</div>
+        <div class="modal-title" id="modal-title">제목</div>
+        <div class="modal-body" id="modal-body">설명</div>
+    </div>
+</div>
+
+<script>
+/* ── VIEW SWITCHING ── */
+const panels = { pal: 'view-pal', tosk: 'view-tosk', compare: 'view-compare' };
+const tabs = document.querySelectorAll('.tab-btn');
+
+function switchView(id) {
+    Object.values(panels).forEach(p => document.getElementById(p).classList.remove('active'));
+    document.getElementById(panels[id]).classList.add('active');
+    tabs.forEach((btn, i) => {
+        btn.classList.remove('active-pal','active-tosk','active-compare');
+    });
+    const map = { pal: 0, tosk: 1, compare: 2 };
+    tabs[map[id]].classList.add('active-' + id);
+}
+
+/* ── TERM DICTIONARIES ── */
+const palDict = {
+    "라이트백 (현실 세계 집행)": "팔란티어 앱이나 AI를 통해 내려진 최종 결정(예: 부품 발주)이 내부 온톨로지를 거쳐 실제 외부 운영 시스템(SAP, Salesforce 등)으로 다시 기록되고 물리적으로 실행되는 것을 뜻합니다.",
+    "피드백 루프 (기억과 학습)": "실행된 결정의 결과(성공/실패 여부 등)가 다시 데이터로 수집되어 파운데이션 레이어로 유입되며, 이를 통해 AI와 시스템이 경험을 기억하고 스스로 학습하는 과정입니다.",
+    "진화하는 디지털 트윈": "현실 세계의 물리적 자산과 프로세스를 디지털로 복제한 것을 넘어, 실행과 피드백이 누적됨에 따라 스스로 정교해지고 조직의 가치를 복리로 증대시키는 최종 상태를 말합니다.",
+    "OOSD & OSDK": "OOSD(온톨로지 지향 소프트웨어 개발)는 원시 DB가 아닌 '온톨로지 논리' 위에서 개발하는 방법론이며, OSDK는 이를 돕기 위해 프론트엔드/백엔드 개발자에게 제공되는 SDK입니다.",
+    "워크숍 (Workshop)": "기술적 전문성에 관계없이 클릭과 드래그 앤 드롭(Low-code/No-code)만으로 현장 운영자를 위한 고품질 양방향 대시보드와 운영 애플리케이션을 구축하는 도구입니다.",
+    "객체 탐색기 (Object Explorer)": "온톨로지 객체들을 시각적으로 검색, 필터링, 비교하고 엑셀처럼 분석하며 곧바로 액션(Action)을 취할 수 있게 해주는 기본 워크플로우 도구입니다.",
+    "AIP (AI Platform)": "대규모 언어 모델(LLM)을 팔란티어 고담/파운드리 위에 안전하게 통합하여, 엔터프라이즈 환경에서 생성형 AI를 실무에 활용하게 해주는 핵심 플랫폼입니다.",
+    "온톨로지 접지 (Ontology Grounding)": "RAG(검색 증강 생성)를 넘어선 개념(OAG)으로, AI가 환각(Hallucination)을 일으키지 않도록 조직의 실제 물리적 데이터와 비즈니스 규칙(온톨로지)을 바탕으로 답변을 제한하고 검증하는 메커니즘입니다.",
+    "AIP 로직 & Evals": "코딩 없이 자연어로 AI 추론 함수(파이프라인)를 설계하고, 해당 AI의 논리가 신뢰할 수 있는지 수천 개의 가상 시나리오로 생산 환경 배포 전에 체계적으로 테스트(Evals)하는 기능입니다.",
+    "객체 타입 (Objects)": "데이터베이스의 행(Row)과 열(Column)을 '항공기', '직원', '주문' 등 인간이 이해할 수 있는 비즈니스 언어(명사)로 승격시킨 시맨틱 데이터 단위입니다.",
+    "속성 (Properties)": "객체가 가진 구체적인 특성이나 상태를 나타냅니다. (예: 항공기의 '현재 위치', '엔진 온도', 직원의 '소속 부서')",
+    "링크 타입 (Links)": "서로 다른 객체들 사이의 관계를 정의합니다. (예: '직원'이 '부서'에 근무한다) 이를 통해 데이터 간의 맥락이 형성되고 거대한 지식 그래프가 완성됩니다.",
+    "액션 타입 (Actions)": "사용자나 시스템이 객체의 상태를 변경하거나 새로운 의사결정을 내릴 때, 온톨로지 내에서 이를 통제하고 기록하는 단일 트랜잭션 단위(동사)입니다. 엄격한 권한 모델(RBAC)이 적용됩니다.",
+    "함수 (Functions)": "복잡한 수식 계산, 시뮬레이션 알고리즘 등 의사결정을 지원하는 코드 기반(TypeScript, Python 등)의 비즈니스 로직입니다.",
+    "모델 (Models)": "머신러닝(ML), 예측, 최적화 등 의사결정에 필요한 맥락을 산출하는 알고리즘 자산으로, 온톨로지 객체 및 액션과 원활하게 연동됩니다.",
+    "고담 (Gotham)": "국방 및 정보기관을 위한 작전용 플랫폼입니다. 비정형 첩보, 위성 이미지, 적군 동향 등을 분석하여 군사적 위협에 대응합니다.",
+    "파운드리 (Foundry)": "민간 기업을 위한 상업용 플랫폼입니다. 수만 개의 ERP 시스템, 센서, 공급망 데이터를 연결하여 비즈니스 효율을 극대화합니다.",
+    "아폴로 (Apollo)": "팔란티어의 지속적 배포(CD) 플랫폼입니다. 퍼블릭 클라우드, 온프레미스, 심지어 우주 위성이나 엣지 환경 등 어디서나 소프트웨어를 안전하고 자율적으로 배포/업데이트합니다.",
+    "커넥터 및 데이터 세트": "ERP, CRM, 센서 등 수많은 레거시 시스템에 파편화된 원시 데이터를 추출하고 정제하여 팔란티어 플랫폼으로 통합하는 기초 데이터 자산입니다.",
+    "하이퍼오토 (HyperAuto)": "소프트웨어 정의 데이터 통합 도구입니다. SAP 같은 복잡한 시스템의 메타데이터를 분석해 파이프라인부터 온톨로지 객체 생성까지 단 몇 분 만에 자동 구성합니다.",
+};
+
+const toskDict = {
+    "tosk-feedback": "RDF(TTL)·Obsidian Vault·JSON 형식으로 지식을 출력합니다. homiletics/columns/devotional 프레임워크가 여기서 실행되어 설교·칼럼·묵상 산출물을 생성합니다. 생성된 결과물은 다시 _INBOX.md로 순환되어 지식이 복리 증식합니다.",
+    "tosk-rdf": "export-rdf 명령으로 data/knowledge.ttl을 생성합니다. BFO/IAO/RO 표준 어휘로 매핑되며, 누락 관계는 th:{rel} 네임스페이스로 fallback됩니다. GraphDB, Protege와 호환됩니다.",
+    "tosk-obsidian": "export-obsidian 명령으로 Obsidian Vault 형식 마크다운을 생성합니다. 각 Entity가 별도 노트가 되고 Graph View에서 지식 그래프를 시각적으로 탐색할 수 있습니다.",
+    "tosk-frameworks": "homiletics(설교), columns(칼럼), devotional(묵상) 템플릿 프레임워크입니다. 코어 엔진의 JSONL 데이터를 읽어 실무 산출물을 자동 생성합니다.",
+    "tosk-apps": "Lens(렌즈)는 개혁주의·목회·학술·비평 등 해석 방향을 통제하는 가드레일입니다. calibrate-lens로 렌즈 안정성을 수치화할 수 있습니다. manager.py는 모든 엔진 기능의 단일 CLI 파사드입니다.",
+    "tosk-lens": "lenses/ 디렉터리의 reformed.md, pastoral.md, academic.md 파일이 추론의 해석학적 방향을 정의합니다. AI 에이전트가 Reflect나 Analyze 결과를 해석할 때 렌즈 파일을 먼저 로드합니다.",
+    "tosk-cli": "manager.py는 lint, lint-ontology, analyze, reflect, pipeline, export-rdf, export-obsidian, compare-sources, calibrate-lens, audit-aporia, migrate-ontology, ontology-report 등 모든 엔진 기능의 단일 진입점입니다. --format json 플래그로 에이전트 친화적 JSON 출력을 지원합니다.",
+    "tosk-ontology-skills": ".skills/ontology-builder/SKILL.md를 실행하는 AI 에이전트입니다. 원본 텍스트를 읽어 Entity/Relation/Claim/Evidence/Aporia를 JSONL로 추출하고 manager.py add-bulk로 데이터를 투입합니다.",
+    "tosk-ai": "Analyze(위상 분석)와 Reflect(사후 추론)의 2단계 AI 레이어입니다. Analyze는 networkx의 가중 PageRank로 핵심 개념을 식별하고, Reflect는 공통 위협을 가진 개념 쌍을 structural_ally로 자동 연결합니다.",
+    "tosk-pagerank": "RelationStrength(necessary/contingent/probable)와 CitationType 가중치를 반영한 Weighted PageRank입니다. 어떤 개념이 지식 그래프의 '허브'인지, 어떤 개념이 '다리(Bridge)' 역할을 하는지 수치로 계산합니다.",
+    "tosk-reflect": "Reflect 엔진은 두 가지 추론을 수행합니다. ① structural_ally: 동일한 위협(ExistentialState)을 공유하는 두 개념을 동맹 관계로 연결. ② prescribes_solution: 위협받는 개념에게 해결책을 가진 개념을 처방 관계로 연결.",
+    "tosk-aporia": "Aporia Auditor(v5.6)는 신학적 역설의 '평탄화 위험(tension flattening risk)'을 검사합니다. unipolar(한 극에만 주장), closure-predicate(결론 단정), under-corroborated(근거 부족) 세 가지 패턴을 탐지합니다.",
+    "tosk-cross": "pipeline --sources A B 명령으로 복수 소스를 병합하여 교차 추론합니다. compare-sources로 동일 개념에 대한 두 소스의 관계 차이를 수치화합니다.",
+    "tosk-ontology": "TOSK의 핵심 데이터 모델입니다. Entity(12종)·Relation·Claim·Evidence·Aporia의 5종 JSONL이 코어를 구성합니다. Claim과 Evidence를 1급 시민으로 다루는 Argument-Centric 설계가 팔란티어와의 핵심 차별점입니다.",
+    "tosk-entity": "v5.7에서 12종으로 확충되었습니다. 기존 6종(Person, Concept, Event, Work, Group, Other) + 신규 6종(Place, Scripture, Institution, Creed, Practice, Period). bfo_category로 Continuant/Occurrent를 구분합니다.",
+    "tosk-relation": "docs/relations_registry.yaml에 35종 9카테고리로 등록된 술어 체계입니다. OL-002 Purity Gate가 미등록 술어 사용을 enforce 수준으로 차단합니다. scope 필드(TheologicalScope)로 동일 술어의 도메인별 의미 차이를 구분합니다.",
+    "tosk-scope": "v5.7 신규 필드입니다. Relation.scope로 동일한 술어(예: 'causes')가 ontological·soteriological·ecclesiological 등 신학 도메인에 따라 다른 의미를 가질 때 이를 명시적으로 구분합니다.",
+    "tosk-claim": "신학적 주장의 1급 시민 모델입니다. statement(주장문), polarity(affirm/deny), modality(assert/question/hypothesize), supports_relations(지지하는 Relation 직접 링크)를 포함합니다.",
+    "tosk-evidence": "주장을 뒷받침하는 1차 텍스트 근거입니다. quote(직접 인용) 또는 paraphrase(요약) 중 하나가 필수입니다. canonical_ref(Gal 3:28, KD I/1 §1 p.42 형식)로 표준 참조를 저장합니다.",
+    "tosk-aporia-model": "인간 논리로 분해되지 않는 신학적 역설(삼위일체, 신인양성 등)을 오류가 아닌 '구조화된 아포리아'로 기록합니다. pole_a_claims·pole_b_claims로 양극을 명시하고 Aporia Auditor로 flattening 위험을 감시합니다.",
+    "tosk-lint": "기존 Soft Lint 엔진입니다. BFO Continuant/Occurrent 분류 검증, Claim-Evidence 커버리지 검사, Relation 레지스트리 경고, Provenance Gate(key_chunks 누락 경고), Aporia Gate(양극 누락 경고)를 수행합니다. advisory 수준으로 데이터를 차단하지 않습니다.",
+    "tosk-purity": "v5.7 신규 OL-001~OL-008 Purity Gate입니다. OL-002(registry 미준수 0건)와 OL-006(중복 ID 0건)이 enforce 수준으로 --strict 모드에서 exit code 2를 반환합니다. Read-Only: JSONL을 절대 수정하지 않습니다.",
+    "tosk-inbox": "어떤 텍스트든 _INBOX.md에 붙여넣으면 ontology-builder 에이전트가 자동 처리합니다. PDF 각주 깨짐, 줄바꿈 오류도 Smart Cleaning으로 복원합니다. --source 플래그로 소스를 격리하여 복수 본문을 병렬 수집합니다.",
+    "tosk-inbox-detail": "_INBOX.md는 루트에 위치한 Raw Text 버퍼입니다. 신학 논문·설교 원고·개인 묵상 메모·카카오톡 나눔글 등 어떤 장르의 텍스트도 받아들입니다. 에이전트가 문맥을 정제(Clean)하고 구조화(Extract)합니다.",
+    "tosk-jsonl": "5종의 JSONL 파일이 data/{source}/ 디렉터리에 저장됩니다: entities.jsonl / relations.jsonl / claims.jsonl / evidence.jsonl / aporia.jsonl. 각 소스별로 디렉터리가 분리되어 병렬 수집 및 Cross-Source 분석을 지원합니다.",
+    "tosk-source": "--source 플래그로 소스를 지정하지 않으면 data/default/가 자동 생성됩니다. Genesis, John, Amos처럼 성경 본문별, 또는 논문·저자별 소스를 분리하여 pipeline --sources A B로 교차 추론합니다.",
+};
+
+/* ── MODAL LOGIC ── */
+const modal = document.getElementById('modal');
+const modalTag = document.getElementById('modal-tag');
+const modalTitle = document.getElementById('modal-title');
+const modalBody = document.getElementById('modal-body');
+
+function openModal(system, termKey) {
+    let title = termKey;
+    let body = '';
+    
+    if (system === 'pal') {
+        body = palDict[termKey] || '상세 설명 준비 중입니다.';
+        modalTag.style.color = '#93c5fd';
+        modalTag.textContent = '[ PALANTIR ]';
+    } else {
+        body = toskDict[termKey] || '상세 설명 준비 중입니다.';
+        modalTag.style.color = '#6ee7b7';
+        modalTag.textContent = '[ TOSK v5.7 ]';
+        // Clean up key for title
+        title = termKey.replace('tosk-', '').replace(/-/g,' ');
+        // Map display titles
+        const titleMap = {
+            'feedback': '지식 출력 및 피드백 루프',
+            'rdf': 'RDF Export (TTL)',
+            'obsidian': 'Obsidian Export',
+            'frameworks': '설교/논문 프레임워크',
+            'apps': '렌즈 시스템 및 에이전트 인터페이스',
+            'lens': 'Lens 시스템 v4.0',
+            'cli': 'manager.py CLI 파사드',
+            'ontology skills': 'ontology-builder 스킬',
+            'ai': '추론 엔진 (Analyze + Reflect)',
+            'pagerank': 'Weighted PageRank 분석',
+            'reflect': 'Reflect — Gap Filling 추론',
+            'aporia': 'Aporia Auditor (v5.6)',
+            'cross': 'Cross-Source 파이프라인',
+            'ontology': '공통 온톨로지 코어 (TOSK Data Model)',
+            'entity': 'Entity 타입 (12종, v5.7)',
+            'relation': 'Relation + 레지스트리',
+            'scope': 'TheologicalScope (v5.7)',
+            'claim': 'Claim — 주장 모델',
+            'evidence': 'Evidence — 근거 모델',
+            'aporia model': 'Aporia — 역설 모델',
+            'lint': 'Soft Lint 엔진',
+            'purity': 'Purity Gate OL-001~008 (v5.7)',
+            'inbox': '원재료 수집 (_INBOX.md)',
+            'inbox detail': '_INBOX.md — Raw Text 버퍼',
+            'jsonl': 'JSONL Store (5종)',
+            'source': 'Source 격리 체계',
+        };
+        title = titleMap[title] || title;
+    }
+
+    modalTitle.textContent = title;
+    modalBody.textContent = body;
+    modal.classList.add('open');
+}
+
+function closeModal() {
+    modal.classList.remove('open');
+}
+
+document.getElementById('modal-close').addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+/* ── ATTACH EVENTS ── */
+function attachEvents() {
+    // Layer cards
+    document.querySelectorAll('.layer-card[data-term]').forEach(card => {
+        card.addEventListener('click', (e) => {
+            if (!e.target.closest('.pill[data-term]')) {
+                const term = card.dataset.term;
+                const sys = card.dataset.system;
+                if (term && sys) openModal(sys, term);
+            }
+        });
+    });
+
+    // Pills
+    document.querySelectorAll('.pill[data-term]').forEach(pill => {
+        pill.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const term = pill.dataset.term;
+            const sys = pill.dataset.system || pill.closest('[data-system]')?.dataset.system;
+            if (term) {
+                // Determine system
+                const inToskView = pill.closest('#view-tosk');
+                const inPalView = pill.closest('#view-pal');
+                const s = inToskView ? 'tosk' : (inPalView ? 'pal' : (sys || 'pal'));
+                openModal(s, term);
+            }
+        });
+    });
+}
+
+attachEvents();
+</script>
+</body>
+</html>
