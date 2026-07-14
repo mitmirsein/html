@@ -253,23 +253,36 @@
         .li-content {
             display: flex;
             flex-wrap: wrap;
-            align-items: baseline;
-            gap: 0.6rem;
+            gap: 1.5rem;
             width: 100%;
+        }
+
+        .li-meta-col {
+            width: 220px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .li-desc-col {
+            flex: 1;
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
         }
 
         .li-title {
             font-weight: 700;
             color: var(--text-main);
-            min-width: 180px;
-            display: inline-block;
+            font-size: 0.95rem;
         }
 
         .li-desc {
             color: var(--text-muted);
-            flex: 1;
-            min-width: 280px;
             font-size: 0.92rem;
+            line-height: 1.5;
         }
 
         .li-code {
@@ -278,8 +291,9 @@
             padding: 0.15rem 0.4rem;
             border-radius: 4px;
             font-family: monospace;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             white-space: nowrap;
+            width: fit-content;
         }
 
         .quality-badge {
@@ -522,33 +536,39 @@
                     <ul class="details-list">
                         <li>
                             <div class="li-content">
-                                <span class="li-title">아리스토텔레스적 연역 논리</span>
-                                <span class="li-desc">
-                                    문항 조건과 수학적 개념들의 결합을 삼단논법 체계로 분해하여 근원(archai) 의존성 그래프로 인덱싱합니다.
-                                    <br><span class="quality-badge">품질개선: 변형 문제의 수학적 조건 충돌 및 오류 문항 100% 원천 차단</span>
-                                </span>
-                                <code class="li-code">foundation.archai_dag</code>
+                                <div class="li-meta-col">
+                                    <span class="li-title">아리스토텔레스적 연역 논리</span>
+                                    <code class="li-code">foundation.archai_dag</code>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">문항 조건과 수학적 개념들의 결합을 삼단논법 체계로 분해하여 근원(archai) 의존성 그래프로 인덱싱합니다.</span>
+                                    <span class="quality-badge">품질개선: 변형 문제의 수학적 조건 충돌 및 오류 문항 100% 원천 차단</span>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
-                                <span class="li-title">소크라테스적 산파술 힌트</span>
-                                <span class="li-desc">
-                                    발문에서 답으로 유도하는 인과 과정을 질문 연쇄 노드로 설계합니다.
-                                    <br><span class="quality-badge">품질개선: 학생의 오답 지점과 인지 단계에 정확히 정합하는 1:1 맞춤형 힌트 유도</span>
-                                </span>
-                                <code class="li-code">Socratic_Hint_Query</code>
+                                <div class="li-meta-col">
+                                    <span class="li-title">소크라테스적 산파술 힌트</span>
+                                    <code class="li-code">Socratic_Hint_Query</code>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">발문에서 답으로 유도하는 인과 과정을 질문 연쇄 노드로 설계합니다.</span>
+                                    <span class="quality-badge">품질개선: 학생의 오답 지점과 인지 단계에 정확히 정합하는 1:1 맞춤형 힌트 유도</span>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
-                                <span class="li-title">플라톤적 기하 이데아</span>
-                                <span class="li-desc">
-                                    완벽한 상사비와 점/선 제약식을 수치 솔버로 피팅하여 모순 오차를 0으로 만듭니다.
-                                    <br><span class="quality-badge">품질개선: 다이어그램 렌더링 겹침·깨짐 방지 및 LaTeX 컴파일 에러 0% 통제</span>
-                                </span>
-                                <code class="li-code">geometry_spec</code>
-                                <code class="li-code">geometry-certificate</code>
+                                <div class="li-meta-col">
+                                    <span class="li-title">플라톤적 기하 이데아</span>
+                                    <code class="li-code">geometry_spec</code>
+                                    <code class="li-code">geometry-certificate</code>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">완벽한 상사비와 점/선 제약식을 수치 솔버로 피팅하여 모순 오차를 0으로 만듭니다.</span>
+                                    <span class="quality-badge">품질개선: 다이어그램 렌더링 겹침·깨짐 방지 및 LaTeX 컴파일 에러 0% 통제</span>
+                                </div>
                             </div>
                         </li>
                     </ul>
