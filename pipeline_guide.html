@@ -282,6 +282,17 @@
             white-space: nowrap;
         }
 
+        .quality-badge {
+            display: inline-block;
+            margin-top: 0.4rem;
+            font-size: 0.78rem;
+            color: var(--success-color);
+            background-color: #d1dcce;
+            padding: 0.1rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
         footer {
             text-align: center;
             margin-top: 4.5rem;
@@ -512,21 +523,30 @@
                         <li>
                             <div class="li-content">
                                 <span class="li-title">아리스토텔레스적 연역 논리</span>
-                                <span class="li-desc">조건문들의 결합을 삼단논법 체계로 분해하여 DAG에 인덱싱합니다. <b>[품질개선: 변형 문제의 수학적 조건 충돌 및 오류 문항 100% 원천 차단]</b></span>
+                                <span class="li-desc">
+                                    조건문들의 결합을 삼단논법 체계로 분해하여 DAG에 인덱싱합니다.
+                                    <br><span class="quality-badge">품질개선: 변형 문제의 수학적 조건 충돌 및 오류 문항 100% 원천 차단</span>
+                                </span>
                                 <code class="li-code">archai_dag</code>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
                                 <span class="li-title">소크라테스적 산파술 힌트</span>
-                                <span class="li-desc">발문에서 답으로 유도하는 인과 과정을 질문 연쇄 노드로 설계합니다. <b>[품질개선: 학생의 오답 지점과 인지 단계에 정확히 정합하는 1:1 맞춤형 힌트 유도]</b></span>
+                                <span class="li-desc">
+                                    발문에서 답으로 유도하는 인과 과정을 질문 연쇄 노드로 설계합니다.
+                                    <br><span class="quality-badge">품질개선: 학생의 오답 지점과 인지 단계에 정확히 정합하는 1:1 맞춤형 힌트 유도</span>
+                                </span>
                                 <code class="li-code">Socratic_Hint_Query</code>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
                                 <span class="li-title">플라톤적 기하 이데아</span>
-                                <span class="li-desc">완벽한 상사비와 점/선 제약식을 수치 솔버로 피팅하여 모순 오차를 0으로 만듭니다. <b>[품질개선: 다이어그램 렌더링 겹침·깨짐 방지 및 LaTeX 컴파일 에러 0% 통제]</b></span>
+                                <span class="li-desc">
+                                    완벽한 상사비와 점/선 제약식을 수치 솔버로 피팅하여 모순 오차를 0으로 만듭니다.
+                                    <br><span class="quality-badge">품질개선: 다이어그램 렌더링 겹침·깨짐 방지 및 LaTeX 컴파일 에러 0% 통제</span>
+                                </span>
                                 <code class="li-code">geometry_spec</code>
                                 <code class="li-code">geometry-certificate</code>
                             </div>
