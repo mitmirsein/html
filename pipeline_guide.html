@@ -749,18 +749,18 @@
                 <span class="status-pill green">통제 가동 중</span>
             </div>
             <p class="step-desc" style="color: var(--text-main); font-weight: 500;">
-                이 수학 기출 포렌식 파이프라인은 에이전트의 완성도 및 계약 무결성을 관리하는 외부 가드레일 프레임워크인 <strong>horos</strong>의 설계 원리를 기반으로 통제됩니다.
+                이 수학 기출 포렌식 파이프라인은 AI 에이전트의 자기 기만(Hallucination)을 막고 계약 무결성을 외부에서 강제하는 가드레일 프레임워크인 <strong>horos</strong>의 5대 강제 정책 하에 통제됩니다.
             </p>
             <div class="step-details">
-                <div class="details-title" style="border-bottom-color: #dcd4bc;">단계별 horos 정책 적용 내역</div>
+                <div class="details-title" style="border-bottom-color: #dcd4bc;">파이프라인 내 horos의 5대 실질 강제 행위</div>
                 <ul class="details-list">
                     <li>
                         <div class="li-content">
                             <div class="li-meta-col">
-                                <span class="li-title">사전 및 환경 진단</span>
+                                <span class="li-title">① 기름값 사전 검사기</span>
                             </div>
                             <div class="li-desc-col">
-                                <span class="li-desc">1단계 가동 직전 디스크 가용 용량(Pre-flight) 및 시스템 환경(doctor)을 진단합니다.</span>
+                                <span class="li-desc">1단계 가동 전 디스크 여유 공간이 부족하면 불필요한 API 요금이 발생하지 않도록 실행을 즉시 셧다운(Pre-flight)시킵니다.</span>
                                 <div class="li-tags">
                                     <code class="li-code">PreflightError</code>
                                     <code class="li-code">engine:doctor</code>
@@ -771,12 +771,12 @@
                     <li>
                         <div class="li-content">
                             <div class="li-meta-col">
-                                <span class="li-title">의미적 위반 차단</span>
+                                <span class="li-title">② 짝퉁 변형 문제 적발기</span>
                             </div>
                             <div class="li-desc-col">
-                                <span class="li-desc">5단계와 6단계 사이에서 데이터와 수식의 논리 구조 모순을 검출해 게이트를 차단(block)합니다.</span>
+                                <span class="li-desc">5단계와 6단계 사이에서 AI가 본문 문투만 바꾸거나 숫자만 교체하여 제출한 가짜 변형 문항을 자동 검출하고 차단(block)합니다.</span>
                                 <div class="li-tags">
-                                    <code class="li-code">Schema Gate</code>
+                                    <code class="li-code">ENGINE-SEM-NUMERIC-CLONE</code>
                                     <code class="li-code">Semantic Diff</code>
                                 </div>
                             </div>
@@ -785,12 +785,12 @@
                     <li>
                         <div class="li-content">
                             <div class="li-meta-col">
-                                <span class="li-title">최종 증거 체인 보장</span>
+                                <span class="li-title">③ 기하학적 붕괴 감지기</span>
                             </div>
                             <div class="li-desc-col">
-                                <span class="li-desc">7단계 최종 배포 시 해시 신선도 및 수학 제약 조건 무결성을 검증하고, deposited-evidence를 결합(release-strict)합니다.</span>
+                                <span class="li-desc">수치 최적화 솔버를 통해 변형 기하 도형의 모든 수치적 제약 오차를 계산하여, 선이 찌그러지거나 레이아웃이 겹치는 도형 생성을 금지합니다.</span>
                                 <div class="li-tags">
-                                    <code class="li-code">06.run-evidence.json</code>
+                                    <code class="li-code">ENGINE-GEOM-LAYOUT-FAIL</code>
                                     <code class="li-code">Geometry Certificate</code>
                                 </div>
                             </div>
@@ -799,7 +799,35 @@
                     <li>
                         <div class="li-content">
                             <div class="li-meta-col">
-                                <span class="li-title">레포지토리 정보</span>
+                                <span class="li-title">④ 야바위 풀이 감별사</span>
+                            </div>
+                            <div class="li-desc-col">
+                                <span class="li-desc">논리 단계의 인과 의존성 그래프(Kahn 위상 정렬)를 역추적 검산하여, 원리 도약이나 모순이 있는 해설의 배포 후보 승인을 완강히 거부합니다.</span>
+                                <div class="li-tags">
+                                    <code class="li-code">ENGINE-PROOF-ANSWER-MISMATCH</code>
+                                    <code class="li-code">Proof Gate</code>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-content">
+                            <div class="li-meta-col">
+                                <span class="li-title">⑤ 신선도 라벨 감시관</span>
+                            </div>
+                            <div class="li-desc-col">
+                                <span class="li-desc">7단계 최종 배포 시, SHA-256 해시 대조를 거쳐 이전에 검증 완료된 결과물 파일을 수동으로 임의 변조한 흔적을 잡아내 차단(release-strict)합니다.</span>
+                                <div class="li-tags">
+                                    <code class="li-code">06.run-evidence.json</code>
+                                    <code class="li-code">ENGINE-EVIDENCE-STALE</code>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="li-content">
+                            <div class="li-meta-col">
+                                <span class="li-title">정본 레포지토리</span>
                             </div>
                             <div class="li-desc-col">
                                 <span class="li-desc">에이전트 훅 및 신뢰 경계 통제 정본 소스 레포지토리 주소입니다.</span>
