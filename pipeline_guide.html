@@ -270,7 +270,6 @@
             min-width: 280px;
             display: flex;
             flex-direction: column;
-            gap: 0.4rem;
         }
 
         .li-title {
@@ -285,6 +284,14 @@
             line-height: 1.5;
         }
 
+        .li-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            align-items: center;
+        }
+
         .li-code {
             background-color: #e6dfca;
             color: #63472b;
@@ -293,18 +300,19 @@
             font-family: monospace;
             font-size: 0.78rem;
             white-space: nowrap;
-            width: fit-content;
+            display: inline-block;
+            line-height: 1.2;
         }
 
         .quality-badge {
             display: inline-block;
-            margin-top: 0.4rem;
             font-size: 0.78rem;
             color: var(--success-color);
             background-color: #d1dcce;
-            padding: 0.1rem 0.5rem;
+            padding: 0.15rem 0.5rem;
             border-radius: 4px;
             font-weight: 700;
+            line-height: 1.2;
         }
 
         footer {
@@ -399,20 +407,32 @@
                     <ul class="details-list">
                         <li>
                             <div class="li-content">
-                                <span class="li-title">이미지 렌더링</span>
-                                <span class="li-desc">pdftoppm을 가동하여 원본 PDF 페이지를 고해상도(150dpi) PNG 이미지로 렌더링합니다.</span>
+                                <div class="li-meta-col">
+                                    <span class="li-title">이미지 렌더링</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">pdftoppm을 가동하여 원본 PDF 페이지를 고해상도(150dpi) PNG 이미지로 렌더링합니다.</span>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
-                                <span class="li-title">정답 매칭</span>
-                                <span class="li-desc">해설지 파싱 및 분석을 통해 30개 기출 문항의 정답(Ground Truth)을 매칭합니다.</span>
+                                <div class="li-meta-col">
+                                    <span class="li-title">정답 매칭</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">해설지 파싱 및 분석을 통해 30개 기출 문항의 정답(Ground Truth)을 매칭합니다.</span>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
-                                <span class="li-title">데이터베이스 인입</span>
-                                <span class="li-desc">데이터베이스 저장소 어댑터에 최초의 문항 데이터 슬롯을 생성합니다.</span>
+                                <div class="li-meta-col">
+                                    <span class="li-title">데이터베이스 인입</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">데이터베이스 저장소 어댑터에 최초의 문항 데이터 슬롯을 생성합니다.</span>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -432,21 +452,35 @@
                     <ul class="details-list">
                         <li>
                             <div class="li-content">
-                                <span class="li-title">바운딩 템플릿</span>
-                                <span class="li-desc">표준 시험지 레이아웃(A3 2단 구성) 기준의 영역 좌표 분할 템플릿을 적용합니다.</span>
+                                <div class="li-meta-col">
+                                    <span class="li-title">바운딩 템플릿</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">표준 시험지 레이아웃(A3 2단 구성) 기준의 영역 좌표 분할 템플릿을 적용합니다.</span>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
-                                <span class="li-title">이미지 절단</span>
-                                <span class="li-desc">macOS 네이티브 sips 명령어를 스크립트 내부에서 일괄 실행합니다.</span>
+                                <div class="li-meta-col">
+                                    <span class="li-title">이미지 절단</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">macOS 네이티브 sips 명령어를 스크립트 내부에서 일괄 실행합니다.</span>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
-                                <span class="li-title">개별 자산 확보</span>
-                                <span class="li-desc">문항별 잘려나간 개별 이미지 파일들을 자산 폴더에 성공적으로 적치합니다.</span>
-                                <code class="li-code">figures/source-01.png</code>
+                                <div class="li-meta-col">
+                                    <span class="li-title">개별 자산 확보</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">문항별 잘려나간 개별 이미지 파일들을 자산 폴더에 성공적으로 적치합니다.</span>
+                                    <div class="li-tags">
+                                        <code class="li-code">figures/source-01.png</code>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -466,21 +500,35 @@
                     <ul class="details-list">
                         <li>
                             <div class="li-content">
-                                <span class="li-title">OCR 엔진 구동</span>
-                                <span class="li-desc">로컬 Tesseract OCR(수식, 한글, 영문 라이브러리 탑재) 엔진을 호출합니다.</span>
+                                <div class="li-meta-col">
+                                    <span class="li-title">OCR 엔진 구동</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">로컬 Tesseract OCR(수식, 한글, 영문 라이브러리 탑재) 엔진을 호출합니다.</span>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
-                                <span class="li-title">품질 자동 판정</span>
-                                <span class="li-desc">추출된 한글 비율과 문자 패턴을 분석하여 기계적 품질 보고서를 생성합니다.</span>
+                                <div class="li-meta-col">
+                                    <span class="li-title">품질 자동 판정</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">추출된 한글 비율과 문자 패턴을 분석하여 기계적 품질 보고서를 생성합니다.</span>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
-                                <span class="li-title">원시 텍스트 결합</span>
-                                <span class="li-desc">판독된 날것의 수학 기호와 원시 텍스트를 문항 케이스 메타데이터에 안착시킵니다.</span>
-                                <code class="li-code">ocr/raw-tesseract.txt</code>
+                                <div class="li-meta-col">
+                                    <span class="li-title">원시 텍스트 결합</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">판독된 날것의 수학 기호와 원시 텍스트를 문항 케이스 메타데이터에 안착시킵니다.</span>
+                                    <div class="li-tags">
+                                        <code class="li-code">ocr/raw-tesseract.txt</code>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -500,23 +548,39 @@
                     <ul class="details-list">
                         <li>
                             <div class="li-content">
-                                <span class="li-title">LaTeX 수식 복원</span>
-                                <span class="li-desc">에이전트 검수를 가동해 무결하고 엄격한 표준 LaTeX 수식 표기법으로 보정합니다.</span>
+                                <div class="li-meta-col">
+                                    <span class="li-title">LaTeX 수식 복원</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">에이전트 검수를 가동해 무결하고 엄격한 표준 LaTeX 수식 표기법으로 보정합니다.</span>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
-                                <span class="li-title">구조적 정보 파싱</span>
-                                <span class="li-desc">5지선다 보기 배열 및 정오표 지문, 합의 조건 상자 데이터를 정밀 매핑합니다.</span>
-                                <code class="li-code">choices</code>
-                                <code class="li-code">boxed_statements</code>
+                                <div class="li-meta-col">
+                                    <span class="li-title">구조적 정보 파싱</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">5지선다 보기 배열 및 정오표 지문, 합의 조건 상자 데이터를 정밀 매핑합니다.</span>
+                                    <div class="li-tags">
+                                        <code class="li-code">choices</code>
+                                        <code class="li-code">boxed_statements</code>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
-                                <span class="li-title">골든 인덱스 승격</span>
-                                <span class="li-desc">교정된 마크다운/수식 데이터를 저장 및 승격하고 골든 데이터셋 인덱스를 갱신합니다.</span>
-                                <code class="li-code">case.json</code>
+                                <div class="li-meta-col">
+                                    <span class="li-title">골든 인덱스 승격</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">교정된 마크다운/수식 데이터를 저장 및 승격하고 골든 데이터셋 인덱스를 갱신합니다.</span>
+                                    <div class="li-tags">
+                                        <code class="li-code">case.json</code>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -538,11 +602,13 @@
                             <div class="li-content">
                                 <div class="li-meta-col">
                                     <span class="li-title">아리스토텔레스적 연역 논리</span>
-                                    <code class="li-code">foundation.archai_dag</code>
                                 </div>
                                 <div class="li-desc-col">
                                     <span class="li-desc">문항 조건과 수학적 개념들의 결합을 삼단논법 체계로 분해하여 근원(archai) 의존성 그래프로 인덱싱합니다.</span>
-                                    <span class="quality-badge">품질개선: 변형 문제의 수학적 조건 충돌 및 오류 문항 100% 원천 차단</span>
+                                    <div class="li-tags">
+                                        <code class="li-code">foundation.archai_dag</code>
+                                        <span class="quality-badge">품질개선: 변형 문제의 수학적 조건 충돌 및 오류 문항 100% 원천 차단</span>
+                                    </div>
                                 </div>
                             </div>
                         </li>
@@ -550,11 +616,13 @@
                             <div class="li-content">
                                 <div class="li-meta-col">
                                     <span class="li-title">소크라테스적 산파술 힌트</span>
-                                    <code class="li-code">Socratic_Hint_Query</code>
                                 </div>
                                 <div class="li-desc-col">
                                     <span class="li-desc">발문에서 답으로 유도하는 인과 과정을 질문 연쇄 노드로 설계합니다.</span>
-                                    <span class="quality-badge">품질개선: 학생의 오답 지점과 인지 단계에 정확히 정합하는 1:1 맞춤형 힌트 유도</span>
+                                    <div class="li-tags">
+                                        <code class="li-code">Socratic_Hint_Query</code>
+                                        <span class="quality-badge">품질개선: 학생의 오답 지점과 인지 단계에 정확히 정합하는 1:1 맞춤형 힌트 유도</span>
+                                    </div>
                                 </div>
                             </div>
                         </li>
@@ -562,12 +630,14 @@
                             <div class="li-content">
                                 <div class="li-meta-col">
                                     <span class="li-title">플라톤적 기하 이데아</span>
-                                    <code class="li-code">geometry_spec</code>
-                                    <code class="li-code">geometry-certificate</code>
                                 </div>
                                 <div class="li-desc-col">
                                     <span class="li-desc">완벽한 상사비와 점/선 제약식을 수치 솔버로 피팅하여 모순 오차를 0으로 만듭니다.</span>
-                                    <span class="quality-badge">품질개선: 다이어그램 렌더링 겹침·깨짐 방지 및 LaTeX 컴파일 에러 0% 통제</span>
+                                    <div class="li-tags">
+                                        <code class="li-code">geometry_spec</code>
+                                        <code class="li-code">geometry-certificate</code>
+                                        <span class="quality-badge">품질개선: 다이어그램 렌더링 겹침·깨짐 방지 및 LaTeX 컴파일 에러 0% 통제</span>
+                                    </div>
                                 </div>
                             </div>
                         </li>
@@ -588,21 +658,35 @@
                     <ul class="details-list">
                         <li>
                             <div class="li-content">
-                                <span class="li-title">변형 치수 시뮬레이션</span>
-                                <span class="li-desc">기하학적 상사비와 불변 성질을 유지한 한도 내에서 최적의 변이 조건을 형성합니다.</span>
+                                <div class="li-meta-col">
+                                    <span class="li-title">변형 치수 시뮬레이션</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">기하학적 상사비와 불변 성질을 유지한 한도 내에서 최적의 변이 조건을 형성합니다.</span>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
-                                <span class="li-title">해설 오케스트레이션</span>
-                                <span class="li-desc">00~04 생성 에이전트를 차례로 구동하여 단계별 변형 풀이 과정을 자동 수립합니다.</span>
-                                <code class="li-code">variant_solution</code>
+                                <div class="li-meta-col">
+                                    <span class="li-title">해설 오케스트레이션</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">00~04 생성 에이전트를 차례로 구동하여 단계별 변형 풀이 과정을 자동 수립합니다.</span>
+                                    <div class="li-tags">
+                                        <code class="li-code">variant_solution</code>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
-                                <span class="li-title">위생 필터링 검수</span>
-                                <span class="li-desc">수식 문법 오류, 부자연스러운 한글 문장 표현을 사전에 전수 검수합니다.</span>
+                                <div class="li-meta-col">
+                                    <span class="li-title">위생 필터링 검수</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">수식 문법 오류, 부자연스러운 한글 문장 표현을 사전에 전수 검수합니다.</span>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -622,21 +706,35 @@
                     <ul class="details-list">
                         <li>
                             <div class="li-content">
-                                <span class="li-title">A4 인쇄 레이아웃</span>
-                                <span class="li-desc">Noto Serif 서체 및 여백 제어 패키지를 활용한 1단 교재 레이아웃을 형성합니다.</span>
+                                <div class="li-meta-col">
+                                    <span class="li-title">A4 인쇄 레이아웃</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">Noto Serif 서체 및 여백 제어 패키지를 활용한 1단 교재 레이아웃을 형성합니다.</span>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
-                                <span class="li-title">다이어그램 벡터 드로잉</span>
-                                <span class="li-desc">TikZ 컴파일러 또는 SVG 변환기를 작동해 정밀 기하 도형 벡터 렌더링을 그립니다.</span>
+                                <div class="li-meta-col">
+                                    <span class="li-title">다이어그램 벡터 드로잉</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">TikZ 컴파일러 또는 SVG 변환기를 작동해 정밀 기하 도형 벡터 렌더링을 그립니다.</span>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
-                                <span class="li-title">PDF 컴파일 컴파일</span>
-                                <span class="li-desc">XeLaTeX 빌더 및 배포 준비 테스트 통과 후 최종 PDF 교재를 배포용 폴더에 출력합니다.</span>
-                                <code class="li-code">output/</code>
+                                <div class="li-meta-col">
+                                    <span class="li-title">PDF 컴파일 컴파일</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">XeLaTeX 빌더 및 배포 준비 테스트 통과 후 최종 PDF 교재를 배포용 폴더에 출력합니다.</span>
+                                    <div class="li-tags">
+                                        <code class="li-code">output/</code>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                     </ul>
