@@ -10,18 +10,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #060913; /* Deep Ocean Black */
-            --card-bg: #0f1626; /* Sleek Steel Dark Blue */
-            --card-border: #1e293b; /* Steel Slate Border */
-            --text-main: #f1f5f9; /* Slate White */
-            --text-muted: #94a3b8; /* Mineral Grey Muted */
-            --accent-grad: linear-gradient(135deg, #06b6d4, #6366f1); /* Cyber Cyan to Cosmic Violet */
-            --accent-cyan: #06b6d4; /* Electric Cyan */
-            --accent-violet: #6366f1; /* Cosmic Violet */
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --error-color: #ef4444;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --bg-color: #f8f9fc; /* Material 3 Light Background */
+            --card-bg: #ffffff; /* Pure White Surface */
+            --card-border: #e0e2ec; /* M3 Outline Variant */
+            --text-main: #1a1c1e; /* On Surface */
+            --text-muted: #43474e; /* On Surface Variant */
+            --accent-primary: #005faf; /* M3 Primary Blue */
+            --accent-secondary: #006874; /* M3 Tertiary Teal */
+            --accent-grad: linear-gradient(135deg, #005faf, #006874); /* M3 Primary Gradient */
+            --success-color: #006e4c; /* M3 Custom Success Green */
+            --warning-color: #8c5000; /* M3 Custom Warning Yellow/Brown */
+            --error-color: #ba1a1a; /* M3 Custom Error Red */
+            --transition: all 0.25s cubic-bezier(0.2, 0, 0, 1); /* M3 Standard Easing */
         }
 
         * {
@@ -45,12 +45,11 @@
         .container {
             max-width: 1000px;
             width: 100%;
-            background: radial-gradient(circle at top right, rgba(6, 182, 212, 0.05), transparent 500px),
-                        radial-gradient(circle at bottom left, rgba(99, 102, 241, 0.05), transparent 500px);
-            border-radius: 24px;
+            background-color: var(--card-bg);
+            border-radius: 28px; /* M3 Surface Container Large */
             padding: 3.5rem;
             border: 1px solid var(--card-border);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         header {
@@ -62,8 +61,8 @@
         header::after {
             content: '';
             display: block;
-            width: 50px;
-            height: 3px;
+            width: 48px;
+            height: 4px;
             margin: 1.5rem auto 0 auto;
             background: var(--accent-grad);
             border-radius: 9999px;
@@ -77,13 +76,13 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.02em;
         }
 
         .subtitle {
             color: var(--text-muted);
             font-size: 1.15rem;
-            font-weight: 300;
+            font-weight: 400;
             max-width: 650px;
             margin: 0 auto;
         }
@@ -91,14 +90,13 @@
         /* SVG Pipeline Diagram */
         .diagram-container {
             width: 100%;
-            background: rgba(15, 22, 38, 0.6);
+            background: #f0f4f9; /* M3 Surface Container */
             border: 1px solid var(--card-border);
             border-radius: 20px;
             padding: 2.5rem;
             margin-bottom: 4.5rem;
             display: flex;
             justify-content: center;
-            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .pipeline-svg {
@@ -120,25 +118,26 @@
             top: 0;
             bottom: 0;
             width: 2px;
-            background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-violet), var(--success-color));
-            opacity: 0.25;
+            background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary), var(--success-color));
+            opacity: 0.3;
         }
 
         .step-card {
             background-color: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 20px;
+            border-radius: 20px; /* M3 Medium Corner */
             padding: 2.2rem;
             margin-bottom: 2.8rem;
             position: relative;
             transition: var(--transition);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
         }
 
         .step-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-cyan);
-            box-shadow: 0 12px 28px rgba(6, 182, 212, 0.15);
+            transform: translateY(-4px);
+            background-color: #f7f9ff; /* M3 Light Hover Color Tint */
+            border-color: var(--accent-primary);
+            box-shadow: 0 4px 12px rgba(0, 95, 175, 0.08), 0 2px 6px rgba(0, 95, 175, 0.04);
         }
 
         .step-badge {
@@ -156,8 +155,8 @@
             font-weight: 700;
             font-size: 0.95rem;
             color: #ffffff;
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
-            border: 2px solid var(--bg-color);
+            box-shadow: 0 2px 6px rgba(0, 95, 175, 0.3);
+            border: 3px solid var(--card-bg);
         }
 
         .step-header {
@@ -186,35 +185,35 @@
         }
 
         .status-pill.blue {
-            background-color: rgba(6, 182, 212, 0.15);
-            color: #22d3ee;
-            border: 1px solid rgba(6, 182, 212, 0.3);
+            background-color: #e0f2fe;
+            color: #0369a1;
+            border: 1px solid #bae6fd;
         }
 
         .status-pill.purple {
-            background-color: rgba(99, 102, 241, 0.15);
-            color: #818cf8;
-            border: 1px solid rgba(99, 102, 241, 0.3);
+            background-color: #e0e7ff;
+            color: #4338ca;
+            border: 1px solid #c7d2fe;
         }
 
         .status-pill.green {
-            background-color: rgba(16, 185, 129, 0.15);
-            color: #34d399;
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            background-color: #d1fae5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
         }
 
         .step-desc {
             color: var(--text-muted);
             font-size: 0.98rem;
             margin-bottom: 1.6rem;
-            font-weight: 300;
+            font-weight: 400;
         }
 
         .step-details {
-            background-color: rgba(6, 9, 19, 0.6);
+            background-color: #f8f9fa; /* M3 Surface Container Low */
             border-radius: 12px;
             padding: 1.2rem 1.5rem;
-            border-left: 3px solid var(--accent-cyan);
+            border-left: 3px solid var(--accent-primary);
         }
 
         .details-title {
@@ -223,7 +222,7 @@
             letter-spacing: 0.08em;
             color: var(--text-muted);
             margin-bottom: 0.6rem;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .details-list {
@@ -240,9 +239,9 @@
         }
 
         .details-list li::before {
-            content: '◆';
-            color: var(--accent-cyan);
-            font-size: 0.75rem;
+            content: '●';
+            color: var(--accent-primary);
+            font-size: 0.7rem;
         }
 
         footer {
@@ -268,57 +267,57 @@
         <div class="diagram-container">
             <svg class="pipeline-svg" viewBox="0 0 800 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <!-- Pipeline Path Line -->
-                <path d="M 50,60 L 750,60" stroke="#1e293b" stroke-width="6" stroke-linecap="round"/>
-                <path d="M 50,60 L 400,60" stroke="url(#cyan-to-violet)" stroke-width="6" stroke-linecap="round"/>
-                <path d="M 400,60 L 750,60" stroke="url(#violet-to-green)" stroke-width="6" stroke-linecap="round"/>
+                <path d="M 50,60 L 750,60" stroke="#e0e2ec" stroke-width="6" stroke-linecap="round"/>
+                <path d="M 50,60 L 400,60" stroke="url(#m3-blue-to-teal)" stroke-width="6" stroke-linecap="round"/>
+                <path d="M 400,60 L 750,60" stroke="url(#m3-teal-to-green)" stroke-width="6" stroke-linecap="round"/>
 
                 <!-- Gradients Definition -->
                 <defs>
-                    <linearGradient id="cyan-to-violet" x1="50" y1="60" x2="400" y2="60" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" stop-color="#06b6d4"/>
-                        <stop offset="100%" stop-color="#6366f1"/>
+                    <linearGradient id="m3-blue-to-teal" x1="50" y1="60" x2="400" y2="60" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#005faf"/>
+                        <stop offset="100%" stop-color="#006874"/>
                     </linearGradient>
-                    <linearGradient id="violet-to-green" x1="400" y1="60" x2="750" y2="60" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" stop-color="#6366f1"/>
-                        <stop offset="100%" stop-color="#10b981"/>
+                    <linearGradient id="m3-teal-to-green" x1="400" y1="60" x2="750" y2="60" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#006874"/>
+                        <stop offset="100%" stop-color="#006e4c"/>
                     </linearGradient>
                 </defs>
 
                 <!-- Step Circles -->
                 <!-- Step 1 -->
-                <circle cx="50" cy="60" r="16" fill="#060913" stroke="#06b6d4" stroke-width="4"/>
-                <text x="50" y="64" fill="#f1f5f9" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">1</text>
-                <text x="50" y="95" fill="#94a3b8" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">시딩</text>
+                <circle cx="50" cy="60" r="16" fill="#ffffff" stroke="#005faf" stroke-width="4"/>
+                <text x="50" y="64" fill="#1a1c1e" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">1</text>
+                <text x="50" y="95" fill="#43474e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">시딩</text>
 
                 <!-- Step 2 -->
-                <circle cx="166" cy="60" r="16" fill="#060913" stroke="#06b6d4" stroke-width="4"/>
-                <text x="166" y="64" fill="#f1f5f9" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">2</text>
-                <text x="166" y="95" fill="#94a3b8" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">크롭</text>
+                <circle cx="166" cy="60" r="16" fill="#ffffff" stroke="#005faf" stroke-width="4"/>
+                <text x="166" y="64" fill="#1a1c1e" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">2</text>
+                <text x="166" y="95" fill="#43474e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">크롭</text>
 
                 <!-- Step 3 -->
-                <circle cx="282" cy="60" r="16" fill="#060913" stroke="#06b6d4" stroke-width="4"/>
-                <text x="282" y="64" fill="#f1f5f9" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">3</text>
-                <text x="282" y="95" fill="#94a3b8" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">OCR</text>
+                <circle cx="282" cy="60" r="16" fill="#ffffff" stroke="#005faf" stroke-width="4"/>
+                <text x="282" y="64" fill="#1a1c1e" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">3</text>
+                <text x="282" y="95" fill="#43474e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">OCR</text>
 
                 <!-- Step 4 -->
-                <circle cx="400" cy="60" r="16" fill="#060913" stroke="#6366f1" stroke-width="4"/>
-                <text x="400" y="64" fill="#f1f5f9" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">4</text>
-                <text x="400" y="95" fill="#f1f5f9" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">정제승격</text>
+                <circle cx="400" cy="60" r="16" fill="#ffffff" stroke="#006874" stroke-width="4"/>
+                <text x="400" y="64" fill="#1a1c1e" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">4</text>
+                <text x="400" y="95" fill="#1a1c1e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">정제승격</text>
 
                 <!-- Step 5 -->
-                <circle cx="516" cy="60" r="16" fill="#060913" stroke="#10b981" stroke-width="4"/>
-                <text x="516" y="64" fill="#f1f5f9" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">5</text>
-                <text x="516" y="95" fill="#94a3b8" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">문제분석</text>
+                <circle cx="516" cy="60" r="16" fill="#ffffff" stroke="#006e4c" stroke-width="4"/>
+                <text x="516" y="64" fill="#1a1c1e" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">5</text>
+                <text x="516" y="95" fill="#43474e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">문제분석</text>
 
                 <!-- Step 6 -->
-                <circle cx="632" cy="60" r="16" fill="#060913" stroke="#10b981" stroke-width="4"/>
-                <text x="632" y="64" fill="#f1f5f9" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">6</text>
-                <text x="632" y="95" fill="#94a3b8" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">변형생성</text>
+                <circle cx="632" cy="60" r="16" fill="#ffffff" stroke="#006e4c" stroke-width="4"/>
+                <text x="632" y="64" fill="#1a1c1e" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">6</text>
+                <text x="632" y="95" fill="#43474e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">변형생성</text>
 
                 <!-- Step 7 -->
-                <circle cx="750" cy="60" r="16" fill="#060913" stroke="#10b981" stroke-width="4"/>
-                <text x="750" y="64" fill="#f1f5f9" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">7</text>
-                <text x="750" y="95" fill="#94a3b8" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">MD & PDF</text>
+                <circle cx="750" cy="60" r="16" fill="#ffffff" stroke="#006e4c" stroke-width="4"/>
+                <text x="750" y="64" fill="#1a1c1e" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">7</text>
+                <text x="750" y="95" fill="#43474e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">MD & PDF</text>
             </svg>
         </div>
 
