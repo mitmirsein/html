@@ -10,14 +10,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0b130f; /* Deep Forest Black */
-            --card-bg: #12221a; /* Roastery Dark Green */
-            --card-border: #203a2d; /* Forest Olive Border */
-            --text-main: #f4f0ea; /* Cozy Warm Cream */
-            --text-muted: #95ad9e; /* Sage Green Muted */
-            --accent-grad: linear-gradient(135deg, #006241, #cba258); /* Forest Green to Gold */
-            --accent-gold: #cba258; /* Reserve Gold */
-            --accent-green: #006241; /* Forest Green */
+            --bg-color: #060913; /* Deep Ocean Black */
+            --card-bg: #0f1626; /* Sleek Steel Dark Blue */
+            --card-border: #1e293b; /* Steel Slate Border */
+            --text-main: #f1f5f9; /* Slate White */
+            --text-muted: #94a3b8; /* Mineral Grey Muted */
+            --accent-grad: linear-gradient(135deg, #06b6d4, #6366f1); /* Cyber Cyan to Cosmic Violet */
+            --accent-cyan: #06b6d4; /* Electric Cyan */
+            --accent-violet: #6366f1; /* Cosmic Violet */
             --success-color: #10b981;
             --warning-color: #f59e0b;
             --error-color: #ef4444;
@@ -45,12 +45,12 @@
         .container {
             max-width: 1000px;
             width: 100%;
-            background: radial-gradient(circle at top right, rgba(203, 162, 88, 0.06), transparent 500px),
-                        radial-gradient(circle at bottom left, rgba(0, 98, 65, 0.06), transparent 500px);
+            background: radial-gradient(circle at top right, rgba(6, 182, 212, 0.05), transparent 500px),
+                        radial-gradient(circle at bottom left, rgba(99, 102, 241, 0.05), transparent 500px);
             border-radius: 24px;
             padding: 3.5rem;
             border: 1px solid var(--card-border);
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
 
         header {
@@ -60,12 +60,13 @@
         }
 
         header::after {
-            content: '★';
+            content: '';
             display: block;
+            width: 50px;
+            height: 3px;
             margin: 1.5rem auto 0 auto;
-            color: var(--accent-gold);
-            font-size: 1.2rem;
-            letter-spacing: 0.2em;
+            background: var(--accent-grad);
+            border-radius: 9999px;
         }
 
         h1 {
@@ -90,14 +91,14 @@
         /* SVG Pipeline Diagram */
         .diagram-container {
             width: 100%;
-            background: rgba(18, 34, 26, 0.6);
+            background: rgba(15, 22, 38, 0.6);
             border: 1px solid var(--card-border);
             border-radius: 20px;
             padding: 2.5rem;
             margin-bottom: 4.5rem;
             display: flex;
             justify-content: center;
-            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .pipeline-svg {
@@ -119,7 +120,7 @@
             top: 0;
             bottom: 0;
             width: 2px;
-            background: linear-gradient(to bottom, var(--accent-green), var(--accent-gold), var(--success-color));
+            background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-violet), var(--success-color));
             opacity: 0.25;
         }
 
@@ -131,13 +132,13 @@
             margin-bottom: 2.8rem;
             position: relative;
             transition: var(--transition);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
 
         .step-card:hover {
             transform: translateY(-5px);
-            border-color: var(--accent-gold);
-            box-shadow: 0 12px 24px rgba(203, 162, 88, 0.12);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 12px 28px rgba(6, 182, 212, 0.15);
         }
 
         .step-badge {
@@ -154,8 +155,8 @@
             font-family: 'Outfit', sans-serif;
             font-weight: 700;
             font-size: 0.95rem;
-            color: #f4f0ea;
-            box-shadow: 0 0 15px rgba(203, 162, 88, 0.3);
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
             border: 2px solid var(--bg-color);
         }
 
@@ -185,15 +186,15 @@
         }
 
         .status-pill.blue {
-            background-color: rgba(0, 98, 65, 0.2);
-            color: #5cdba4;
-            border: 1px solid rgba(0, 98, 65, 0.4);
+            background-color: rgba(6, 182, 212, 0.15);
+            color: #22d3ee;
+            border: 1px solid rgba(6, 182, 212, 0.3);
         }
 
         .status-pill.purple {
-            background-color: rgba(203, 162, 88, 0.15);
-            color: #ecd5aa;
-            border: 1px solid rgba(203, 162, 88, 0.3);
+            background-color: rgba(99, 102, 241, 0.15);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.3);
         }
 
         .status-pill.green {
@@ -210,10 +211,10 @@
         }
 
         .step-details {
-            background-color: rgba(11, 19, 15, 0.6);
+            background-color: rgba(6, 9, 19, 0.6);
             border-radius: 12px;
             padding: 1.2rem 1.5rem;
-            border-left: 3px solid var(--accent-gold);
+            border-left: 3px solid var(--accent-cyan);
         }
 
         .details-title {
@@ -239,8 +240,8 @@
         }
 
         .details-list li::before {
-            content: '★';
-            color: var(--accent-gold);
+            content: '◆';
+            color: var(--accent-cyan);
             font-size: 0.75rem;
         }
 
@@ -267,57 +268,57 @@
         <div class="diagram-container">
             <svg class="pipeline-svg" viewBox="0 0 800 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <!-- Pipeline Path Line -->
-                <path d="M 50,60 L 750,60" stroke="#203a2d" stroke-width="6" stroke-linecap="round"/>
-                <path d="M 50,60 L 400,60" stroke="url(#forest-green-to-gold)" stroke-width="6" stroke-linecap="round"/>
-                <path d="M 400,60 L 750,60" stroke="url(#forest-gold-to-light)" stroke-width="6" stroke-linecap="round"/>
+                <path d="M 50,60 L 750,60" stroke="#1e293b" stroke-width="6" stroke-linecap="round"/>
+                <path d="M 50,60 L 400,60" stroke="url(#cyan-to-violet)" stroke-width="6" stroke-linecap="round"/>
+                <path d="M 400,60 L 750,60" stroke="url(#violet-to-green)" stroke-width="6" stroke-linecap="round"/>
 
                 <!-- Gradients Definition -->
                 <defs>
-                    <linearGradient id="forest-green-to-gold" x1="50" y1="60" x2="400" y2="60" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" stop-color="#006241"/>
-                        <stop offset="100%" stop-color="#cba258"/>
+                    <linearGradient id="cyan-to-violet" x1="50" y1="60" x2="400" y2="60" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#06b6d4"/>
+                        <stop offset="100%" stop-color="#6366f1"/>
                     </linearGradient>
-                    <linearGradient id="forest-gold-to-light" x1="400" y1="60" x2="750" y2="60" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" stop-color="#cba258"/>
+                    <linearGradient id="violet-to-green" x1="400" y1="60" x2="750" y2="60" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#6366f1"/>
                         <stop offset="100%" stop-color="#10b981"/>
                     </linearGradient>
                 </defs>
 
                 <!-- Step Circles -->
                 <!-- Step 1 -->
-                <circle cx="50" cy="60" r="16" fill="#0b130f" stroke="#006241" stroke-width="4"/>
-                <text x="50" y="64" fill="#f4f0ea" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">1</text>
-                <text x="50" y="95" fill="#95ad9e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">시딩</text>
+                <circle cx="50" cy="60" r="16" fill="#060913" stroke="#06b6d4" stroke-width="4"/>
+                <text x="50" y="64" fill="#f1f5f9" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">1</text>
+                <text x="50" y="95" fill="#94a3b8" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">시딩</text>
 
                 <!-- Step 2 -->
-                <circle cx="166" cy="60" r="16" fill="#0b130f" stroke="#006241" stroke-width="4"/>
-                <text x="166" y="64" fill="#f4f0ea" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">2</text>
-                <text x="166" y="95" fill="#95ad9e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">크롭</text>
+                <circle cx="166" cy="60" r="16" fill="#060913" stroke="#06b6d4" stroke-width="4"/>
+                <text x="166" y="64" fill="#f1f5f9" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">2</text>
+                <text x="166" y="95" fill="#94a3b8" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">크롭</text>
 
                 <!-- Step 3 -->
-                <circle cx="282" cy="60" r="16" fill="#0b130f" stroke="#006241" stroke-width="4"/>
-                <text x="282" y="64" fill="#f4f0ea" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">3</text>
-                <text x="282" y="95" fill="#95ad9e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">OCR</text>
+                <circle cx="282" cy="60" r="16" fill="#060913" stroke="#06b6d4" stroke-width="4"/>
+                <text x="282" y="64" fill="#f1f5f9" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">3</text>
+                <text x="282" y="95" fill="#94a3b8" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">OCR</text>
 
                 <!-- Step 4 -->
-                <circle cx="400" cy="60" r="16" fill="#0b130f" stroke="#cba258" stroke-width="4"/>
-                <text x="400" y="64" fill="#f4f0ea" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">4</text>
-                <text x="400" y="95" fill="#f4f0ea" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">정제승격</text>
+                <circle cx="400" cy="60" r="16" fill="#060913" stroke="#6366f1" stroke-width="4"/>
+                <text x="400" y="64" fill="#f1f5f9" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">4</text>
+                <text x="400" y="95" fill="#f1f5f9" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">정제승격</text>
 
                 <!-- Step 5 -->
-                <circle cx="516" cy="60" r="16" fill="#0b130f" stroke="#10b981" stroke-width="4"/>
-                <text x="516" y="64" fill="#f4f0ea" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">5</text>
-                <text x="516" y="95" fill="#95ad9e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">문제분석</text>
+                <circle cx="516" cy="60" r="16" fill="#060913" stroke="#10b981" stroke-width="4"/>
+                <text x="516" y="64" fill="#f1f5f9" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">5</text>
+                <text x="516" y="95" fill="#94a3b8" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">문제분석</text>
 
                 <!-- Step 6 -->
-                <circle cx="632" cy="60" r="16" fill="#0b130f" stroke="#10b981" stroke-width="4"/>
-                <text x="632" y="64" fill="#f4f0ea" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">6</text>
-                <text x="632" y="95" fill="#95ad9e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">변형생성</text>
+                <circle cx="632" cy="60" r="16" fill="#060913" stroke="#10b981" stroke-width="4"/>
+                <text x="632" y="64" fill="#f1f5f9" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">6</text>
+                <text x="632" y="95" fill="#94a3b8" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">변형생성</text>
 
                 <!-- Step 7 -->
-                <circle cx="750" cy="60" r="16" fill="#0b130f" stroke="#10b981" stroke-width="4"/>
-                <text x="750" y="64" fill="#f4f0ea" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">7</text>
-                <text x="750" y="95" fill="#95ad9e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">MD & PDF</text>
+                <circle cx="750" cy="60" r="16" fill="#060913" stroke="#10b981" stroke-width="4"/>
+                <text x="750" y="64" fill="#f1f5f9" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">7</text>
+                <text x="750" y="95" fill="#94a3b8" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">MD & PDF</text>
             </svg>
         </div>
 
