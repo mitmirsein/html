@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수학 기출 포렌식 파이프라인 가이드 (스타벅스 리저브 에디션)</title>
+    <!-- Google Fonts Outfit & Noto Sans KR -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b130f; /* Deep Forest Black */
+            --card-bg: #12221a; /* Starbucks Roastery Dark Green */
+            --card-border: #203a2d; /* Forest Olive Border */
+            --text-main: #f4f0ea; /* Cozy Warm Cream */
+            --text-muted: #95ad9e; /* Sage Green Muted */
+            --accent-grad: linear-gradient(135deg, #006241, #cba258); /* Starbucks Green to Reserve Gold */
+            --accent-gold: #cba258; /* Reserve Gold */
+            --accent-green: #006241; /* Starbucks Green */
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: radial-gradient(circle at top right, rgba(203, 162, 88, 0.06), transparent 500px),
+                        radial-gradient(circle at bottom left, rgba(0, 98, 65, 0.06), transparent 500px);
+            border-radius: 24px;
+            padding: 3.5rem;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4.5rem;
+            position: relative;
+        }
+
+        header::after {
+            content: '★';
+            display: block;
+            margin: 1.5rem auto 0 auto;
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            letter-spacing: 0.2em;
+        }
+
+        h1 {
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: var(--accent-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -0.03em;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            font-weight: 300;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        /* SVG Pipeline Diagram */
+        .diagram-container {
+            width: 100%;
+            background: rgba(18, 34, 26, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 4.5rem;
+            display: flex;
+            justify-content: center;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .pipeline-svg {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+        }
+
+        /* Timeline steps styling */
+        .timeline {
+            position: relative;
+            padding-left: 3.5rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 17px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-green), var(--accent-gold), var(--success-color));
+            opacity: 0.25;
+        }
+
+        .step-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 2.2rem;
+            margin-bottom: 2.8rem;
+            position: relative;
+            transition: var(--transition);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 12px 24px rgba(203, 162, 88, 0.12);
+        }
+
+        .step-badge {
+            position: absolute;
+            left: -3.5rem;
+            top: 2rem;
+            width: 36px;
+            height: 36px;
+            background: var(--accent-grad);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #f4f0ea;
+            box-shadow: 0 0 15px rgba(203, 162, 88, 0.3);
+            border: 2px solid var(--bg-color);
+        }
+
+        .step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .step-title {
+            font-size: 1.45rem;
+            font-weight: 600;
+            color: var(--text-main);
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+        }
+
+        .status-pill {
+            padding: 0.3rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .status-pill.blue {
+            background-color: rgba(0, 98, 65, 0.2);
+            color: #5cdba4;
+            border: 1px solid rgba(0, 98, 65, 0.4);
+        }
+
+        .status-pill.purple {
+            background-color: rgba(203, 162, 88, 0.15);
+            color: #ecd5aa;
+            border: 1px solid rgba(203, 162, 88, 0.3);
+        }
+
+        .status-pill.green {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .step-desc {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            margin-bottom: 1.6rem;
+            font-weight: 300;
+        }
+
+        .step-details {
+            background-color: rgba(11, 19, 15, 0.6);
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        .details-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+        }
+
+        .details-list {
+            list-style: none;
+        }
+
+        .details-list li {
+            font-size: 0.92rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .details-list li::before {
+            content: '★';
+            color: var(--accent-gold);
+            font-size: 0.75rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--card-border);
+            padding-top: 2.2rem;
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>수학 기출 포렌식 파이프라인</h1>
+            <div class="subtitle">PDF 문제지 인입부터 수학적 분석 및 변형 교안 생성, 그리고 조판을 거쳐 고품질 PDF 교재 발행에 이르는 전 과정을 소개합니다.</div>
+        </header>
+
+        <!-- SVG Flow Diagram -->
+        <div class="diagram-container">
+            <svg class="pipeline-svg" viewBox="0 0 800 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Pipeline Path Line -->
+                <path d="M 50,60 L 750,60" stroke="#203a2d" stroke-width="6" stroke-linecap="round"/>
+                <path d="M 50,60 L 400,60" stroke="url(#starbucks-green-to-gold)" stroke-width="6" stroke-linecap="round"/>
+                <path d="M 400,60 L 750,60" stroke="url(#starbucks-gold-to-light)" stroke-width="6" stroke-linecap="round"/>
+
+                <!-- Gradients Definition -->
+                <defs>
+                    <linearGradient id="starbucks-green-to-gold" x1="50" y1="60" x2="400" y2="60" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#006241"/>
+                        <stop offset="100%" stop-color="#cba258"/>
+                    </linearGradient>
+                    <linearGradient id="starbucks-gold-to-light" x1="400" y1="60" x2="750" y2="60" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#cba258"/>
+                        <stop offset="100%" stop-color="#10b981"/>
+                    </linearGradient>
+                </defs>
+
+                <!-- Step Circles -->
+                <!-- Step 1 -->
+                <circle cx="50" cy="60" r="16" fill="#0b130f" stroke="#006241" stroke-width="4"/>
+                <text x="50" y="64" fill="#f4f0ea" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">1</text>
+                <text x="50" y="95" fill="#95ad9e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">시딩</text>
+
+                <!-- Step 2 -->
+                <circle cx="166" cy="60" r="16" fill="#0b130f" stroke="#006241" stroke-width="4"/>
+                <text x="166" y="64" fill="#f4f0ea" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">2</text>
+                <text x="166" y="95" fill="#95ad9e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">크롭</text>
+
+                <!-- Step 3 -->
+                <circle cx="282" cy="60" r="16" fill="#0b130f" stroke="#006241" stroke-width="4"/>
+                <text x="282" y="64" fill="#f4f0ea" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">3</text>
+                <text x="282" y="95" fill="#95ad9e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">OCR</text>
+
+                <!-- Step 4 -->
+                <circle cx="400" cy="60" r="16" fill="#0b130f" stroke="#cba258" stroke-width="4"/>
+                <text x="400" y="64" fill="#f4f0ea" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">4</text>
+                <text x="400" y="95" fill="#f4f0ea" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">정제승격</text>
+
+                <!-- Step 5 -->
+                <circle cx="516" cy="60" r="16" fill="#0b130f" stroke="#10b981" stroke-width="4"/>
+                <text x="516" y="64" fill="#f4f0ea" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">5</text>
+                <text x="516" y="95" fill="#95ad9e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">문제분석</text>
+
+                <!-- Step 6 -->
+                <circle cx="632" cy="60" r="16" fill="#0b130f" stroke="#10b981" stroke-width="4"/>
+                <text x="632" y="64" fill="#f4f0ea" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">6</text>
+                <text x="632" y="95" fill="#95ad9e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">변형생성</text>
+
+                <!-- Step 7 -->
+                <circle cx="750" cy="60" r="16" fill="#0b130f" stroke="#10b981" stroke-width="4"/>
+                <text x="750" y="64" fill="#f4f0ea" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">7</text>
+                <text x="750" y="95" fill="#95ad9e" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">MD & PDF</text>
+            </svg>
+        </div>
+
+        <!-- Pipeline Timeline -->
+        <div class="timeline">
+            <!-- Step 1 -->
+            <div class="step-card">
+                <div class="step-badge">1</div>
+                <div class="step-header">
+                    <div class="step-title">1단계: 정답 시딩 (PDF Ingest Seeding)</div>
+                    <span class="status-pill blue">GT확보 / OCR대기</span>
+                </div>
+                <p class="step-desc">기출 PDF 파일로부터 대상 학년도 및 시험 정보를 매핑하고, 데이터베이스에 해당 문항을 고유 케이스로 등록하여 빈 껍데기(Shell)를 형성하는 단계입니다.</p>
+                <div class="step-details">
+                    <div class="details-title">동작 및 산출 데이터</div>
+                    <ul class="details-list">
+                        <li><b>pdftoppm</b>을 사용한 PDF 원본의 고해상도(150dpi) 이미지 렌더링</li>
+                        <li>해설지 분석을 통한 30개 기출 문항의 정답(Ground Truth) 수집 및 매칭</li>
+                        <li>데이터베이스 저장소 어댑터에 최초 슬롯 생성</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-card">
+                <div class="step-badge">2</div>
+                <div class="step-header">
+                    <div class="step-title">2단계: 이미지 절단 (Cropping)</div>
+                    <span class="status-pill blue">GT확보 / CROP완료 / OCR대기</span>
+                </div>
+                <p class="step-desc">전체 시험지 페이지 이미지에서 불필요한 테두리를 버리고 개별 문항 영역만을 바운딩 박스로 정확히 잘라내어 독립된 이미지 자산으로 확보하는 단계입니다.</p>
+                <div class="step-details">
+                    <div class="details-title">동작 및 산출 데이터</div>
+                    <ul class="details-list">
+                        <li>표준 시험지 레이아웃(A3 2단 구성) 기준 좌표 좌표(x, y, w, h) 분할 템플릿 사용</li>
+                        <li>macOS 네이티브 그래픽 명령어 <b>sips</b>를 스크립트 내부에서 일괄 가동</li>
+                        <li>문항별 개별 이미지 자산(<code>figures/source-01.png</code>) 보관소 생성</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card">
+                <div class="step-badge">3</div>
+                <div class="step-header">
+                    <div class="step-title">3단계: 원시 OCR 결합 (Raw OCR Ingest)</div>
+                    <span class="status-pill blue">OCR원문확보 / 정제대기</span>
+                </div>
+                <p class="step-desc">잘려나간 문항 이미지로부터 발문 텍스트를 기계적으로 추출하여, 시스템이 읽을 수 있는 대략적인 텍스트 데이터를 확보하는 단계입니다.</p>
+                <div class="step-details">
+                    <div class="details-title">동작 및 산출 데이터</div>
+                    <ul class="details-list">
+                        <li>로컬 <b>Tesseract OCR</b>(equ, kor, eng 라이브러리 탑재) 구동</li>
+                        <li>추출 텍스트의 한글 비율 분석을 통한 기계적 품질(quality) 판정 및 보고서 생성</li>
+                        <li>추출된 날것의 수식을 <code>ocr/raw-tesseract.txt</code>에 결합</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-card">
+                <div class="step-badge">4</div>
+                <div class="step-header">
+                    <div class="step-title">4단계: 수식 클리닝 및 승격 (Text Cleaning & Promotion)</div>
+                    <span class="status-pill purple">OCR정제승격 / 실행대기</span>
+                </div>
+                <p class="step-desc">기계적 OCR 단계에서 깨진 수식 기호를 수학적으로 정확한 LaTeX 코드로 수동/자동 검수 교정하고 보기 선지를 구조화하여 엔진 분석 준비를 끝마치는 단계입니다.</p>
+                <div class="step-details">
+                    <div class="details-title">동작 및 산출 데이터</div>
+                    <ul class="details-list">
+                        <li>LLM(에이전트)이 개입하여 맥락에 부합하는 무결한 LaTeX 문법으로 수식 기호 복원</li>
+                        <li>5지선다의 보기 리스트(<code>choices</code>) 및 조건문(<code>boxed_statements</code>) 매핑</li>
+                        <li>교정 데이터를 <code>case.json</code>에 저장 후 승격하고 골든 인덱스 재빌드</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step-card">
+                <div class="step-badge">5</div>
+                <div class="step-header">
+                    <div class="step-title">5단계: 문제 분석 (기하 도형 분석도 가능)</div>
+                    <span class="status-pill green">분석완료 / 솔루션대기</span>
+                </div>
+                <p class="step-desc">승격된 기출 문항의 수학적 출제 원리와 개념 연쇄망(DAG)을 구성하고, 도형 문항의 경우 기하 제약 조건을 수치 솔버로 피팅하는 심층 분석 단계입니다.</p>
+                <div class="step-details">
+                    <div class="details-title">동작 및 산출 데이터</div>
+                    <ul class="details-list">
+                        <li>도형 문항의 기하학적 형상과 점/선 제약 수치 명세(<code>geometry_spec</code>) 설계</li>
+                        <li>도형 최적화 솔버를 구동하여 변수 피팅 및 잔차 검증 수행(<code>geometry-certificate</code>)</li>
+                        <li>문항의 출제 원리와 개념 연쇄망을 구성하는 의도 그래프(<code>archai_dag</code>) 형성</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="step-card">
+                <div class="step-badge">6</div>
+                <div class="step-header">
+                    <div class="step-title">6단계: 변형 시뮬레이션 및 오케스트레이션 (Variant Ingest)</div>
+                    <span class="status-pill green">변형완료 / 컴파일대기</span>
+                </div>
+                <p class="step-desc">분석된 수학적 인과 구조와 오개념 요소를 흔들어, 본래의 출제 의도를 변별하면서도 조건이 세련되게 변형된 실전용 변형 문항 및 해설 단계를 생성하는 단계입니다.</p>
+                <div class="step-details">
+                    <div class="details-title">동작 및 산출 데이터</div>
+                    <ul class="details-list">
+                        <li>기하학적 상사(Similarity) 및 불변 법칙(Invariants)을 유지한 변형 치수 생성</li>
+                        <li>00~04 생성 오케스트레이터를 가동하여 단계별 변형 해설(<code>variant_solution</code>) 자동 수립</li>
+                        <li>한국어 평서문 및 수식 위생 필터 검수 자동 적용</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 7 -->
+            <div class="step-card">
+                <div class="step-badge">7</div>
+                <div class="step-header">
+                    <div class="step-title">7단계: 마크다운(MD) 및 PDF 발행 (Markdown & PDF Publish)</div>
+                    <span class="status-pill green">발행완료</span>
+                </div>
+                <p class="step-desc">정제 및 변형된 수학 문항 데이터를 마크다운(MD) 소스로 취합하고, Noto Serif 서체 환경 하에 XeLaTeX 컴파일러를 구동하여 최종 PDF 교안을 발행하는 단계입니다.</p>
+                <div class="step-details">
+                    <div class="details-title">동작 및 산출 데이터</div>
+                    <ul class="details-list">
+                        <li>Noto Serif CJK KR 서체 및 A4 교재 스타일 레이아웃 기반 조판 환경 세팅</li>
+                        <li>TikZ 또는 SVG 벡터 엔진을 이용한 정밀 기하 도형 다이어그램 벡터 드로잉</li>
+                        <li>컴파일러 구동 및 조판 테스트 하네스 검수 통과 후 최종 <code>output/</code> PDF 생성</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            Math-Lecture.
+        </footer>
+    </div>
+</body>
+</html>
