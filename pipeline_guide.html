@@ -315,6 +315,164 @@
             line-height: 1.2;
         }
 
+        /* Engine 2 Popular CSS */
+        .hero-note {
+            background: linear-gradient(135deg, #f7f1df, #eadfc2);
+            border: 1px solid var(--card-border);
+            border-radius: 22px;
+            padding: 1.6rem 1.8rem;
+            margin: -2rem 0 3rem 0;
+            color: var(--text-main);
+        }
+
+        .intro-panel {
+            background: #f7f1df;
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 2rem;
+            margin: -2rem 0 3rem 0;
+        }
+
+        .intro-kicker {
+            color: var(--accent-primary);
+            font-weight: 800;
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.55rem;
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+        }
+
+        .intro-panel h2 {
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+            font-size: 1.65rem;
+            line-height: 1.35;
+            color: var(--text-main);
+            margin-bottom: 0.9rem;
+        }
+
+        .intro-panel p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .intro-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1.35rem;
+        }
+
+        .intro-item {
+            background: #faf8f2;
+            border: 1px solid #e3dac3;
+            border-radius: 16px;
+            padding: 1rem;
+        }
+
+        .intro-item strong {
+            display: block;
+            color: var(--text-main);
+            margin-bottom: 0.35rem;
+        }
+
+        .output-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            margin-top: 1.3rem;
+        }
+
+        .output-chip {
+            background: #e6dfca;
+            color: #63472b;
+            border: 1px solid #d4cbb3;
+            border-radius: 9999px;
+            padding: 0.32rem 0.72rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .hero-note strong {
+            color: var(--accent-primary);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            margin-bottom: 4.5rem;
+        }
+
+        .impact-card {
+            background: #f7f1df;
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 1.25rem;
+            box-shadow: 0 3px 10px rgba(112, 83, 53, 0.035);
+        }
+
+        .impact-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.45rem;
+            color: var(--accent-primary);
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+        }
+
+        .impact-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .plain-section {
+            background-color: #f7f1df;
+            border: 1px solid var(--card-border);
+            border-radius: 22px;
+            padding: 2rem;
+            margin-top: 2.8rem;
+        }
+
+        .plain-section h2 {
+            font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+            font-size: 1.45rem;
+            color: var(--accent-primary);
+            margin-bottom: 0.9rem;
+        }
+
+        .plain-section p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .plain-list {
+            list-style: none;
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .plain-list li {
+            background: #faf8f2;
+            border: 1px solid #e3dac3;
+            border-radius: 14px;
+            padding: 0.95rem 1rem;
+            color: var(--text-muted);
+        }
+
+        .plain-list strong {
+            color: var(--text-main);
+        }
+
+        @media (max-width: 780px) {
+            .impact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .intro-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* /Engine 2 Popular CSS */
+
         footer {
             text-align: center;
             margin-top: 4.5rem;
@@ -331,8 +489,59 @@
     <div class="container">
         <header>
             <h1>수학 기출 포렌식 파이프라인</h1>
-            <div class="subtitle">PDF 문제지 인입부터 수학적 분석 및 변형 교안 생성, 그리고 조판을 거쳐 고품질 PDF 교재 발행에 이르는 전 과정을 소개합니다.</div>
+            <div class="subtitle">PDF 문제지를 넣으면 정답·문항·해설·변형·도형·PDF 발행까지 이어지는 흐름을 한눈에 보여줍니다. 이번 개선으로 미적분·확률과 통계까지 더 안정적으로 다루고, 실패 원인도 더 분명하게 설명합니다.</div>
         </header>
+
+
+
+        <!-- Project Introduction -->
+        <section class="intro-panel">
+            <div class="intro-kicker">Project Overview</div>
+            <h2>수학 기출 문제를 “풀이”가 아니라 “교안”으로 바꾸는 자동 발행 파이프라인입니다.</h2>
+            <p>
+                이 프로젝트는 기출 PDF나 문항 이미지를 받아 정답, 문제 본문, 도형, 개념 구조, 풀이 흐름, 오답 유도 지점,
+                변형 대비 문제, 최종 PDF 교안까지 하나의 흐름으로 묶습니다. 목표는 단순히 답을 맞히는 것이 아니라
+                “왜 이 문제가 이렇게 출제되었는가”, “학생은 어디서 막히는가”, “어떤 원리를 다른 문제로 옮길 수 있는가”를
+                선명하게 드러내는 것입니다.
+            </p>
+            <div class="intro-grid">
+                <div class="intro-item">
+                    <strong>교사를 위한 도구</strong>
+                    한 문항을 수업 가능한 해설, 질문 흐름, 오답 반박, 변형 대비 자료로 빠르게 정리합니다.
+                </div>
+                <div class="intro-item">
+                    <strong>콘텐츠 팀을 위한 공정</strong>
+                    OCR, 수식 정제, 도형 검증, PDF 발행, 증거 기록을 반복 가능한 제작 라인으로 만듭니다.
+                </div>
+                <div class="intro-item">
+                    <strong>AI를 안전하게 쓰는 방식</strong>
+                    모델이 만든 답을 그대로 믿지 않고, 정답 권위값·스키마·증거·게이트로 단계마다 확인합니다.
+                </div>
+                <div class="intro-item">
+                    <strong>프로덕션을 위한 품질 관리</strong>
+                    결과물이 언제, 어떤 입력과 엔진 상태에서 만들어졌는지 기록해 나중에 다시 검증할 수 있게 합니다.
+                </div>
+            </div>
+            <div class="output-strip" aria-label="주요 산출물">
+                <span class="output-chip">정답 데이터</span>
+                <span class="output-chip">정제된 문제 본문</span>
+                <span class="output-chip">개념·풀이 구조</span>
+                <span class="output-chip">도형·그래프</span>
+                <span class="output-chip">변형 대비 문제</span>
+                <span class="output-chip">마크다운 교안</span>
+                <span class="output-chip">PDF 교재</span>
+                <span class="output-chip">검증 리포트</span>
+            </div>
+        </section>
+        <!-- /Project Introduction -->
+
+        <!-- Engine 2 Hero Note -->
+        <section class="hero-note">
+            <strong>이번 버전의 핵심은 “더 많이 그리는 것”이 아니라 “틀린 것을 더 빨리 알아차리는 것”입니다.</strong>
+            기하 도형만 조심스럽게 다루던 수준에서 벗어나, 미적분 그래프와 확률·통계 다이어그램까지 다루는 기반을 마련했습니다.
+            또한 PDF가 깨지거나, 변형 문제가 원본을 베끼거나, 중간 작업이 이전 결과를 지우는 상황을 더 명확히 잡아냅니다.
+        </section>
+        <!-- /Engine 2 Hero Note -->
 
         <!-- SVG Flow Diagram -->
         <div class="diagram-container">
@@ -380,7 +589,58 @@
                 <text x="516" y="64" fill="#322b20" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">5</text>
                 <text x="516" y="95" fill="#6b5d49" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">문제분석</text>
 
-                <!-- Step 6 -->
+
+                <!-- Engine 2 Area Expansion -->
+                <div class="step-details" style="margin-top: 1rem;">
+                    <div class="details-title">이번 개선으로 넓어진 분석 범위</div>
+                    <ul class="details-list">
+                        <li>
+                            <div class="li-content">
+                                <div class="li-meta-col">
+                                    <span class="li-title">미적분 그래프</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">다항식, 유리함수, 제곱근, 지수·로그, 삼각함수를 안전한 파서로 읽고 정의역 안에서 곡선을 샘플링합니다. 끊어지는 지점과 화면 밖으로 나가는 값도 기록합니다.</span>
+                                    <div class="li-tags">
+                                        <code class="li-code">function-curves</code>
+                                        <code class="li-code">SVG/TikZ</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="li-content">
+                                <div class="li-meta-col">
+                                    <span class="li-title">확률·통계 도표</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">벤다이어그램, 이산분포 막대그래프, 정규분포 음영, 시행 트리, 상태 전이 격자를 템플릿으로 그립니다. 확률의 합과 구간 순서도 함께 검사합니다.</span>
+                                    <div class="li-tags">
+                                        <code class="li-code">probability-diagrams</code>
+                                        <code class="li-code">확률합 1</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="li-content">
+                                <div class="li-meta-col">
+                                    <span class="li-title">라벨 겹침 완화</span>
+                                </div>
+                                <div class="li-desc-col">
+                                    <span class="li-desc">점 이름과 수식 라벨이 선분·곡선·다른 글자와 겹치지 않도록 비용 함수를 사용해 배치합니다. 같은 입력이면 같은 그림이 나오도록 결정론적으로 동작합니다.</span>
+                                    <div class="li-tags">
+                                        <code class="li-code">label-optimizer</code>
+                                        <code class="li-code">byte-identical</code>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /Engine 2 Area Expansion -->
+
+            <!-- Step 6 -->
                 <circle cx="632" cy="60" r="16" fill="#faf8f2" stroke="#3b6845" stroke-width="4"/>
                 <text x="632" y="64" fill="#322b20" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">6</text>
                 <text x="632" y="95" fill="#6b5d49" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">변형생성</text>
@@ -391,6 +651,24 @@
                 <text x="750" y="95" fill="#6b5d49" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">MD & PDF</text>
             </svg>
         </div>
+
+
+        <!-- Engine 2 Impact Summary -->
+        <section class="impact-grid" aria-label="이번 개선 요약">
+            <article class="impact-card">
+                <h3>전 영역 확장</h3>
+                <p>기하뿐 아니라 미적분 함수 그래프, 확률·통계 도표까지 설명 자료로 만들 수 있는 기반을 갖췄습니다.</p>
+            </article>
+            <article class="impact-card">
+                <h3>PDF 실패 원인 표시</h3>
+                <p>긴 수식, 지원하지 않는 LaTeX 명령, 치명적 컴파일 로그를 구조화해 어디서 깨졌는지 보여줍니다.</p>
+            </article>
+            <article class="impact-card">
+                <h3>중단 후 이어가기</h3>
+                <p>작업이 중간에 실패해도 완료된 단계는 건너뛰고 실패 지점부터 다시 시작할 수 있는 구조를 마련했습니다.</p>
+            </article>
+        </section>
+        <!-- /Engine 2 Impact Summary -->
 
         <!-- Pipeline Timeline -->
         <div class="timeline">
@@ -601,13 +879,13 @@
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">아리스토텔레스적 연역 논리</span>
+                                    <span class="li-title">개념과 조건 지도</span>
                                 </div>
                                 <div class="li-desc-col">
                                     <span class="li-desc">문항 조건과 수학적 개념들의 결합을 삼단논법 체계로 분해하여 근원(archai) 의존성 그래프로 인덱싱합니다.</span>
                                     <div class="li-tags">
                                         <code class="li-code">foundation.archai_dag</code>
-                                        <span class="quality-badge">품질개선: 변형 문제의 수학적 조건 충돌 및 오류 문항 100% 원천 차단</span>
+                                        <span class="quality-badge">품질개선: 조건 충돌을 사전에 잡아 잘못된 변형을 크게 줄임</span>
                                     </div>
                                 </div>
                             </div>
@@ -615,13 +893,13 @@
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">소크라테스적 산파술 힌트</span>
+                                    <span class="li-title">막히는 지점 기반 힌트</span>
                                 </div>
                                 <div class="li-desc-col">
                                     <span class="li-desc">발문에서 답으로 유도하는 인과 과정을 질문 연쇄 노드로 설계합니다.</span>
                                     <div class="li-tags">
                                         <code class="li-code">Socratic_Hint_Query</code>
-                                        <span class="quality-badge">품질개선: 학생의 오답 지점과 인지 단계에 정확히 정합하는 1:1 맞춤형 힌트 유도</span>
+                                        <span class="quality-badge">품질개선: 학생이 막히는 지점을 더 잘 짚는 힌트 생성</span>
                                     </div>
                                 </div>
                             </div>
@@ -629,14 +907,14 @@
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">플라톤적 기하 이데아</span>
+                                    <span class="li-title">정확한 도형 엔진</span>
                                 </div>
                                 <div class="li-desc-col">
                                     <span class="li-desc">완벽한 상사비와 점/선 제약식을 수치 솔버로 피팅하여 모순 오차를 0으로 만듭니다.</span>
                                     <div class="li-tags">
                                         <code class="li-code">geometry_spec</code>
                                         <code class="li-code">geometry-certificate</code>
-                                        <span class="quality-badge">품질개선: 다이어그램 렌더링 겹침·깨짐 방지 및 LaTeX 컴파일 에러 0% 통제</span>
+                                        <span class="quality-badge">품질개선: 도형 겹침과 PDF 오류 원인을 구조화해 빠르게 수정</span>
                                     </div>
                                 </div>
                             </div>
@@ -727,7 +1005,7 @@
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">PDF 컴파일 컴파일</span>
+                                    <span class="li-title">PDF 컴파일</span>
                                 </div>
                                 <div class="li-desc-col">
                                     <span class="li-desc">XeLaTeX 빌더 및 배포 준비 테스트 통과 후 최종 PDF 교재를 배포용 폴더에 출력합니다.</span>
@@ -840,6 +1118,23 @@
                 </ul>
             </div>
         </div>
+
+
+
+        <!-- Engine 2 Production Quality -->
+        <section class="plain-section">
+            <h2>생산 품질이 좋아졌다는 뜻</h2>
+            <p>이번 개선은 화면을 더 화려하게 만든 작업이 아니라, 실제 운영에서 문제를 덜 만들고 더 빨리 고치게 하는 작업입니다.</p>
+            <ul class="plain-list">
+                <li><strong>틀린 그림을 덜 냅니다.</strong> 도형, 원뿔곡선, 함수 곡선, 통계 도표가 각각 검증 가능한 계약을 갖습니다.</li>
+                <li><strong>PDF가 왜 깨졌는지 말합니다.</strong> 긴 인라인 수식은 display 수식으로 올리고, 치명적 로그와 지원하지 않는 명령을 구체적으로 표시합니다.</li>
+                <li><strong>변형 문제의 베끼기를 잡습니다.</strong> 숫자만 바꾸거나 원본 구조를 거의 복제한 문항은 Mutation Lab과 Semantic Gate에서 걸러냅니다.</li>
+                <li><strong>결과물의 출처를 남깁니다.</strong> 실행 당시의 엔진 코드, 설정, 프롬프트, 케이스 내용을 해시로 기록해 나중에 바뀐 파일과 구분합니다.</li>
+                <li><strong>실패 후 다시 시작할 수 있습니다.</strong> 완료된 단계는 건너뛰고 실패한 단계부터 재개하는 오케스트레이션 계약을 갖습니다.</li>
+            </ul>
+        </section>
+        <!-- /Engine 2 Production Quality -->
+
 
         <footer>
             Math-Lecture.
