@@ -9,6 +9,7 @@
     <meta property="og:url" content="https://kerygma.co.kr/html/pipeline_guide.html">
     <meta property="og:title" content="수학 기출 포렌식 파이프라인 가이드">
     <meta property="og:description" content="PDF 인입부터 변형 생성 및 MD/PDF 조판 발행에 이르는 전 단계 프로세스">
+    <meta name="description" content="수학 기출 포렌식 파이프라인의 PDF 인입부터 변형 생성 및 MD/PDF 조판 발행에 이르는 전 단계 프로세스 가이드">
     <!-- Google Fonts Outfit & Noto Sans KR -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +19,7 @@
             --bg-color: #f2ebd9; /* Cozy Sepia Paper Background */
             --card-bg: #faf8f2; /* Soft Ivory Surface */
             --card-border: #dcd5c0; /* Warm Earth Outline */
+            --card-hover-bg: #f6f0dd; /* Very Warm Ivory Tint */
             --text-main: #322b20; /* Deep Coffee Black */
             --text-muted: #6b5d49; /* Sage Umber Muted */
             --accent-primary: #705335; /* Rich Roasted Brown */
@@ -26,7 +28,19 @@
             --success-color: #3b6845; /* Cozy Forest Green */
             --warning-color: #a1701a; /* Cozy Mustard Yellow */
             --error-color: #9c3b3b; /* Cozy Terracotta Red */
-            --transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+            --transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+
+        /* prefers-reduced-motion support */
+        @media (prefers-reduced-motion: reduce) {
+            .step-card:hover {
+                transform: none !important;
+            }
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
         }
 
         * {
@@ -45,6 +59,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .container {
@@ -134,13 +149,13 @@
             padding: 2.2rem;
             margin-bottom: 2.8rem;
             position: relative;
-            transition: var(--transition);
-            box-shadow: 0 3px 10px rgba(112, 83, 53, 0.03);
+            transition: var(--transition), background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 3px 10px rgba(112, 83, 53, 0.035);
         }
 
         .step-card:hover {
             transform: translateY(-4px);
-            background-color: #f6f0dd; /* Very Warm Ivory Tint */
+            background-color: var(--card-hover-bg);
             border-color: var(--accent-primary);
             box-shadow: 0 6px 18px rgba(112, 83, 53, 0.08);
         }
@@ -489,43 +504,40 @@
     <div class="container">
         <header>
             <h1>수학 기출 포렌식 파이프라인</h1>
-            <div class="subtitle">PDF 문제지를 넣으면 정답·문항·해설·변형·도형·PDF 발행까지 이어지는 흐름을 한눈에 보여줍니다. 이번 개선으로 미적분·확률과 통계까지 더 안정적으로 다루고, 실패 원인도 더 분명하게 설명합니다.</div>
+            <div class="subtitle">PDF 시험지를 등록하면 정답 검증부터 수식 정제, 도형 및 그래프 생성, 변형 문제 제작, 그리고 최종 PDF 교재 발행까지 이어지는 전체 프로세스를 안내합니다. 미적분과 확률·통계 등 고교 수학 전 영역을 안정적으로 처리하며, 오류 발생 시 구체적인 진단 원인을 함께 제공합니다.</div>
         </header>
 
 
 
         <!-- Project Introduction -->
-        <section class="intro-panel">
+        <section class="intro-panel" id="project-overview-section">
             <div class="intro-kicker">Project Overview</div>
-            <h2>수학 기출 문제를 “풀이”가 아니라 “교안”으로 바꾸는 자동 발행 파이프라인입니다.</h2>
+            <h2>단순히 수학 문제를 푸는 AI가 아닌, 수업용 "맞춤 교안"을 제작하는 자동화 시스템입니다.</h2>
             <p>
-                이 프로젝트는 기출 PDF나 문항 이미지를 받아 정답, 문제 본문, 도형, 개념 구조, 풀이 흐름, 오답 유도 지점,
-                변형 대비 문제, 최종 PDF 교안까지 하나의 흐름으로 묶습니다. 목표는 단순히 답을 맞히는 것이 아니라
-                “왜 이 문제가 이렇게 출제되었는가”, “학생은 어디서 막히는가”, “어떤 원리를 다른 문제로 옮길 수 있는가”를
-                선명하게 드러내는 것입니다.
+                기출문제 시험지나 문제 이미지를 넣기만 하면 정답 비교, 본문 텍스트 정리, 도형과 그래프 생성, 핵심 원리 분석, 취약점 힌트 설계, 그리고 변형 문제 제작까지 출판 가능한 수준의 교안 제작 과정을 하나의 선명한 흐름으로 묶어냅니다.
             </p>
             <div class="intro-grid">
                 <div class="intro-item">
-                    <strong>교사를 위한 도구</strong>
-                    한 문항을 수업 가능한 해설, 질문 흐름, 오답 반박, 변형 대비 자료로 빠르게 정리합니다.
+                    <strong>선생님을 위한 맞춤 도구</strong>
+                    문제 하나를 수업용 해설, 단계별 질문 힌트, 오답을 짚어내는 피드백, 쌍둥이 변형 문제까지 한 번에 정리합니다.
                 </div>
                 <div class="intro-item">
-                    <strong>콘텐츠 팀을 위한 공정</strong>
-                    OCR, 수식 정제, 도형 검증, PDF 발행, 증거 기록을 반복 가능한 제작 라인으로 만듭니다.
+                    <strong>콘텐츠 제작자를 위한 자동화 공정</strong>
+                    텍스트 스캔, 수학 기호 교정, 그래프 검사, 책자 제작 등의 귀찮고 반복적인 제작 업무를 완전 자동화합니다.
                 </div>
                 <div class="intro-item">
-                    <strong>AI를 안전하게 쓰는 방식</strong>
-                    모델이 만든 답을 그대로 믿지 않고, 정답 권위값·스키마·증거·게이트로 단계마다 확인합니다.
+                    <strong>믿을 수 있는 인공지능 협업</strong>
+                    인공지능이 멋대로 작성한 오답이나 엉뚱한 해설에 속지 않도록, 검증 규칙과 정답 매칭을 통해 단계마다 꼼꼼히 감시합니다.
                 </div>
                 <div class="intro-item">
-                    <strong>프로덕션을 위한 품질 관리</strong>
-                    결과물이 언제, 어떤 입력과 엔진 상태에서 만들어졌는지 기록해 나중에 다시 검증할 수 있게 합니다.
+                    <strong>출판 수준의 데이터 히스토리 보존</strong>
+                    작업 당시의 AI 버전과 설정 세팅을 고유 번호(해시)로 자동 기록하여, 언제든지 결과물의 신뢰성을 검토하고 똑같이 재현해 냅니다.
                 </div>
             </div>
-            <div class="output-strip" aria-label="주요 산출물">
+            <div class="output-strip" aria-label="주요 결과물">
                 <span class="output-chip">정답 데이터</span>
                 <span class="output-chip">정제된 문제 본문</span>
-                <span class="output-chip">개념·풀이 구조</span>
+                <span class="output-chip">개념 및 풀이 구조</span>
                 <span class="output-chip">도형·그래프</span>
                 <span class="output-chip">변형 대비 문제</span>
                 <span class="output-chip">마크다운 교안</span>
@@ -535,13 +547,13 @@
         </section>
         <!-- /Project Introduction -->
 
-        <!-- Engine 2 Hero Note -->
-        <section class="hero-note">
-            <strong>이번 버전의 핵심은 “더 많이 그리는 것”이 아니라 “틀린 것을 더 빨리 알아차리는 것”입니다.</strong>
-            기하 도형만 조심스럽게 다루던 수준에서 벗어나, 미적분 그래프와 확률·통계 다이어그램까지 다루는 기반을 마련했습니다.
-            또한 PDF가 깨지거나, 변형 문제가 원본을 베끼거나, 중간 작업이 이전 결과를 지우는 상황을 더 명확히 잡아냅니다.
+        <!-- Pipeline Core Strength Note -->
+        <section class="hero-note" id="pipeline-core-strength">
+            <strong>이 파이프라인의 핵심은 단순히 수식을 표현하는 것을 넘어, “오류를 신속하게 예방하고 진단하는 것”에 있습니다.</strong>
+            기하 도형은 물론이고 미적분 그래프와 확률·통계 도표까지 고교 수학 전 영역의 시각 자료를 안정적으로 조판합니다.
+            또한 PDF 조판이 깨지는 오류, 본문만 살짝 베낀 유사 변형 문제, 작업 중간 유실 같은 비정상 동작을 실시간 감시 시스템을 통해 원천적으로 방지합니다.
         </section>
-        <!-- /Engine 2 Hero Note -->
+        <!-- /Pipeline Core Strength Note -->
 
         <!-- SVG Flow Diagram -->
         <div class="diagram-container">
@@ -589,58 +601,7 @@
                 <text x="516" y="64" fill="#322b20" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">5</text>
                 <text x="516" y="95" fill="#6b5d49" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">문제분석</text>
 
-
-                <!-- Engine 2 Area Expansion -->
-                <div class="step-details" style="margin-top: 1rem;">
-                    <div class="details-title">이번 개선으로 넓어진 분석 범위</div>
-                    <ul class="details-list">
-                        <li>
-                            <div class="li-content">
-                                <div class="li-meta-col">
-                                    <span class="li-title">미적분 그래프</span>
-                                </div>
-                                <div class="li-desc-col">
-                                    <span class="li-desc">다항식, 유리함수, 제곱근, 지수·로그, 삼각함수를 안전한 파서로 읽고 정의역 안에서 곡선을 샘플링합니다. 끊어지는 지점과 화면 밖으로 나가는 값도 기록합니다.</span>
-                                    <div class="li-tags">
-                                        <code class="li-code">function-curves</code>
-                                        <code class="li-code">SVG/TikZ</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="li-content">
-                                <div class="li-meta-col">
-                                    <span class="li-title">확률·통계 도표</span>
-                                </div>
-                                <div class="li-desc-col">
-                                    <span class="li-desc">벤다이어그램, 이산분포 막대그래프, 정규분포 음영, 시행 트리, 상태 전이 격자를 템플릿으로 그립니다. 확률의 합과 구간 순서도 함께 검사합니다.</span>
-                                    <div class="li-tags">
-                                        <code class="li-code">probability-diagrams</code>
-                                        <code class="li-code">확률합 1</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="li-content">
-                                <div class="li-meta-col">
-                                    <span class="li-title">라벨 겹침 완화</span>
-                                </div>
-                                <div class="li-desc-col">
-                                    <span class="li-desc">점 이름과 수식 라벨이 선분·곡선·다른 글자와 겹치지 않도록 비용 함수를 사용해 배치합니다. 같은 입력이면 같은 그림이 나오도록 결정론적으로 동작합니다.</span>
-                                    <div class="li-tags">
-                                        <code class="li-code">label-optimizer</code>
-                                        <code class="li-code">byte-identical</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /Engine 2 Area Expansion -->
-
-            <!-- Step 6 -->
+                <!-- Step 6 -->
                 <circle cx="632" cy="60" r="16" fill="#faf8f2" stroke="#3b6845" stroke-width="4"/>
                 <text x="632" y="64" fill="#322b20" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">6</text>
                 <text x="632" y="95" fill="#6b5d49" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">변형생성</text>
@@ -650,6 +611,43 @@
                 <text x="750" y="64" fill="#322b20" font-size="12" font-family="Outfit" font-weight="bold" text-anchor="middle">7</text>
                 <text x="750" y="95" fill="#6b5d49" font-size="10" font-family="Inter" text-anchor="middle" font-weight="bold">MD & PDF</text>
             </svg>
+        </div>
+
+        <!-- Engine 2 Area Expansion (SVG 외부로 이동 완료) -->
+        <div class="step-details" style="margin-top: -3.5rem; margin-bottom: 4.5rem;">
+            <div class="details-title">파이프라인이 지원하는 수학 영역과 시각 자료</div>
+            <ul class="details-list">
+                <li>
+                    <div class="li-content">
+                        <div class="li-meta-col">
+                            <span class="li-title">미적분 그래프</span>
+                        </div>
+                        <div class="li-desc-col">
+                            <span class="li-desc">다항식, 유리함수, 제곱근, 지수·로그, 삼각함수를 안전한 파서로 읽고 정의역 안에서 곡선을 샘플링합니다. 끊어지는 지점과 화면 밖으로 나가는 값도 기록합니다.</span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="li-content">
+                        <div class="li-meta-col">
+                            <span class="li-title">확률·통계 도표</span>
+                        </div>
+                        <div class="li-desc-col">
+                            <span class="li-desc">벤다이어그램, 이산분포 막대그래프, 정규분포 음영, 시행 트리, 상태 전이 격자를 템플릿으로 그립니다. 확률의 합과 구간 순서도 함께 검사합니다.</span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="li-content">
+                        <div class="li-meta-col">
+                            <span class="li-title">라벨 겹침 완화</span>
+                        </div>
+                        <div class="li-desc-col">
+                            <span class="li-desc">점 이름과 수식 라벨이 선분·곡선·다른 글자와 겹치지 않도록 비용 함수를 사용해 배치합니다. 같은 입력이면 같은 그림이 나오도록 결정론적으로 동작합니다.</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
 
 
@@ -673,432 +671,380 @@
         <!-- Pipeline Timeline -->
         <div class="timeline">
             <!-- Step 1 -->
-            <div class="step-card">
+            <article class="step-card" id="step-1-card">
                 <div class="step-badge">1</div>
                 <div class="step-header">
-                    <div class="step-title">1단계: 정답 시딩 (PDF Ingest Seeding)</div>
-                    <span class="status-pill blue">GT확보 / OCR대기</span>
+                    <div class="step-title">1단계: 정답 연동 및 기초 등록 (PDF Ingest Seeding)</div>
+                    <span class="status-pill blue" role="status" aria-label="상태: 정답 확인 완료 및 텍스트 추출 대기">정답 확보 / 추출 대기</span>
                 </div>
-                <p class="step-desc">기출 PDF 파일로부터 대상 학년도 및 시험 정보를 매핑하고, 데이터베이스에 해당 문항을 고유 케이스로 등록하여 빈 껍데기(Shell)를 형성하는 단계입니다.</p>
+                <p class="step-desc">기출문제가 담긴 PDF 파일에서 시험명과 출제 연도를 분석하고, 시스템상에 개별 문제를 저장할 슬롯을 처음 만드는 단계입니다.</p>
                 <div class="step-details">
-                    <div class="details-title">동작 및 산출 데이터</div>
+                    <div class="details-title">주요 동작 및 결과물</div>
                     <ul class="details-list">
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">이미지 렌더링</span>
+                                    <span class="li-title">시험지 이미지 변환</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">pdftoppm을 가동하여 원본 PDF 페이지를 고해상도(150dpi) PNG 이미지로 렌더링합니다.</span>
+                                    <span class="li-desc">PDF 시험지 페이지를 고화질 그림 파일로 깨끗하게 변환합니다.</span>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">정답 매칭</span>
+                                    <span class="li-title">진짜 정답 매칭</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">해설지 파싱 및 분석을 통해 30개 기출 문항의 정답(Ground Truth)을 매칭합니다.</span>
+                                    <span class="li-desc">공식 해설지를 분석하여 시험 문제의 진짜 정답(기준값)을 찾아 각각 연동해 둡니다.</span>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">데이터베이스 인입</span>
+                                    <span class="li-title">기초 데이터 생성</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">데이터베이스 저장소 어댑터에 최초의 문항 데이터 슬롯을 생성합니다.</span>
+                                    <span class="li-desc">각 문제를 하나하나 개별 관리할 수 있도록 기본 데이터를 시스템에 등록합니다.</span>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
-            </div>
+            </article>
 
             <!-- Step 2 -->
-            <div class="step-card">
+            <article class="step-card" id="step-2-card">
                 <div class="step-badge">2</div>
                 <div class="step-header">
-                    <div class="step-title">2단계: 이미지 절단 (Cropping)</div>
-                    <span class="status-pill blue">GT확보 / CROP완료 / OCR대기</span>
+                    <div class="step-title">2단계: 개별 문항 오리기 (Cropping)</div>
+                    <span class="status-pill blue" role="status" aria-label="상태: 정답 매칭 및 문항 오리기 완료, 텍스트 분석 대기">정답 연동 / 오리기 완료 / 대기</span>
                 </div>
-                <p class="step-desc">전체 시험지 페이지 이미지에서 불필요한 테두리를 버리고 개별 문항 영역만을 바운딩 박스로 정확히 잘라내어 독립된 이미지 자산으로 확보하는 단계입니다.</p>
+                <p class="step-desc">여러 문제가 한데 묶인 시험지 그림에서 필요한 문제 영역만 깔끔하게 컴퓨터가 자동 판독할 크기로 오려내어 저장하는 단계입니다.</p>
                 <div class="step-details">
-                    <div class="details-title">동작 및 산출 데이터</div>
+                    <div class="details-title">주요 동작 및 결과물</div>
                     <ul class="details-list">
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">바운딩 템플릿</span>
+                                    <span class="li-title">레이아웃 자동 분석</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">표준 시험지 레이아웃(A3 2단 구성) 기준의 영역 좌표 분할 템플릿을 적용합니다.</span>
+                                    <span class="li-desc">표준 시험지 구성(왼쪽 단, 오른쪽 단)에 맞춰 각 문제가 위치한 테두리를 식별합니다.</span>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">이미지 절단</span>
+                                    <span class="li-title">이미지 분할 절단</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">macOS 네이티브 sips 명령어를 스크립트 내부에서 일괄 실행합니다.</span>
+                                    <span class="li-desc">이미지 편집 명령을 통해 문항이 담긴 영역을 하나씩 자동으로 오려냅니다.</span>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">개별 자산 확보</span>
+                                    <span class="li-title">문항 자산 개별 보관</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">문항별 잘려나간 개별 이미지 파일들을 자산 폴더에 성공적으로 적치합니다.</span>
-                                    <div class="li-tags">
-                                        <code class="li-code">figures/source-01.png</code>
-                                    </div>
+                                    <span class="li-desc">각각 오려낸 문제 그림 파일들을 문항별 자산 폴더에 안전하게 분류해 둡니다.</span>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
-            </div>
+            </article>
 
             <!-- Step 3 -->
-            <div class="step-card">
+            <article class="step-card" id="step-3-card">
                 <div class="step-badge">3</div>
                 <div class="step-header">
-                    <div class="step-title">3단계: 원시 OCR 결합 (Raw OCR Ingest)</div>
-                    <span class="status-pill blue">OCR원문확보 / 정제대기</span>
+                    <div class="step-title">3단계: 문자 자동 인식 (Raw OCR Ingest)</div>
+                    <span class="status-pill blue" role="status" aria-label="상태: 텍스트 1차 추출 완료 및 수식 다듬기 대기">텍스트 판독 완료 / 수식 교정 대기</span>
                 </div>
-                <p class="step-desc">잘려나간 문항 이미지로부터 발문 텍스트를 기계적으로 추출하여, 시스템이 읽을 수 있는 대략적인 텍스트 데이터를 확보하는 단계입니다.</p>
+                <p class="step-desc">오려낸 문제 그림에서 기계적으로 글자와 수식을 읽어내어, 컴퓨터가 이해할 수 있는 기초 문제 텍스트 데이터를 확보하는 단계입니다.</p>
                 <div class="step-details">
-                    <div class="details-title">동작 및 산출 데이터</div>
+                    <div class="details-title">주요 동작 및 결과물</div>
                     <ul class="details-list">
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">OCR 엔진 구동</span>
+                                    <span class="li-title">텍스트 인식기 구동</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">로컬 Tesseract OCR(수식, 한글, 영문 라이브러리 탑재) 엔진을 호출합니다.</span>
+                                    <span class="li-desc">한글, 영문, 수학 기호를 읽을 수 있는 인공지능 문자 판독기(Tesseract)를 호출합니다.</span>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">품질 자동 판정</span>
+                                    <span class="li-title">오독률 자동 검사</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">추출된 한글 비율과 문자 패턴을 분석하여 기계적 품질 보고서를 생성합니다.</span>
+                                    <span class="li-desc">글자가 뭉개졌거나 잘못 판독된 문장 패턴이 있는지 컴퓨터가 1차 품질을 판정합니다.</span>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">원시 텍스트 결합</span>
+                                    <span class="li-title">초안 텍스트 저장</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">판독된 날것의 수학 기호와 원시 텍스트를 문항 케이스 메타데이터에 안착시킵니다.</span>
-                                    <div class="li-tags">
-                                        <code class="li-code">ocr/raw-tesseract.txt</code>
-                                    </div>
+                                    <span class="li-desc">읽어낸 대략적인 글자와 수학 기호를 문제의 초안 텍스트 파일로 저장합니다.</span>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
-            </div>
+            </article>
 
             <!-- Step 4 -->
-            <div class="step-card">
+            <article class="step-card" id="step-4-card">
                 <div class="step-badge">4</div>
                 <div class="step-header">
-                    <div class="step-title">4단계: 수식 클리닝 및 승격 (Text Cleaning & Promotion)</div>
-                    <span class="status-pill purple">OCR정제승격 / 실행대기</span>
+                    <div class="step-title">4단계: 수식 교정 및 공식 등록 (Text Cleaning & Promotion)</div>
+                    <span class="status-pill purple" role="status" aria-label="상태: 수식 교정 및 공식 데이터 등록 완료, 분석 대기">수식 교정 완료 / 분석 대기</span>
                 </div>
-                <p class="step-desc">기계적 OCR 단계에서 깨진 수식 기호를 수학적으로 정확한 LaTeX 코드로 수동/자동 검수 교정하고 보기 선지를 구조화하여 엔진 분석 준비를 끝마치는 단계입니다.</p>
+                <p class="step-desc">기계가 오독한 수학 수식 기호들을 깔끔하고 표준적인 LaTeX 수식 양식으로 가다듬고, 보기나 선지를 문항 구조에 맞게 단정히 정돈하는 검수 단계입니다.</p>
                 <div class="step-details">
-                    <div class="details-title">동작 및 산출 데이터</div>
+                    <div class="details-title">주요 동작 및 결과물</div>
                     <ul class="details-list">
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">LaTeX 수식 복원</span>
+                                    <span class="li-title">표준 수학 수식 보정</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">에이전트 검수를 가동해 무결하고 엄격한 표준 LaTeX 수식 표기법으로 보정합니다.</span>
+                                    <span class="li-desc">인공지능 검수 및 수정을 거쳐 흐트러진 수식 기호들을 엄격한 표준 양식으로 교정합니다.</span>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">구조적 정보 파싱</span>
+                                    <span class="li-title">문제 구조화 정돈</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">5지선다 보기 배열 및 정오표 지문, 합의 조건 상자 데이터를 정밀 매핑합니다.</span>
-                                    <div class="li-tags">
-                                        <code class="li-code">choices</code>
-                                        <code class="li-code">boxed_statements</code>
-                                    </div>
+                                    <span class="li-desc">5지선다 번호, 지문 상자, &lt;보기&gt;의 참·거짓 조건 등 구성 요소를 정확히 분류합니다.</span>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">골든 인덱스 승격</span>
+                                    <span class="li-title">완결 데이터 공식 승격</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">교정된 마크다운/수식 데이터를 저장 및 승격하고 골든 데이터셋 인덱스를 갱신합니다.</span>
-                                    <div class="li-tags">
-                                        <code class="li-code">case.json</code>
-                                    </div>
+                                    <span class="li-desc">오류 없이 보정이 끝난 최종 텍스트 데이터를 저장하고 공식 정제 데이터로 공식 등록합니다.</span>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
-            </div>
+            </article>
 
             <!-- Step 5 -->
-            <div class="step-card">
+            <article class="step-card" id="step-5-card">
                 <div class="step-badge">5</div>
                 <div class="step-header">
-                    <div class="step-title">5단계: 문제 분석 (기하 도형 분석도 가능)</div>
-                    <span class="status-pill green">분석완료 / 솔루션대기</span>
+                    <div class="step-title">5단계: 심층 원리 분석 및 그래프/도형 연동 (Problem Analysis)</div>
+                    <span class="status-pill green" role="status" aria-label="상태: 문항 원리 및 수식 분석 완료, 변형 대비 단계 대기">분석 완료 / 변형 대기</span>
                 </div>
-                <p class="step-desc">승격된 기출 문항의 수학적 출제 원리와 개념 연쇄망(DAG)을 철학적·논리학적 구조로 해체하여 분석하고, 도형 문항의 경우 기하학적 형상을 정밀하게 피팅하는 심층 분석 단계입니다.</p>
+                <p class="step-desc">등록된 공식 문제의 수학적 개념 흐름을 논리적으로 해부하고, 문제에 들어가는 도형이나 그래프를 수치적 오차 없이 완벽히 피팅하여 연동하는 깊이 있는 분석 단계입니다.</p>
                 <div class="step-details">
-                    <div class="details-title">동작 및 산출 데이터</div>
+                    <div class="details-title">주요 동작 및 결과물</div>
                     <ul class="details-list">
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">개념과 조건 지도</span>
+                                    <span class="li-title">출제 원리 및 조건 지도</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">문항 조건과 수학적 개념들의 결합을 삼단논법 체계로 분해하여 근원(archai) 의존성 그래프로 인덱싱합니다.</span>
-                                    <div class="li-tags">
-                                        <code class="li-code">foundation.archai_dag</code>
-                                        <span class="quality-badge">품질개선: 조건 충돌을 사전에 잡아 잘못된 변형을 크게 줄임</span>
-                                    </div>
+                                    <span class="li-desc">수학적 조건들의 인과관계를 지도(DAG)로 표현하여 논리 구조를 해체 분석합니다. 이를 통해 조건 간의 모순을 사전에 차단하여 이상한 변형 문제 제작을 예방합니다.</span>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">막히는 지점 기반 힌트</span>
+                                    <span class="li-title">사고 흐름 힌트 설계</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">발문에서 답으로 유도하는 인과 과정을 질문 연쇄 노드로 설계합니다.</span>
-                                    <div class="li-tags">
-                                        <code class="li-code">Socratic_Hint_Query</code>
-                                        <span class="quality-badge">품질개선: 학생이 막히는 지점을 더 잘 짚는 힌트 생성</span>
-                                    </div>
+                                    <span class="li-desc">학생이 문제를 풀어나갈 때 단계별로 막히는 핵심 지점들을 분석하고, 오답 원인을 정확히 짚어주는 친절한 힌트 질문들을 설계합니다.</span>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">정확한 도형 엔진</span>
+                                    <span class="li-title">수치 기반 도형 엔진</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">완벽한 상사비와 점/선 제약식을 수치 솔버로 피팅하여 모순 오차를 0으로 만듭니다.</span>
-                                    <div class="li-tags">
-                                        <code class="li-code">geometry_spec</code>
-                                        <code class="li-code">geometry-certificate</code>
-                                        <span class="quality-badge">품질개선: 도형 겹침과 PDF 오류 원인을 구조화해 빠르게 수정</span>
-                                    </div>
+                                    <span class="li-desc">도형의 비율과 제약조건을 수치 계산기로 정확히 정렬해 오차가 전혀 없는 그림을 그리며, 선이나 글자가 겹치는 인쇄 오류를 구조적으로 예방합니다.</span>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
-            </div>
+            </article>
 
             <!-- Step 6 -->
-            <div class="step-card">
+            <article class="step-card" id="step-6-card">
                 <div class="step-badge">6</div>
                 <div class="step-header">
-                    <div class="step-title">6단계: 변형 시뮬레이션 및 오케스트레이션 (Variant Ingest)</div>
-                    <span class="status-pill green">변형완료 / 컴파일대기</span>
+                    <div class="step-title">6단계: 세련된 변형 문제 제작 (Variant Ingest)</div>
+                    <span class="status-pill green" role="status" aria-label="상태: 변형 문제 제작 완료, 교재 파일 조판 및 발행 대기">변형 완료 / 발행 대기</span>
                 </div>
-                <p class="step-desc">분석된 수학적 인과 구조와 오개념 요소를 흔들어, 본래의 출제 의도를 변별하면서도 조건이 세련되게 변형된 실전용 변형 문항 및 해설 단계를 생성하는 단계입니다.</p>
+                <p class="step-desc">이전 단계에서 분석된 핵심 출제 원리를 바탕으로, 문제의 결은 유지하되 숫자와 조건만 깔끔하게 다듬어진 새로운 쌍둥이 문제와 맞춤 해설을 제작하는 단계입니다.</p>
                 <div class="step-details">
-                    <div class="details-title">동작 및 산출 데이터</div>
+                    <div class="details-title">주요 동작 및 결과물</div>
                     <ul class="details-list">
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">변형 치수 시뮬레이션</span>
+                                    <span class="li-title">변형 조건 자동 설계</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">기하학적 상사비와 불변 성질을 유지한 한도 내에서 최적의 변이 조건을 형성합니다.</span>
+                                    <span class="li-desc">도형의 비율과 불변의 수학적 성질을 정확히 만족하도록 새로운 수치 조건들을 영리하게 구성합니다.</span>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">해설 오케스트레이션</span>
+                                    <span class="li-title">단계별 풀이 자동 제작</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">00~04 생성 에이전트를 차례로 구동하여 단계별 변형 풀이 과정을 자동 수립합니다.</span>
-                                    <div class="li-tags">
-                                        <code class="li-code">variant_solution</code>
-                                    </div>
+                                    <span class="li-desc">새로 만들어진 변형 문제에 맞춰 자세하고 빈틈없는 쌍둥이 풀이 과정과 오답 해설을 조립합니다.</span>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">위생 필터링 검수</span>
+                                    <span class="li-title">오류 및 어색한 한글 정제</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">수식 문법 오류, 부자연스러운 한글 문장 표현을 사전에 전수 검수합니다.</span>
+                                    <span class="li-desc">새로 만든 수식 기호에 문법 오류가 없는지, 한글 문장 표현이 어색하지 않은지 사전에 정교하게 검사합니다.</span>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
-            </div>
+            </article>
 
             <!-- Step 7 -->
-            <div class="step-card">
+            <article class="step-card" id="step-7-card">
                 <div class="step-badge">7</div>
                 <div class="step-header">
-                    <div class="step-title">7단계: 마크다운(MD) 및 PDF 발행 (Markdown & PDF Publish)</div>
-                    <span class="status-pill green">발행완료</span>
+                    <div class="step-title">7단계: 교안용 마크다운 취합 및 PDF 출판 (Markdown & PDF Publish)</div>
+                    <span class="status-pill green" role="status" aria-label="상태: 최종 PDF 교재 배포 완료">발행 완료</span>
                 </div>
-                <p class="step-desc">정제 및 변형된 수학 문항 데이터를 마크다운(MD) 소스로 취합하고, Noto Serif 서체 환경 하에 XeLaTeX 컴파일러를 구동하여 최종 PDF 교안을 발행하는 단계입니다.</p>
+                <p class="step-desc">정리 및 변형 완료된 수학 문제와 해설을 하나의 문서 파일로 합치고, 깔끔한 명조 계열(Noto Serif) 폰트와 인쇄 규격에 맞춰 인쇄/배포 가능한 PDF 교재 파일로 출력하는 단계입니다.</p>
                 <div class="step-details">
-                    <div class="details-title">동작 및 산출 데이터</div>
+                    <div class="details-title">주요 동작 및 결과물</div>
                     <ul class="details-list">
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">A4 인쇄 레이아웃</span>
+                                    <span class="li-title">A4 인쇄용 책자 배치</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">Noto Serif 서체 및 여백 제어 패키지를 활용한 1단 교재 레이아웃을 형성합니다.</span>
+                                    <span class="li-desc">인쇄하기 가장 편하도록 눈에 잘 들어오는 서체, 자간, 여백을 세심하게 조절하여 깔끔한 레이아웃을 형성합니다.</span>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">다이어그램 벡터 드로잉</span>
+                                    <span class="li-title">벡터 그래픽 선명 렌더링</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">TikZ 컴파일러 또는 SVG 변환기를 작동해 정밀 기하 도형 벡터 렌더링을 그립니다.</span>
+                                    <span class="li-desc">그려야 할 기하학적 도형과 통계 도표를 확대해도 깨지지 않는 깔끔한 벡터 그래픽으로 선명하게 렌더링합니다.</span>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="li-content">
                                 <div class="li-meta-col">
-                                    <span class="li-title">PDF 컴파일</span>
+                                    <span class="li-title">최종 PDF 배포</span>
                                 </div>
                                 <div class="li-desc-col">
-                                    <span class="li-desc">XeLaTeX 빌더 및 배포 준비 테스트 통과 후 최종 PDF 교재를 배포용 폴더에 출력합니다.</span>
-                                    <div class="li-tags">
-                                        <code class="li-code">output/</code>
-                                    </div>
+                                    <span class="li-desc">조판 오류 유무와 배포 규격 테스트를 통과한 뒤, 실물 인쇄가 가능한 최종 PDF 교재를 지정 폴더에 출력합니다.</span>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
-            </div>
+            </article>
         </div>
 
         <!-- horos Integration Section -->
-        <div class="step-card" style="margin-top: 3rem; border-left: 4px solid var(--accent-primary); background-color: #f3edd9;">
+        <article class="step-card" id="horos-integration-card" style="margin-top: 3rem; border-left: 4px solid var(--accent-primary); background-color: #f3edd9;">
             <div class="step-header">
-                <div class="step-title" style="color: var(--accent-primary); font-weight: 800;">프로젝트 신뢰 경계 통제 프레임워크 (horos)</div>
-                <span class="status-pill green">통제 가동 중</span>
+                <div class="step-title" style="color: var(--accent-primary); font-weight: 800;">문제 제작 안심 통제 가드레일 (horos)</div>
+                <span class="status-pill green" role="status" aria-label="상태: 통제 가동 중">안심 통제 작동 중</span>
             </div>
             <p class="step-desc" style="color: var(--text-main); font-weight: 500;">
-                이 수학 기출 포렌식 파이프라인은 AI 에이전트의 자기 기만(Hallucination)을 막고 계약 무결성을 외부에서 강제하는 가드레일 프레임워크인 <strong>horos</strong>의 5대 강제 정책 하에 통제됩니다.
+                이 모든 자동화 프로세스는 인공지능이 스스로 작성한 잘못된 오답이나 논리 오류가 있는 풀이를 완벽히 차단하고 결과물의 품질을 보증하는 실시간 안심 감시 체계인 <strong>horos</strong>의 통제를 받습니다.
             </p>
             <div class="step-details">
-                <div class="details-title" style="border-bottom-color: #dcd4bc;">파이프라인 내 horos의 5대 실질 강제 행위</div>
+                <div class="details-title" style="border-bottom-color: #dcd4bc;">신뢰성 확보를 위한 5가지 주요 안심 필터</div>
                 <ul class="details-list">
                     <li>
                         <div class="li-content">
                             <div class="li-meta-col">
-                                <span class="li-title">① 기름값 사전 검사기</span>
+                                <span class="li-title">① 사전 예산 낭비 차단</span>
                             </div>
                             <div class="li-desc-col">
-                                <span class="li-desc">1단계 가동 전 디스크 여유 공간이 부족하면 불필요한 API 요금이 발생하지 않도록 실행을 즉시 셧다운(Pre-flight)시킵니다.</span>
-                                <div class="li-tags">
-                                    <code class="li-code">PreflightError</code>
-                                    <code class="li-code">engine:doctor</code>
-                                </div>
+                                <span class="li-desc">작업 시작 전 남은 컴퓨터 용량이 부족하면 불필요한 인공지능 호출 요금이 나가지 않도록 작업을 즉시 일시 정지시킵니다.</span>
                             </div>
                         </div>
                     </li>
                     <li>
                         <div class="li-content">
                             <div class="li-meta-col">
-                                <span class="li-title">② 짝퉁 변형 문제 적발기</span>
+                                <span class="li-title">② 유사 카피캣 변형 적발</span>
                             </div>
                             <div class="li-desc-col">
-                                <span class="li-desc">5단계와 6단계 사이에서 AI가 본문 문투만 바꾸거나 숫자만 교체하여 제출한 가짜 변형 문항을 자동 검출하고 차단(block)합니다.</span>
-                                <div class="li-tags">
-                                    <code class="li-code">ENGINE-SEM-NUMERIC-CLONE</code>
-                                    <code class="li-code">Semantic Diff</code>
-                                </div>
+                                <span class="li-desc">인공지능이 문제의 문장 말투만 살짝 바꾸거나 숫자 한두 개만 적당히 고쳐 낸 성의 없는 복제 문제를 자동으로 감지하고 거릅니다.</span>
                             </div>
                         </div>
                     </li>
                     <li>
                         <div class="li-content">
                             <div class="li-meta-col">
-                                <span class="li-title">③ 기하학적 붕괴 감지기</span>
+                                <span class="li-title">③ 깨진 그림 및 겹침 감지</span>
                             </div>
                             <div class="li-desc-col">
-                                <span class="li-desc">수치 최적화 솔버를 통해 변형 기하 도형의 모든 수치적 제약 오차를 계산하여, 선이 찌그러지거나 레이아웃이 겹치는 도형 생성을 금지합니다.</span>
-                                <div class="li-tags">
-                                    <code class="li-code">ENGINE-GEOM-LAYOUT-FAIL</code>
-                                    <code class="li-code">Geometry Certificate</code>
-                                </div>
+                                <span class="li-desc">수학 도형의 비례와 각도를 계산하여 선이 찌그러지거나 글자가 겹쳐 인쇄되는 어색한 도형 그림 파일 생성을 차단합니다.</span>
                             </div>
                         </div>
                     </li>
                     <li>
                         <div class="li-content">
                             <div class="li-meta-col">
-                                <span class="li-title">④ 야바위 풀이 감별사</span>
+                                <span class="li-title">④ 논리 비약 및 오답 감별</span>
                             </div>
                             <div class="li-desc-col">
-                                <span class="li-desc">논리 단계의 인과 의존성 그래프(Kahn 위상 정렬)를 역추적 검산하여, 원리 도약이나 모순이 있는 해설의 배포 후보 승인을 완강히 거부합니다.</span>
-                                <div class="li-tags">
-                                    <code class="li-code">ENGINE-PROOF-ANSWER-MISMATCH</code>
-                                    <code class="li-code">Proof Gate</code>
-                                </div>
+                                <span class="li-desc">해설의 처음부터 끝까지 논리 인과관계를 계산기로 수학적 검증하여, 중간 풀이 단계가 생략되거나 답이 다른 엉터리 풀이를 철저히 잡아냅니다.</span>
                             </div>
                         </div>
                     </li>
                     <li>
                         <div class="li-content">
                             <div class="li-meta-col">
-                                <span class="li-title">⑤ 신선도 라벨 감시관</span>
+                                <span class="li-title">⑤ 임의 데이터 위조 방지</span>
                             </div>
                             <div class="li-desc-col">
-                                <span class="li-desc">7단계 최종 배포 시, SHA-256 해시 대조를 거쳐 이전에 검증 완료된 결과물 파일을 수동으로 임의 변조한 흔적을 잡아내 차단(release-strict)합니다.</span>
-                                <div class="li-tags">
-                                    <code class="li-code">06.run-evidence.json</code>
-                                    <code class="li-code">ENGINE-EVIDENCE-STALE</code>
-                                </div>
+                                <span class="li-desc">최종 발행 시점에, 검수 완료 이후 누군가 텍스트나 결과물을 강제로 조작한 흔적이 있는지 고유 디지털 해시로 대조하여 원천 차단합니다.</span>
                             </div>
                         </div>
                     </li>
@@ -1108,32 +1054,15 @@
                                 <span class="li-title">정본 레포지토리</span>
                             </div>
                             <div class="li-desc-col">
-                                <span class="li-desc">에이전트 훅 및 신뢰 경계 통제 정본 소스 레포지토리 주소입니다.</span>
-                                <div class="li-tags">
-                                    <a href="https://github.com/mitmirsein/horos" target="_blank" class="li-code" style="color: var(--accent-primary); text-decoration: underline; font-weight: 700;">https://github.com/mitmirsein/horos</a>
-                                </div>
+                                <span class="li-desc">에이전트 훅 및 신뢰 경계 통제 정본 소스 레포지토리 주소: <a href="https://github.com/mitmirsein/horos" target="_blank" id="horos-repository-link" style="color: var(--accent-primary); text-decoration: underline; font-weight: 700;">https://github.com/mitmirsein/horos</a></span>
                             </div>
                         </div>
                     </li>
                 </ul>
             </div>
-        </div>
+        </article>
 
 
-
-        <!-- Engine 2 Production Quality -->
-        <section class="plain-section">
-            <h2>생산 품질이 좋아졌다는 뜻</h2>
-            <p>이번 개선은 화면을 더 화려하게 만든 작업이 아니라, 실제 운영에서 문제를 덜 만들고 더 빨리 고치게 하는 작업입니다.</p>
-            <ul class="plain-list">
-                <li><strong>틀린 그림을 덜 냅니다.</strong> 도형, 원뿔곡선, 함수 곡선, 통계 도표가 각각 검증 가능한 계약을 갖습니다.</li>
-                <li><strong>PDF가 왜 깨졌는지 말합니다.</strong> 긴 인라인 수식은 display 수식으로 올리고, 치명적 로그와 지원하지 않는 명령을 구체적으로 표시합니다.</li>
-                <li><strong>변형 문제의 베끼기를 잡습니다.</strong> 숫자만 바꾸거나 원본 구조를 거의 복제한 문항은 Mutation Lab과 Semantic Gate에서 걸러냅니다.</li>
-                <li><strong>결과물의 출처를 남깁니다.</strong> 실행 당시의 엔진 코드, 설정, 프롬프트, 케이스 내용을 해시로 기록해 나중에 바뀐 파일과 구분합니다.</li>
-                <li><strong>실패 후 다시 시작할 수 있습니다.</strong> 완료된 단계는 건너뛰고 실패한 단계부터 재개하는 오케스트레이션 계약을 갖습니다.</li>
-            </ul>
-        </section>
-        <!-- /Engine 2 Production Quality -->
 
 
         <footer>
