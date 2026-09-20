@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>칼 바르트 『로마서 2판』에서 칭의와 화해의 신학적 비중 분석</title>
+  <style>
+    /* ==========================================================================
+       MCKINSEY-STYLE EXECUTIVE EDITORIAL SYSTEM
+       ========================================================================== */
+    :root {
+      --mck-navy: #00205B;
+      --mck-navy-dark: #001438;
+      --mck-blue: #005A9C;
+      --mck-blue-tint: #F0F6FB;
+      --mck-blue-line: #B8D5ED;
+      
+      --mck-bg: #F9FAFB;
+      --mck-surface: #FFFFFF;
+      --mck-surface-subtle: #F4F6F8;
+      --mck-border: #E5E7EB;
+      --mck-border-strong: #D1D5DB;
+      
+      --mck-text-main: #1F2937;
+      --mck-text-secondary: #4B5563;
+      --mck-text-muted: #6B7280;
+      
+      --font-editorial-serif: 'Merriweather', 'Noto Serif KR', Georgia, Cambria, serif;
+      --font-ui-sans: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: 'JetBrains Mono', Consolas, Monaco, monospace;
+      
+      --container-max-width: 900px;
+      --optimal-prose-width: 100%;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      background-color: var(--mck-bg);
+      color: var(--mck-text-main);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-editorial-serif);
+      line-height: 1.85;
+      background-color: var(--mck-bg);
+      color: var(--mck-text-main);
+      padding: 48px 24px;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+      background-color: var(--mck-surface-subtle);
+      border: 1px solid var(--mck-border);
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: var(--mck-navy-dark);
+    }
+
+    .editorial-wrapper {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      background-color: var(--mck-surface);
+      border: 1px solid var(--mck-border);
+      padding: 56px 64px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 16px 12px; }
+      .editorial-wrapper { padding: 32px 20px; }
+    }
+
+    /* Header & Deck */
+    .briefing-header {
+      border-bottom: 2px solid var(--mck-navy);
+      padding-bottom: 28px;
+      margin-bottom: 40px;
+    }
+
+    .kicker {
+      font-family: var(--font-ui-sans);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--mck-blue);
+      margin-bottom: 12px;
+    }
+
+    h1.doc-title {
+      font-family: var(--font-editorial-serif);
+      font-size: 2.25rem;
+      color: var(--mck-navy);
+      line-height: 1.35;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: balance;
+      margin-bottom: 16px;
+    }
+
+    p.deck {
+      font-family: var(--font-ui-sans);
+      font-size: 1.12rem;
+      color: var(--mck-text-secondary);
+      line-height: 1.6;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      margin-bottom: 20px;
+    }
+
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-family: var(--font-ui-sans);
+      font-size: 0.84rem;
+      color: var(--mck-text-secondary);
+      border-top: 1px solid var(--mck-border);
+      padding-top: 14px;
+    }
+
+    .meta-item strong {
+      color: var(--mck-text-main);
+    }
+
+    /* Headings & Prose */
+    h2 {
+      font-family: var(--font-editorial-serif);
+      font-size: 1.45rem;
+      color: var(--mck-navy);
+      border-bottom: 1px solid var(--mck-border);
+      padding-bottom: 8px;
+      margin-top: 48px;
+      margin-bottom: 20px;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: balance;
+    }
+
+    h3 {
+      font-family: var(--font-editorial-serif);
+      font-size: 1.18rem;
+      color: var(--mck-navy-dark);
+      margin-top: 28px;
+      margin-bottom: 12px;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: balance;
+    }
+
+    p {
+      max-width: var(--optimal-prose-width);
+      margin-bottom: 18px;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+    }
+
+    ul, ol {
+      max-width: var(--optimal-prose-width);
+      margin-left: 24px;
+      margin-bottom: 20px;
+    }
+
+    li {
+      margin-bottom: 8px;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+    }
+
+    /* Executive Takeaway Box (No Side-Tab, Top Keyline & Balanced Prose) */
+    .executive-takeaway {
+      background-color: var(--mck-blue-tint);
+      border: 1px solid var(--mck-blue-line);
+      border-top: 3px solid var(--mck-navy);
+      padding: 24px 28px;
+      margin: 32px 0;
+    }
+
+    .takeaway-title {
+      font-family: var(--font-ui-sans);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--mck-blue);
+      margin-bottom: 8px;
+    }
+
+    .takeaway-text {
+      font-family: var(--font-editorial-serif);
+      font-size: 1.05rem;
+      color: var(--mck-navy);
+      line-height: 1.75;
+      margin-bottom: 0;
+      max-width: var(--optimal-prose-width);
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+    }
+
+    /* KPI Cards Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .kpi-card {
+      background-color: var(--mck-surface-subtle);
+      border: 1px solid var(--mck-border);
+      padding: 20px;
+      text-align: left;
+    }
+
+    .kpi-label {
+      font-family: var(--font-ui-sans);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--mck-text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .kpi-value {
+      font-family: var(--font-ui-sans);
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--mck-navy);
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .kpi-desc {
+      font-family: var(--font-ui-sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #374151; /* Contrast ratio 8.8:1 against #F4F6F8 */
+    }
+
+    /* McKinsey Editorial Table (No Cramped Container Border) */
+    .table-container {
+      margin: 28px 0;
+      overflow-x: auto;
+      border: none;
+      padding: 0;
+    }
+
+    table.mck-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-ui-sans);
+      font-size: 0.88rem;
+      background-color: var(--mck-surface);
+      border: 1px solid var(--mck-border);
+    }
+
+    table.mck-table th {
+      background-color: var(--mck-navy);
+      color: #FFFFFF;
+      font-weight: 600;
+      text-align: left;
+      padding: 12px 16px;
+      border-bottom: 2px solid var(--mck-navy-dark);
+      white-space: nowrap;
+    }
+
+    table.mck-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--mck-border);
+      color: var(--mck-text-main);
+      vertical-align: top;
+    }
+
+    table.mck-table tr:nth-child(even) td {
+      background-color: var(--mck-surface-subtle);
+    }
+
+    table.mck-table tr:hover td {
+      background-color: #F0F4F8;
+    }
+
+    .badge-rank {
+      display: inline-block;
+      min-width: 28px;
+      text-align: center;
+      font-weight: 700;
+      color: var(--mck-navy);
+    }
+
+    .badge-grade {
+      display: inline-block;
+      padding: 2px 8px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      background-color: var(--mck-blue-tint);
+      color: var(--mck-blue);
+      border: 1px solid var(--mck-blue-line);
+      border-radius: 2px;
+    }
+
+    /* Semantic Blockquote */
+    blockquote {
+      border-left: 3px solid var(--mck-navy);
+      padding: 12px 20px;
+      margin: 20px 0;
+      background-color: var(--mck-surface-subtle);
+      font-style: normal;
+      color: var(--mck-text-secondary);
+      max-width: var(--optimal-prose-width);
+    }
+
+    blockquote p {
+      margin-bottom: 0;
+      font-size: 0.96rem;
+    }
+
+    /* Model Schematic (Pure CSS Grid) */
+    .dialectic-model {
+      display: grid;
+      grid-template-columns: 1fr 48px 1fr;
+      align-items: center;
+      gap: 16px;
+      margin: 32px 0;
+      background-color: var(--mck-surface-subtle);
+      border: 1px solid var(--mck-border);
+      padding: 28px;
+    }
+
+    @media (max-width: 640px) {
+      .dialectic-model {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .model-arrow {
+        transform: rotate(90deg);
+        margin: 8px auto;
+      }
+    }
+
+    .model-card {
+      background-color: var(--mck-surface);
+      border: 1px solid var(--mck-border);
+      padding: 20px;
+    }
+
+    .model-card.left {
+      border-top: 3px solid var(--mck-text-secondary);
+    }
+
+    .model-card.right {
+      border-top: 3px solid var(--mck-blue);
+    }
+
+    .model-card-title {
+      font-family: var(--font-ui-sans);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+
+    .model-card.left .model-card-title { color: var(--mck-text-secondary); }
+    .model-card.right .model-card-title { color: var(--mck-blue); }
+
+    .model-card-term {
+      font-family: var(--font-editorial-serif);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--mck-navy);
+      margin-bottom: 10px;
+    }
+
+    .model-card ul {
+      margin-left: 16px;
+      margin-bottom: 0;
+      font-family: var(--font-ui-sans);
+      font-size: 0.84rem;
+      color: var(--mck-text-secondary);
+    }
+
+    .model-arrow {
+      text-align: center;
+      font-family: var(--font-ui-sans);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--mck-navy);
+    }
+
+    /* Footer */
+    .briefing-footer {
+      border-top: 1px solid var(--mck-border);
+      padding-top: 24px;
+      margin-top: 48px;
+      font-family: var(--font-ui-sans);
+      font-size: 0.8rem;
+      color: var(--mck-text-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <article class="editorial-wrapper">
+    <!-- Header -->
+    <header class="briefing-header">
+      <div class="kicker">TheoSieve Research Executive Briefing</div>
+      <h1 class="doc-title">칼 바르트 『로마서 2판』에서 칭의와 화해의 신학적 비중 분석</h1>
+      <p class="deck">TheoSieve JEV(Judgment, Evidence, Verification) 인출 엔진 기반의 정량 실증 데이터 및 교의학적 맥락 분석 보고서</p>
+      
+      <div class="meta-bar">
+        <div class="meta-item">작성 일시: <strong>2026-09-20</strong></div>
+        <div class="meta-item">조사 대상: <strong>Karl Barth, Der Römerbrief (1922) 서가 전수(34편)</strong></div>
+        <div class="meta-item">평가 도구: <strong>TheoSieve FTS5 + JEV 교의학 랭커</strong></div>
+      </div>
+    </header>
+
+    <!-- Executive Takeaway -->
+    <section class="executive-takeaway">
+      <div class="takeaway-title">핵심 요약 (Executive Takeaway)</div>
+      <p class="takeaway-text">
+        칼 바르트의 『로마서 2판』에서 <strong>칭의</strong>(Rechtfertigung)와 <strong>화해</strong>(Versöhnung)는 대립하는 두 교리가 아니라, 하나의 거대한 구원사적 운동을 이루는 변증법적 양극이다. 
+        <strong>칭의</strong>는 전체 34편 전편(100.0%)에 걸쳐 인간 자기 의의 붕괴를 선언하는 <strong>인식론적 위기</strong>(Krisis)의 기초를 형성하며, 
+        <strong>화해</strong>는 13편(38.2%)에 집중되어 그리스도의 십자가와 부활 안에서 새로운 세계를 여는 <strong>종말론적 평화</strong>(Frieden)의 최고 완성(JEV 84.24점)을 담당한다.
+      </p>
+    </section>
+
+    <!-- KPI Metric Cards -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">칭의 본문 포괄도</div>
+        <div class="kpi-value">100.0%</div>
+        <div class="kpi-desc">총 34편 중 34편 전편 인출</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">화해 본문 포괄도</div>
+        <div class="kpi-value">38.2%</div>
+        <div class="kpi-desc">총 34편 중 핵심 13편 집중</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">화해 최고 JEV 점수</div>
+        <div class="kpi-value">84.24</div>
+        <div class="kpi-desc">롬 3:21–26, 롬 5장, 롬 8장 (A+)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">로마서 8장 재정렬 순위</div>
+        <div class="kpi-value">3위</div>
+        <div class="kpi-desc">8,28–39 Die Liebe 상위권 확정</div>
+      </div>
+    </div>
+
+    <!-- Section 1: Quantitative Evidence -->
+    <section>
+      <h2>1. 정량적 분석 결과 (Quantitative Evidence)</h2>
+      <p>
+        TheoSieve의 SQLite FTS5 전문 검색 색인과 JEV 정량 랭커가 로마서 2판 서가 전체를 전수 조사하여 수치화한 실증 지표다.
+      </p>
+
+      <div class="table-container">
+        <table class="mck-table">
+          <thead>
+            <tr>
+              <th style="width: 60px;">순위</th>
+              <th>본문 및 단락 제목</th>
+              <th style="width: 130px;">장/절</th>
+              <th style="width: 90px;">JEV 점수</th>
+              <th style="width: 70px;">등급</th>
+              <th>신학적 핵심 논점</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge-rank">01</span></td>
+              <td><strong>Jesus</strong></td>
+              <td>롬 3:21–26</td>
+              <td><strong>84.24</strong></td>
+              <td><span class="badge-grade">A+</span></td>
+              <td>화해의 유일한 장소(Hilasterion)이자 속죄소로서의 그리스도</td>
+            </tr>
+            <tr>
+              <td><span class="badge-rank">02</span></td>
+              <td><strong>Die Neue Welt</strong></td>
+              <td>롬 5:12–21</td>
+              <td><strong>84.24</strong></td>
+              <td><span class="badge-grade">A+</span></td>
+              <td>아담의 옛 세계 해체와 그리스도 안에서 열린 새로운 피조 세계</td>
+            </tr>
+            <tr>
+              <td><span class="badge-rank">03</span></td>
+              <td><strong>Die Liebe</strong></td>
+              <td>롬 8:28–39</td>
+              <td><strong>84.24</strong></td>
+              <td><span class="badge-grade">A+</span></td>
+              <td>끊을 수 없는 사랑, 화해된 실재(versöhnt, erlöst)의 선언</td>
+            </tr>
+            <tr>
+              <td><span class="badge-rank">04</span></td>
+              <td><strong>Ein Wort An Die Draussen</strong></td>
+              <td>롬 11:11–24</td>
+              <td><strong>83.60</strong></td>
+              <td><span class="badge-grade">A+</span></td>
+              <td>세상의 화해(Versöhnung der Welt)를 이루시는 하나님의 주권적 자유</td>
+            </tr>
+            <tr>
+              <td><span class="badge-rank">05</span></td>
+              <td><strong>Die Voraussetzung</strong></td>
+              <td>롬 12:3–8</td>
+              <td><strong>83.60</strong></td>
+              <td><span class="badge-grade">A+</span></td>
+              <td>분쟁하는 인간 실존의 부정과 그리스도 안에서의 한 몸 됨</td>
+            </tr>
+            <tr>
+              <td><span class="badge-rank">06</span></td>
+              <td><strong>Der Neue Mensch</strong></td>
+              <td>롬 5:1–11</td>
+              <td><strong>83.60</strong></td>
+              <td><span class="badge-grade">A+</span></td>
+              <td>의롭다 하심의 필연적 결과로서 하나님과 누리는 평화(화해)</td>
+            </tr>
+            <tr>
+              <td><span class="badge-rank">07</span></td>
+              <td><strong>Die Kraft Der Auferstehung</strong></td>
+              <td>롬 6:1–11</td>
+              <td><strong>83.60</strong></td>
+              <td><span class="badge-grade">A+</span></td>
+              <td>옛 사람의 죽음과 부활 생명에 참예하는 화목의 실재</td>
+            </tr>
+            <tr>
+              <td><span class="badge-rank">08</span></td>
+              <td><strong>Die Krisis Des Freien Lebensversuchs</strong></td>
+              <td>롬 14:1–15:13</td>
+              <td><strong>82.32</strong></td>
+              <td><span class="badge-grade">A+</span></td>
+              <td>신앙적 자유의 위기를 극복하는 상호 용납과 평화의 계명</td>
+            </tr>
+            <tr>
+              <td><span class="badge-rank">09</span></td>
+              <td><strong>Allein Durch Den Glauben</strong></td>
+              <td>롬 3:27–30</td>
+              <td><strong>81.68</strong></td>
+              <td><span class="badge-grade">A+</span></td>
+              <td>모든 인간적 자랑의 원천적 배제와 오직 믿음의 화해</td>
+            </tr>
+            <tr>
+              <td><span class="badge-rank">10</span></td>
+              <td><strong>Die Grenze Der Religion</strong></td>
+              <td>롬 7:1–6</td>
+              <td><strong>81.68</strong></td>
+              <td><span class="badge-grade">A+</span></td>
+              <td>율법과 종교의 한계선을 넘어선 새로운 영의 봉사</td>
+            </tr>
+            <tr>
+              <td><span class="badge-rank">11</span></td>
+              <td><strong>Das Gesetz</strong></td>
+              <td>롬 3:1–20</td>
+              <td><strong>77.76</strong></td>
+              <td><span class="badge-grade">A+</span></td>
+              <td>율법의 고발 앞에 침묵하는 모든 입과 심판의 필연성</td>
+            </tr>
+            <tr>
+              <td><span class="badge-rank">12</span></td>
+              <td><strong>Der Gott Jakobs</strong></td>
+              <td>롬 9:6–13</td>
+              <td><strong>75.84</strong></td>
+              <td><span class="badge-grade">A+</span></td>
+              <td>주권적 선택과 인간 행위의 공로성을 부수는 은혜의 자유</td>
+            </tr>
+            <tr>
+              <td><span class="badge-rank">13</span></td>
+              <td><strong>Negative Möglichkeiten</strong></td>
+              <td>롬 12:16–20</td>
+              <td><strong>63.04</strong></td>
+              <td><span class="badge-grade">A+</span></td>
+              <td>원수를 향한 보복의 포기를 통해 칭의를 입증하는 윤리적 부정성</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 2: Qualitative Interpretation -->
+    <section>
+      <h2>2. 정성적 교의학 분석 결과 (Qualitative Interpretation)</h2>
+      <p>
+        산출된 정량 랭킹에 기반하여, 바르트가 각 본문에서 전개한 신학적 논리 구조를 텍스트 맥락에 비추어 해석했다.
+      </p>
+
+      <h3>1) 칭의의 역학: "무한한 질적 차이와 인식론적 위기(Krisis)"</h3>
+      <p>
+        바르트에게 칭의는 인간의 종교적 지위 향상이나 도덕적 성취가 아니다. 하나님과 인간 사이의 범할 수 없는 간극을 선언하는 사건이며, 인간의 모든 자기 의를 철저히 해체하는 배타적 심판이다.
+      </p>
+      <blockquote>
+        <p>
+          "믿음은 인간 가능성의 극치가 아니라 인간 존재의 무효화 위에서 하나님이 무로부터 창조하시는 기적이다." (로마서 4장 주석)
+        </p>
+      </blockquote>
+      <p>
+        로마서 12:16–20에서 칭의가 윤리적 최고점으로 포착되는 것은 바르트 특유의 역설이다. 인간이 스스로 선을 행하여 의로워지려는 시도는 또 다른 불의를 낳을 뿐이며, 오직 악을 악으로 갚지 않고 심판을 하나님께 넘겨드리는 '부정적 가능성' 속에서만 하나님의 칭의가 보존된다.
+      </p>
+
+      <h3>2) 화해의 역학: "십자가 안에서의 새로운 창조와 평화(Frieden)"</h3>
+      <p>
+        화해는 칭의의 엄중한 심판을 통과한 자리에서 주어지는 하나님의 선물이다.
+      </p>
+      <ul>
+        <li>
+          <strong>로마서 5:1의 결정적 변곡점</strong>: 
+          바르트는 롬 5:1을 "믿음을 통해 의롭다고 선언되었으므로, 우리는 하나님과 평화를 누린다(Also gerecht erklärt durch den Glauben, haben wir Frieden mit Gott)"로 번역하며, 칭의의 선언이 곧바로 하나님과의 화목으로 연결됨을 드러냈다.
+        </li>
+        <li>
+          <strong>로마서 5:12–21의 새로운 세계</strong>: 
+          아담의 영역에 속한 낡은 질서가 그리스도의 순종 안에서 끝나고, 전혀 새로운 세계(Die Neue Welt)가 열리는 우주적 사건이 화해의 실체다.
+        </li>
+        <li>
+          <strong>로마서 11:15의 구원 경륜</strong>: 
+          이스라엘의 넘어짐과 이방인의 구원 역사 전체가 결국 '세상의 화해(Versöhnung der Welt)'를 향해 전진하는 하나님의 주권적 자유임을 선포했다.
+        </li>
+      </ul>
+
+      <h3>3) 로마서 8장의 신학적 전환: "명사형 칭의를 넘어 화해된 사랑으로"</h3>
+      <p>
+        로마서 8장은 전통 신학에서 칭의의 완성으로 불리지만, 바르트는 이 본문에서 정적 명사 <code>Rechtfertigung</code>을 완전히 배제했다. 대신 하나님의 선언을 생생한 동사형으로 전환시켰다.
+      </p>
+      <blockquote>
+        <p>
+          "...als negierte Negationen, als aufgehobene Setzungen, friedlich, versöhnt, erlöst..."<br>
+          (부정된 부정들로서, 지양된 정립들로서, <strong>평화롭고, 화해되고, 구속된</strong> 존재로서...)
+        </p>
+      </blockquote>
+      <p>
+        로마서 8:28–39는 법정적 칭의의 범주를 넘어, 환난이나 기근이나 칼조차 결코 끊을 수 없는 '하나님의 사랑 안에서 화해된 실존'으로 귀결된다.
+      </p>
+    </section>
+
+    <!-- Section 3: Dialectic Model & Conclusion -->
+    <section>
+      <h2>3. 종합 결론: 칭의와 화해의 변증법적 상호 역학</h2>
+      <p>
+        두 개념은 단절되거나 대립하지 않고, 변증법적 나선 구조를 이루며 상호작용한다.
+      </p>
+
+      <div class="dialectic-model">
+        <div class="model-card left">
+          <div class="model-card-title">인식론적 부정 단계 (Krisis)</div>
+          <div class="model-card-term">칭의 (Rechtfertigung)</div>
+          <ul>
+            <li>인간 자기 의의 심판 (Nein)</li>
+            <li>무한한 질적 차이의 폭로</li>
+            <li>34편 전편 지배 (포괄도 100%)</li>
+          </ul>
+        </div>
+
+        <div class="model-arrow">➔</div>
+
+        <div class="model-card right">
+          <div class="model-card-title">종말론적 완성 단계 (Frieden)</div>
+          <div class="model-card-term">화해 (Versöhnung)</div>
+          <ul>
+            <li>그리스도 안에서의 평화 (Ja)</li>
+            <li>새로운 피조물의 창조</li>
+            <li>13편 집중 절정 (최고 84.24점)</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>
+        칭의 없는 화해는 인간 중심의 값싼 타협에 머물며, 화해 없는 칭의는 냉혹한 허무주의로 끝난다. 칭의가 인간의 모든 토대를 무너뜨리는 필연적 부정의 단계라면, 화해는 그 무너진 자리에서 하나님 자신이 내미시는 영원한 긍정의 완성이다.
+      </p>
+      <p>
+        따라서 <strong>양적·방법론적 비중으로는 칭의가 100%</strong>로 로마서 2판 전체의 사유를 지탱하며, <strong>질적·목적론적 비중으로는 화해가 최고 가중치(84.24점)</strong>를 기록하며 복음의 실체적 승리를 완결한다.
+      </p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="briefing-footer">
+      <div>TheoSieve Theological Research Lab · Executive Editorial Protocol</div>
+      <div>Canonical Vault: BarthsText/Roemer2/ (Karl Barth, 1922)</div>
+    </footer>
+  </article>
+
+</body>
+</html>
