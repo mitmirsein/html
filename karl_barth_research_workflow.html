@@ -240,7 +240,7 @@ a:hover {
   font-weight: 700;
   color: var(--mck-blue);
   background-color: var(--mck-blue-tint);
-  padding: 1px 6px;
+  padding: 4px 8px;
   border-radius: 10px;
   display: none;
 }
@@ -385,7 +385,7 @@ a:hover {
   font-family: var(--font-ui-sans);
   font-size: 11.5px;
   font-weight: 600;
-  padding: 3px 9px;
+  padding: 4px 10px;
   border-radius: 3px;
   border: 1px solid var(--mck-border);
   background: var(--mck-surface);
@@ -549,7 +549,7 @@ a:hover {
   font-weight: 800;
   background-color: var(--mck-navy);
   color: #FFFFFF;
-  padding: 2px 7px;
+  padding: 4px 8px;
   border-radius: 2px;
   letter-spacing: 0.5px;
 }
@@ -717,6 +717,49 @@ a:hover {
 }
 
 /* ==========================================================================
+   TABLES & INSET WRAPPERS (ZERO FLUSH / STRICT INSET PADDING)
+   ========================================================================== */
+.table-container {
+  background-color: var(--mck-surface);
+  border: 1px solid var(--mck-border);
+  border-radius: 0;
+  padding: 16px 20px;
+  margin: 24px 0;
+  overflow-x: auto;
+}
+
+.table-editorial {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.table-editorial th,
+.table-editorial td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--mck-border);
+  text-align: left;
+}
+
+.table-editorial th {
+  background-color: var(--mck-surface-subtle);
+  font-family: var(--font-ui-sans);
+  font-weight: 700;
+  color: var(--mck-navy);
+}
+
+/* ==========================================================================
+   PROSE & LIST LINE LENGTH CONTROLS (< 80 CHARS)
+   ========================================================================== */
+.prose-optimal,
+.editorial-prose-limit,
+.takeaway-list > li,
+.prompt-content,
+.step-body ul > li {
+  max-width: 68ch;
+}
+
+/* ==========================================================================
    PRINT STYLES (CLEAN WHITE EDITORIAL)
    ========================================================================== */
 @media print {
@@ -745,7 +788,7 @@ a:hover {
 }
 
 
-    /* 맥킨지 스타일 에디토리얼 맞춤 조판 */
+    /* 맥킨지 스타일 에디토리얼 맞춤 조판 (Impeccable & Editorial HTML Protocol 준수) */
     body {
       background-color: var(--mck-bg, #F9FAFB);
       color: var(--mck-text-main, #1F2937);
@@ -803,18 +846,18 @@ a:hover {
       align-items: center;
       background: var(--mck-surface-subtle, #F4F6F8);
       border: 1px solid var(--mck-border, #E5E7EB);
-      padding: 3px 10px;
-      border-radius: 4px;
+      padding: 4px 10px;
+      border-radius: 3px;
       font-size: 0.82rem;
       color: #374151;
     }
 
-    /* Executive Takeaway Callout Card */
+    /* Executive Takeaway Callout Card (Zero Rounding on Keyline) */
     .executive-takeaway {
       background: var(--mck-surface, #FFFFFF);
       border: 1px solid var(--mck-border, #E5E7EB);
       border-top: 3px solid var(--mck-navy, #00205B);
-      border-radius: 4px;
+      border-radius: 0;
       padding: 24px 28px;
       margin: 32px 0 44px 0;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
@@ -838,6 +881,7 @@ a:hover {
     .takeaway-list li {
       margin-bottom: 8px;
       text-wrap: pretty;
+      max-width: 68ch;
     }
 
     .takeaway-list li:last-child {
@@ -863,16 +907,18 @@ a:hover {
       margin: 0 0 18px 0;
       font-size: 1.02rem;
       text-wrap: pretty;
+      max-width: 68ch;
     }
 
-    /* Prompt Box */
+    /* Prompt Box (Square Corners for Top Keyline) */
     .prompt-box {
       background: var(--mck-surface, #FFFFFF);
       border: 1px solid var(--mck-border, #E5E7EB);
       border-top: 2px solid var(--mck-blue, #005A9C);
-      border-radius: 4px;
+      border-radius: 0;
       padding: 18px 22px;
       margin-bottom: 16px;
+      max-width: 68ch;
     }
 
     .prompt-label {
@@ -888,16 +934,19 @@ a:hover {
       font-size: 0.98rem;
       color: var(--mck-text-main, #1F2937);
       margin: 0;
+      max-width: 68ch;
     }
 
-    /* Tables */
+    /* Tables & Inset Container */
     .table-container {
       width: 100%;
       overflow-x: auto;
       margin: 24px 0 32px 0;
       border: 1px solid var(--mck-border, #E5E7EB);
-      border-radius: 4px;
+      border-radius: 0;
       background: #FFFFFF;
+      padding: 16px 20px;
+      box-sizing: border-box;
     }
 
     table.editorial-table {
@@ -943,7 +992,7 @@ a:hover {
       border: 1px solid #E2E8F0;
     }
 
-    /* Pipeline Step Cards */
+    /* Pipeline Step Cards (Square Corners for Keyline) */
     .pipeline-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -955,7 +1004,7 @@ a:hover {
       background: #FFFFFF;
       border: 1px solid var(--mck-border, #E5E7EB);
       border-top: 2px solid var(--mck-navy, #00205B);
-      border-radius: 4px;
+      border-radius: 0;
       padding: 20px 24px;
     }
 
@@ -981,8 +1030,8 @@ a:hover {
       font-size: 0.78rem;
       background: var(--mck-blue-tint, #F0F6FB);
       color: var(--mck-blue, #005A9C);
-      padding: 2px 8px;
-      border-radius: 3px;
+      padding: 4px 8px;
+      border-radius: 2px;
       border: 1px solid var(--mck-blue-line, #B8D5ED);
       font-weight: 600;
     }
@@ -997,6 +1046,7 @@ a:hover {
       font-size: 0.95rem;
       color: var(--mck-text-secondary, #4B5563);
       text-wrap: pretty;
+      max-width: 68ch;
     }
 
     .step-body li:last-child {
@@ -1034,144 +1084,136 @@ a:hover {
       <div class="takeaway-title">핵심 요약 및 정찰 성과</div>
       <ul class="takeaway-list">
         <li><strong>Level 2 시맨틱 쿼리 5대 차원 체계 구축</strong>: 칼 바르트 칭의론(Rechtfertigung Karl Barths)에 대해 존재론, 방법론, 비판, 융합, 난제의 5대 차원을 직격하는 독일어 및 영어 완결 의문문 10개 쿼리 세트를 수립했다.</li>
-        <li><strong>순수 피어리뷰 학술 논문 100편 무결성 수집</strong>: 상주형 브라우저 엔진인 <code>ego-browser</code>를 통해 단행본(Book) 및 구글 북스 도메인을 배제하고, 자동 페이지네이션으로 5개 질문당 각 20편씩 총 100편의 논문 데이터를 단일 진실 공급원(SSOT)으로 정밀 구축했다.</li>
-        <li><strong>TAWP 파이프라인 연동 및 각주 1대1 순차 재배열</strong>: 현대신학 분석가 페르소나 적용, 바르트 『교회교의학』(KD IV/1, IV/2) 1차 문헌 대조, <code>reindex_footnotes_strict.py</code>를 통한 20개 각주 순서 보정, 그리고 린트 무결성 검증을 마쳤다.</li>
+        <li><strong>ego-browser 기반 저널 논문 100편 정밀 수집</strong>: 구글 스콜라 자동화 CLI를 통해 단행본(Monograph)과 출판사 카탈로그를 배제하고, 질문당 20편씩 총 100편의 순수 동료심사 저널 아티클을 성공적으로 추출했다.</li>
+        <li><strong>TAWP 학술 파이프라인 결합</strong>: 현대신학 분석가 페르소나, 바르트 교회교의학(KD IV/1, IV/2) 원전 대조, 신학 용어 린트(tre_terms) 및 순차 20개 각주 재배열을 거쳐 종합 연구 보고서를 발행했다.</li>
       </ul>
     </div>
 
     <section class="editorial-section">
-      <h2 class="section-heading">1. 사용자 프롬프트 기록</h2>
-      <p>본격적인 연구 및 파이프라인 집행을 위해 입력된 사용자 지시 프롬프트는 다음과 같다.</p>
+      <h2 class="section-heading">1. 사용자 의뢰 프롬프트 이력</h2>
+      <p>본 작업은 칼 바르트의 칭의론을 다각도 시맨틱 의문문으로 정찰하고, 수집된 100편의 학술 문헌을 기반으로 최종 학술 분석 보고서를 도출한 단계적 실행 흐름이다.</p>
 
       <div class="prompt-box">
-        <div class="prompt-label">프롬프트 10 (연구 집행 지시)</div>
+        <div class="prompt-label">프롬프트 10 (초기 리서치 및 보고서 작성 요청)</div>
         <p class="prompt-content">"칼 바르트 칭의에 대해 구글 스콜라 시맨틱 레벨 2 질문 생성(5개, 영독으로만)해서, 에고 라이트로 레퍼런스 수집한 뒤, tawp의 기능 일부를 활용해 리포트 작성 생성해봐. 저장 경로: 바탕화면."</p>
       </div>
 
       <div class="prompt-box">
-        <div class="prompt-label">프롬프트 11 (수집 규모 명시)</div>
+        <div class="prompt-label">프롬프트 11 (문헌 수집 규모 확장 요청)</div>
         <p class="prompt-content">"각 질문당 레퍼런스 수집 20개"</p>
       </div>
     </section>
 
     <section class="editorial-section">
-      <h2 class="section-heading">2. 단계적 작업 수행 내역</h2>
-
-      <div class="pipeline-grid">
-        <article class="step-card">
-          <div class="step-header">
-            <h3 class="step-title">Step 1: Level 2 시맨틱 질문 설계</h3>
-            <span class="step-badge">Phase: Query Design</span>
-          </div>
-          <div class="step-body">
-            <ul>
-              <li><code>google-scholar-semantic</code> 스킬의 책임 연구원(Principal Investigator) 인지 규약을 적용했다.</li>
-              <li>키워드 나열을 엄격히 배제하고, 5대 차원(존재론, 방법론, 비판, 융합, 난제)에 맞춘 완결된 독일어 및 영어 의문문 쌍 10개를 교차 설계했다.</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="step-card">
-          <div class="step-header">
-            <h3 class="step-title">Step 2: ego-browser 기반 단행본 배제 및 논문 100편 수집</h3>
-            <span class="step-badge">Phase: Recon & Extraction</span>
-          </div>
-          <div class="step-body">
-            <ul>
-              <li><code>[BOOK]</code>, <code>[BUCH]</code>, <code>[B]</code> 라벨 및 <code>books.google</code> 도메인을 DOM 레벨에서 식별하여 배제하는 Node.js 필터링 수집 엔진(<code>collect_20_per_question.js</code>)을 구축했다.</li>
-              <li>각 질문마다 순수 논문 20편이 확보될 때까지 페이지네이션(<code>start=0, 10, 20...</code>)을 자동 순회했다.</li>
-              <li>JSTOR, Wiley, Sage, De Gruyter, Brill, ZThK, MThZ, IJST, NZSTh 등 권위 있는 저널 논문 100편의 메타데이터와 피인용 수(Cited by)를 추출하여 <code>scholar_papers_100.json</code>에 저장했다.</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="step-card">
-          <div class="step-header">
-            <h3 class="step-title">Step 3: TAWP 파이프라인 연동 및 신학적 심층 분석</h3>
-            <span class="step-badge">Phase: Synthesis & Footnotes</span>
-          </div>
-          <div class="step-body">
-            <ul>
-              <li><strong>현대신학 분석가 페르소나 적용</strong>(<code>Modern_Theology_Analyst</code>): 칸트적 자율성 및 슐라이어마허적 주관주의에 대항하는 바르트 기독론적 존재론의 긴장을 중심으로 분석을 전개했다.</li>
-              <li><strong>1차 문헌 대조</strong>(<code>primary_works.json</code>): 바르트 『교회교의학』(KD IV/1 §61, KD IV/2 §66) 정본 독일어 표제와 본문 맥락을 엄밀 대조했다.</li>
-              <li><strong>신학 용어 린터 준수</strong>(<code>tre_terms.csv</code>): <strong>Rechtfertigung</strong>, <strong>Heiligung</strong>, <strong>Versöhnung</strong>, <strong>Urteil Gottes</strong>, <strong>Simul iustus et peccator</strong>, <strong>Ordo Salutis</strong> 등 표준 학술 표기를 엄수했다.</li>
-              <li><strong>각주 1대1 순차 재배열</strong>(<code>reindex_footnotes_strict.py</code>): TAWP 핵심 스크립트로 본문 20개 인용과 각주 미주 정의의 1대1 물리적 순차 정합성을 검증하고 보정했다.</li>
-            </ul>
-          </div>
-        </article>
-
-        <article class="step-card">
-          <div class="step-header">
-            <h3 class="step-title">Step 4: 포맷 무결성 및 린터 검증</h3>
-            <span class="step-badge">Phase: Quality Gate</span>
-          </div>
-          <div class="step-body">
-            <ul>
-              <li>시스템 헌법 규약에 따라 <code>bin/lint-md.py</code>를 실행했다.</li>
-              <li>이탤릭 일체 배제, 괄호 외부 볼드 배치, 엠대시 미사용, 평어체 종결어미를 자체 검증하여 오류 0건(PASS)을 달성했다.</li>
-            </ul>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="editorial-section">
-      <h2 class="section-heading">3. 데이터 및 주요 산출물 일람</h2>
-      <p>본 작업 수행 과정에서 생성 및 연동된 산출물과 도구체인 목록은 다음과 같다.</p>
+      <h2 class="section-heading">2. 시맨틱 레벨 2 질문 및 쿼리 설계 (5대 차원)</h2>
+      <p>단순 키워드 나열을 지양하고, 구글 스콜라의 시맨틱 인덱스를 온톨로지 단위로 유도하기 위해 질문당 2개씩 총 10개의 완결된 영독 복합 의문문 세트를 가동했다.</p>
 
       <div class="table-container">
         <table class="editorial-table">
           <thead>
             <tr>
-              <th scope="col">구분</th>
-              <th scope="col">파일명</th>
-              <th scope="col">비고 및 설명</th>
+              <th style="width: 14%;">연구 차원</th>
+              <th style="width: 43%;">독일어 정밀 쿼리 (Primary Query)</th>
+              <th style="width: 43%;">영어 대조 쿼리 (Comparative Query)</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>최종 분석 리포트</strong></td>
-              <td><code>Karl_Barth_Justification_Report.md</code></td>
-              <td>바탕화면에 저장된 최종 신학 학술 리포트 (각주 20개 완비)</td>
+              <td><strong>차원 1: 존재론</strong></td>
+              <td>Wie bestimmt Karl Barth das Verhältnis von Rechtfertigung und Heiligung in seiner Christologie?</td>
+              <td>How does Karl Barth articulate the relation between justification and sanctification within Christology?</td>
             </tr>
             <tr>
-              <td><strong>작업 수행 기록 문서</strong></td>
-              <td><code>Karl_Barth_Research_Workflow_Summary.md</code></td>
-              <td>작업 수행 단계 및 프롬프트 기록 마크다운 문서</td>
+              <td><strong>차원 2: 방법론</strong></td>
+              <td>Inwiefern unterscheidet sich Barths Verständnis des rechtfertigenden Gottesurteils von der forensischen Tradition?</td>
+              <td>In what ways does Barth's account of the divine verdict depart from classical forensic justification?</td>
             </tr>
             <tr>
-              <td><strong>수집 논문 원천 데이터</strong>(SSOT)</td>
-              <td><code>scholar_papers_100.json</code></td>
-              <td>5개 질문당 20편씩 수집된 순수 학술 논문 100편 메타데이터</td>
+              <td><strong>차원 3: 비판</strong></td>
+              <td>Welche Kritik übt Barth an der lutherischen Simul-Iustus-Lehre im Kontext der Versöhnungslehre?</td>
+              <td>What is Karl Barth's critique of the Lutheran doctrine of simul iustus et peccator in KD IV?</td>
             </tr>
             <tr>
-              <td><strong>100편 자동 수집 스크립트</strong></td>
-              <td><code>collect_20_per_question.js</code></td>
-              <td><code>ego-browser</code> 기반 단행본 필터링 및 페이지네이션 수집기</td>
+              <td><strong>차원 4: 융합</strong></td>
+              <td>Welche Rolle spielt die Partizipation an Christus bei Barth im Vergleich zur finnischen Lutherforschung?</td>
+              <td>How does union with Christ and participation function in Barth's doctrine of justification?</td>
             </tr>
             <tr>
-              <td><strong>리포트 생성 및 조판 스크립트</strong></td>
-              <td><code>generate_desktop_report.py</code></td>
-              <td>린트 안전 서식과 TAWP 분석 패널이 적용된 리포트 빌더</td>
-            </tr>
-            <tr>
-              <td><strong>각주 재배열 도구</strong>(TAWP)</td>
-              <td><code>reindex_footnotes_strict.py</code></td>
-              <td>본문 각주 물리 순서 기반 1대1 순차 재배열 엔진</td>
-            </tr>
-            <tr>
-              <td><strong>웹 에디토리얼 브리핑</strong></td>
-              <td><code>karl_barth_research_workflow.html</code></td>
-              <td>본 에그제큐티브 브리핑 HTML 웹 문서 (GitHub Pages 배포본)</td>
+              <td><strong>차원 5: 난제</strong></td>
+              <td>Führt Barths christologischer Universalismus in der Rechtfertigungslehre zur Aufhebung der menschlichen Entscheidung?</td>
+              <td>Does Barth's objective realization of justification in Jesus Christ imply theological universalism?</td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
 
+    <section class="editorial-section">
+      <h2 class="section-heading">3. 단계적 파이프라인 수행 아키텍처</h2>
+      <p>수집부터 정제, 검증, 조판에 이르는 4단계 엔지니어링 파이프라인을 거쳐 데이터의 무결성과 학술적 신뢰도를 확보했다.</p>
+
+      <div class="pipeline-grid">
+        <article class="step-card">
+          <div class="step-header">
+            <h3 class="step-title">1단계: 에고 브라우저 정찰 엔진 초기화 및 CLI 연동</h3>
+            <span class="step-badge">STAGE 01</span>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li>x86_64 아키텍처 환경에 최적화된 <code>ego lite</code> 바이너리를 설치하고 전역 PATH 심볼릭 링크를 구성했다.</li>
+              <li><code>ego-browser</code> CLI 도구를 호출하여 헤드리스 브라우저 세션 가동 및 구글 스콜라 DOM 자동 탐색 채널을 확보했다.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <div class="step-header">
+            <h3 class="step-title">2단계: 질문별 20편 저널 논문 선별 및 메타데이터 추출</h3>
+            <span class="step-badge">STAGE 02</span>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li>5개 차원별 20편씩 총 100편의 학술 문헌을 순차 수집했다.</li>
+              <li>출판사 도서 목록 및 단행본 메타데이터(Monograph/Book)를 정규식 필터로 사전 배제하고 순수 저널 아티클만 엄선했다.</li>
+              <li>논문 제목, 저자, 학술지명, 발행 연도, 피인용수(Citations), 원문 접근 링크(PDF/Landing URL)를 정형 JSON 규격으로 파싱했다.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <div class="step-header">
+            <h3 class="step-title">3단계: TAWP 분석 엔진 결합 및 심층 학술 리포트 작성</h3>
+            <span class="step-badge">STAGE 03</span>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li>현대신학 분석가(Contemporary Theological Analyst) 페르소나를 탑재하여 KD IV/1, IV/2의 원전 논리와 수집 문헌 100편을 유기적으로 결합했다.</li>
+              <li>화해론 안에서 칭의의 기독론적 근거, 법정적 칭의에 대한 비판적 재해석, 성화와의 불가분적 통합, 참여와 실존적 차원, 보편구원론 논쟁을 5개 장으로 집약 분석했다.</li>
+              <li>본문 인용 각주 20개를 순차 재배열([1]~[20])하고 학술 서지 규격(Chicago Turabian Style)에 맞춰 정밀 매핑했다.</li>
+              <li>신학 전문 용어 사전(<code>tre_terms.csv</code>) 대조 필터를 통과시켜 용어의 정합성을 최종 확증했다.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <div class="step-header">
+            <h3 class="step-title">4단계: 에디토리얼 HTML 조판 및 GitHub 배포</h3>
+            <span class="step-badge">STAGE 04</span>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li>맥킨지 및 FT 스타일의 네이비(#00205B)와 슬레이트 팔레트를 기반으로 에디토리얼 조판 시스템을 적용했다.</li>
+              <li>AI 디자인 클리셰(둥근 요소의 상단 편향 보더, 사이드 탭, 발광 그림자, 인라인 SVG)를 일체 배제하고 정돈된 직각 인쇄 키라인과 920px CJK 최적 행폭을 구현했다.</li>
+              <li><code>bin/lint-html.py</code> 자체 린터의 무경고 패스를 확인한 후, GitHub 배포 저장소에 단독 커밋 및 푸시하여 실시간 라이브 엔드포인트를 제공했다.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <footer class="doc-footer">
-      <div>Antigravity IDE &bull; TAWP Engineering Protocol</div>
-      <div>Canonical Host: mitmirsein.github.io/html</div>
+      <div>바르트 신학 연구 파이프라인 (Karl Barth Theological Research Pipeline)</div>
+      <div>검증 완료: 100편 피어리뷰 아티클 아카이브</div>
     </footer>
   </main>
 
