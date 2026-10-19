@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>칼 바르트 칭의론 학술 정찰 및 파이프라인 작업 수행 기록</title>
+  <style>
+/* ==========================================================================
+   EXECUTIVE EDITORIAL DESIGN SYSTEM (SSOT)
+   Canonical source for long-form research, executive briefings & dossiers.
+   Zero AI Tells / Authentic Editorial Typography / Strict Line-Length Limits
+   ========================================================================== */
+
+:root {
+  /* Authentic Editorial Palette (Pure Navy / Slate / Neutrals) */
+  --mck-navy: #00205B;
+  --mck-navy-dark: #001438;
+  --mck-blue: #005A9C;
+  --mck-blue-tint: #F0F6FB;
+  --mck-blue-line: #B8D5ED;
+  
+  /* Pure Editorial Canvas */
+  --mck-bg: #F9FAFB;
+  --mck-surface: #FFFFFF;
+  --mck-surface-subtle: #F4F6F8;
+  --mck-border: #E5E7EB;
+  --mck-border-strong: #D1D5DB;
+  --mck-border-subtle: #F3F4F6;
+  
+  /* Typography Colors */
+  --mck-text-main: #1F2937;
+  --mck-text-secondary: #4B5563;
+  --mck-text-muted: #6B7280;
+  --mck-text-navy: #00205B;
+  
+  /* Strict Non-Purple Semantic Tones */
+  --tone-challenge-bg: #FBFBFB;
+  --tone-challenge-border: #E5E7EB;
+  --tone-challenge-text: #9A3412;
+  
+  --tone-response-bg: #F8FAFC;
+  --tone-response-border: #E2E8F0;
+  --tone-response-text: #005A9C;
+  
+  --tone-debate-bg: #FFFDF9;
+  --tone-debate-border: #F3E8D8;
+  --tone-debate-text: #854D0E;
+  
+  --tone-audit-bg: #FDF9F9;
+  --tone-audit-border: #F3DADA;
+  --tone-audit-text: #991B1B;
+
+  /* Typography Stacks: Serif Primary for Reading, System Sans for UI */
+  --font-editorial-serif: 'Merriweather', 'Noto Serif KR', Georgia, Cambria, serif;
+  --font-ui-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Pretendard", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, Monaco, monospace;
+  
+  /* Layout Dimensions (CJK Editorial Standards: 880px~920px Container) */
+  --header-height: 60px;
+  --scrubber-height: 50px;
+  --drawer-width: 460px;
+  --container-max-width: 920px;
+  --optimal-prose-width: 100%;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background-color: var(--mck-surface-subtle);
+  border: 1px solid var(--mck-border);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--mck-navy-dark);
+}
+
+/* ==========================================================================
+   RESET & TYPOGRAPHY FOUNDATIONS
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  background-color: var(--mck-bg);
+  color: var(--mck-text-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-editorial-serif);
+  line-height: 1.8;
+  background-color: var(--mck-bg);
+  color: var(--mck-text-main);
+  overflow-x: hidden;
+}
+
+/* Typography & Korean orphan-prevention */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-editorial-serif);
+  color: var(--mck-navy);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+  line-height: 1.35;
+  max-width: none;
+}
+
+p, li, td, th, dd, dt, figcaption, blockquote {
+  text-align: left;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+}
+
+/* Golden standard prose line length limit (Strictly < 80 chars) */
+p {
+  max-width: var(--optimal-prose-width);
+}
+
+a {
+  color: var(--mck-blue);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--mck-navy);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   STICKY MASTHEAD & PROGRESS BAR (GPU TRANSFORM ONLY)
+   ========================================================================== */
+.mck-header-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--mck-surface);
+  border-bottom: 1px solid var(--mck-border);
+}
+
+.reading-progress-bar {
+  height: 3px;
+  background: var(--mck-blue);
+  width: 100%;
+  transform-origin: left;
+  transform: scaleX(0);
+  will-change: transform;
+}
+
+.mck-masthead {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--font-ui-sans);
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mck-brand-badge {
+  background-color: var(--mck-navy);
+  color: #FFFFFF;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  padding: 4px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.masthead-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.masthead-titles .report-category {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mck-blue);
+  line-height: 1.2;
+}
+
+.masthead-titles .report-title-short {
+  font-family: var(--font-editorial-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--mck-navy);
+  white-space: nowrap;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Zero layout-property animation on input */
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  font-family: var(--font-ui-sans);
+  font-size: 13px;
+  padding: 7px 32px 7px 12px;
+  border: 1px solid var(--mck-border);
+  border-radius: 4px;
+  background-color: var(--mck-surface-subtle);
+  color: var(--mck-text-main);
+  width: 230px;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.search-input:focus {
+  outline: 2px solid var(--mck-blue);
+  border-color: transparent;
+  background-color: #FFFFFF;
+}
+
+.search-count-badge {
+  position: absolute;
+  right: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--mck-blue);
+  background-color: var(--mck-blue-tint);
+  padding: 1px 6px;
+  border-radius: 10px;
+  display: none;
+}
+
+.font-size-widget {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--mck-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.font-size-btn {
+  background: var(--mck-surface-subtle);
+  border: none;
+  padding: 6px 10px;
+  font-family: var(--font-ui-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--mck-text-secondary);
+  cursor: pointer;
+  transition: background 0.1s ease;
+}
+
+.font-size-btn:hover {
+  background: var(--mck-border);
+  color: var(--mck-navy);
+}
+
+.font-size-btn + .font-size-btn {
+  border-left: 1px solid var(--mck-border);
+}
+
+.btn-action {
+  font-family: var(--font-ui-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border: 1px solid var(--mck-border);
+  border-radius: 4px;
+  background: var(--mck-surface-subtle);
+  color: var(--mck-text-main);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-action:hover {
+  background: var(--mck-border);
+  color: var(--mck-navy);
+}
+
+.btn-navy {
+  background-color: var(--mck-navy);
+  color: #FFFFFF;
+  border-color: var(--mck-navy);
+}
+
+.btn-navy:hover {
+  background-color: var(--mck-navy-dark);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   TIMELINE SCRUBBER & FILTERS
+   ========================================================================== */
+.mck-scrubber-bar {
+  background-color: var(--mck-surface);
+  border-bottom: 1px solid var(--mck-border);
+  font-family: var(--font-ui-sans);
+  font-size: 13px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+}
+
+.scrubber-inner {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 8px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.scrubber-timeline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.scrubber-pill {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--mck-text-secondary);
+  padding: 4px 9px;
+  border-radius: 3px;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+  text-decoration: none;
+}
+
+.scrubber-pill:hover {
+  background-color: var(--mck-surface-subtle);
+  color: var(--mck-navy);
+  text-decoration: none;
+}
+
+.scrubber-pill.active {
+  background-color: var(--mck-navy);
+  color: #FFFFFF;
+}
+
+.scrubber-pill.pill-special {
+  color: var(--mck-blue);
+  font-weight: 700;
+}
+
+.scrubber-pill.pill-special.active {
+  background-color: var(--mck-blue);
+  color: #FFFFFF;
+}
+
+.dimension-filters {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filter-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--mck-text-muted);
+  text-transform: none;
+  letter-spacing: 0.5px;
+}
+
+.filter-chip {
+  font-family: var(--font-ui-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 3px;
+  border: 1px solid var(--mck-border);
+  background: var(--mck-surface);
+  color: var(--mck-text-secondary);
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.filter-chip:hover {
+  border-color: var(--mck-border-strong);
+  color: var(--mck-navy);
+}
+
+.filter-chip.active {
+  background-color: var(--mck-blue);
+  border-color: var(--mck-blue);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   CONTENT LAYOUT
+   ========================================================================== */
+.main-container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 40px 24px 80px 24px;
+}
+
+/* Hero Section */
+.doc-hero-section {
+  background-color: var(--mck-surface);
+  border: 1px solid var(--mck-border);
+  border-radius: 4px;
+  padding: 48px 48px 40px 48px;
+  margin-bottom: 32px;
+}
+
+.doc-kicker {
+  font-family: var(--font-ui-sans);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--mck-blue);
+  letter-spacing: 1.2px;
+  text-transform: none;
+  margin-bottom: 12px;
+}
+
+.doc-main-title {
+  font-family: var(--font-editorial-serif);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--mck-navy);
+  line-height: 1.35;
+  margin-bottom: 16px;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+  max-width: none;
+}
+
+.doc-subtitle,
+.lead,
+.deck {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--mck-text-secondary);
+  margin-bottom: 28px;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
+  max-width: none;
+}
+
+.doc-metadata-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  padding: 20px 0;
+  border-top: 1px solid var(--mck-border);
+  border-bottom: 1px solid var(--mck-border);
+  margin-bottom: 32px;
+  font-family: var(--font-ui-sans);
+}
+
+.meta-col .meta-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--mck-text-muted);
+  text-transform: none;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.meta-col .meta-value {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--mck-navy);
+}
+
+/* Briefing Section */
+.executive-briefing-box {
+  background-color: var(--mck-surface-subtle);
+  border: 1px solid var(--mck-border);
+  border-radius: 4px;
+  padding: 28px 32px;
+  margin-top: 24px;
+}
+
+.briefing-heading {
+  font-family: var(--font-editorial-serif);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--mck-navy);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--mck-border);
+}
+
+.briefing-text,
+.conclusion-text {
+  font-size: 15.5px;
+  line-height: 1.85;
+  color: var(--mck-text-main);
+  margin-bottom: 16px;
+  max-width: var(--optimal-prose-width);
+}
+
+.briefing-text:last-child,
+.conclusion-text:last-child {
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   CARDS & GRIDS (ZERO MERMAID / PURE SEMANTIC CSS)
+   ========================================================================== */
+.flow-architecture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.flow-card {
+  background-color: var(--mck-surface);
+  border: 1px solid var(--mck-border);
+  border-radius: 4px;
+  padding: 20px 22px;
+  box-shadow: none;
+}
+
+.flow-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.flow-step-badge {
+  font-family: var(--font-ui-sans);
+  font-size: 11px;
+  font-weight: 800;
+  background-color: var(--mck-navy);
+  color: #FFFFFF;
+  padding: 2px 7px;
+  border-radius: 2px;
+  letter-spacing: 0.5px;
+}
+
+.flow-pillar-title {
+  font-family: var(--font-editorial-serif);
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--mck-navy);
+  margin-bottom: 8px;
+}
+
+.flow-pillar-desc {
+  font-size: 13.5px;
+  color: var(--mck-text-secondary);
+  line-height: 1.65;
+  max-width: var(--optimal-prose-width);
+}
+
+/* ==========================================================================
+   SLIDE-OVER DRAWER (NEUTRAL SHADOW / ZERO PURPLE)
+   ========================================================================== */
+.footnote-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.footnote-drawer-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.footnote-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--drawer-width);
+  max-width: 90vw;
+  background-color: var(--mck-surface);
+  border-left: 1px solid var(--mck-border);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.08);
+  z-index: 2001;
+  transform: translateX(100%);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.footnote-drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--mck-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--mck-surface-subtle);
+  font-family: var(--font-ui-sans);
+}
+
+.drawer-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--mck-navy);
+}
+
+.drawer-close-btn {
+  background: none;
+  border: 1px solid var(--mck-border);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--mck-text-secondary);
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.drawer-close-btn:hover {
+  background-color: var(--mck-border);
+  color: var(--mck-navy);
+}
+
+.drawer-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.drawer-fn-card {
+  background-color: var(--mck-surface-subtle);
+  border: 1px solid var(--mck-border);
+  border-radius: 4px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.drawer-fn-card.active-target {
+  border-color: var(--mck-blue);
+  background-color: var(--mck-blue-tint);
+}
+
+.drawer-fn-id {
+  font-family: var(--font-ui-sans);
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--mck-blue);
+  margin-bottom: 6px;
+}
+
+.drawer-fn-claim {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--mck-text-main);
+  margin-bottom: 8px;
+}
+
+.drawer-fn-source {
+  font-size: 12.5px;
+  color: var(--mck-text-muted);
+  border-top: 1px dashed var(--mck-border);
+  padding-top: 6px;
+}
+
+/* ==========================================================================
+   PELE MERMAID DIAGRAM INTEGRATION
+   Pure CSS Variable Theme Mapping for obsidianmd/pele SVG diagrams
+   ========================================================================== */
+.pele {
+  --pele-bg: var(--mck-surface);
+  --pele-fg: var(--mck-text-main);
+  --pele-muted: var(--mck-text-muted);
+  --pele-line: var(--mck-navy);
+  --pele-surface: var(--mck-surface-subtle);
+  --pele-surface-alt: var(--mck-blue-tint);
+  --pele-border: var(--mck-border-strong);
+  --pele-accent: var(--mck-blue);
+  --pele-critical: var(--tone-audit-text);
+  --pele-font: var(--font-ui-sans);
+  --pele-font-mono: var(--font-mono);
+  --pele-radius: 3px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.pele-card {
+  background: var(--mck-surface);
+  border: 1px solid var(--mck-border);
+  border-radius: 4px;
+  padding: 24px;
+  margin: 24px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+  text-align: center;
+}
+
+/* ==========================================================================
+   PRINT STYLES (CLEAN WHITE EDITORIAL)
+   ========================================================================== */
+@media print {
+  .mck-header-wrapper,
+  .footnote-drawer-overlay,
+  .footnote-drawer,
+  .dimension-filters {
+    display: none !important;
+  }
+
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+
+  .main-container {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .century-card,
+  .deep-dive-card {
+    page-break-inside: avoid;
+    border: 1px solid #CCCCCC !important;
+  }
+}
+
+
+    /* 맥킨지 스타일 에디토리얼 맞춤 조판 */
+    body {
+      background-color: var(--mck-bg, #F9FAFB);
+      color: var(--mck-text-main, #1F2937);
+      font-family: var(--font-editorial-serif, 'Merriweather', 'Noto Serif KR', Georgia, serif);
+      line-height: 1.75;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .editorial-wrapper {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 60px 24px 100px 24px;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    header.doc-header {
+      border-bottom: 2px solid var(--mck-navy, #00205B);
+      padding-bottom: 24px;
+      margin-bottom: 40px;
+    }
+
+    .kicker {
+      font-family: var(--font-ui-sans, -apple-system, sans-serif);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--mck-blue, #005A9C);
+      margin-bottom: 8px;
+    }
+
+    h1.doc-title {
+      font-family: var(--font-editorial-serif, 'Merriweather', 'Noto Serif KR', Georgia, serif);
+      font-size: 2.2rem;
+      line-height: 1.35;
+      color: var(--mck-navy, #00205B);
+      margin: 0 0 16px 0;
+      text-wrap: balance;
+    }
+
+    .doc-meta {
+      font-family: var(--font-ui-sans, -apple-system, sans-serif);
+      font-size: 0.9rem;
+      color: var(--mck-text-secondary, #4B5563);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .meta-tag {
+      display: inline-flex;
+      align-items: center;
+      background: var(--mck-surface-subtle, #F4F6F8);
+      border: 1px solid var(--mck-border, #E5E7EB);
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      color: #374151;
+    }
+
+    /* Executive Takeaway Callout Card */
+    .executive-takeaway {
+      background: var(--mck-surface, #FFFFFF);
+      border: 1px solid var(--mck-border, #E5E7EB);
+      border-top: 3px solid var(--mck-navy, #00205B);
+      border-radius: 4px;
+      padding: 24px 28px;
+      margin: 32px 0 44px 0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .takeaway-title {
+      font-family: var(--font-ui-sans, -apple-system, sans-serif);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--mck-navy, #00205B);
+      margin-bottom: 12px;
+      letter-spacing: 0.02em;
+    }
+
+    .takeaway-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--mck-text-main, #1F2937);
+    }
+
+    .takeaway-list li {
+      margin-bottom: 8px;
+      text-wrap: pretty;
+    }
+
+    .takeaway-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Section Styles */
+    section.editorial-section {
+      margin-bottom: 56px;
+    }
+
+    h2.section-heading {
+      font-family: var(--font-editorial-serif, 'Merriweather', 'Noto Serif KR', Georgia, serif);
+      font-size: 1.5rem;
+      color: var(--mck-navy, #00205B);
+      border-bottom: 1px solid var(--mck-border, #E5E7EB);
+      padding-bottom: 10px;
+      margin: 40px 0 20px 0;
+      text-wrap: balance;
+    }
+
+    p {
+      margin: 0 0 18px 0;
+      font-size: 1.02rem;
+      text-wrap: pretty;
+    }
+
+    /* Prompt Box */
+    .prompt-box {
+      background: var(--mck-surface, #FFFFFF);
+      border: 1px solid var(--mck-border, #E5E7EB);
+      border-top: 2px solid var(--mck-blue, #005A9C);
+      border-radius: 4px;
+      padding: 18px 22px;
+      margin-bottom: 16px;
+    }
+
+    .prompt-label {
+      font-family: var(--font-ui-sans, -apple-system, sans-serif);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--mck-blue, #005A9C);
+      margin-bottom: 6px;
+    }
+
+    .prompt-content {
+      font-family: var(--font-editorial-serif, 'Merriweather', 'Noto Serif KR', Georgia, serif);
+      font-size: 0.98rem;
+      color: var(--mck-text-main, #1F2937);
+      margin: 0;
+    }
+
+    /* Tables */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin: 24px 0 32px 0;
+      border: 1px solid var(--mck-border, #E5E7EB);
+      border-radius: 4px;
+      background: #FFFFFF;
+    }
+
+    table.editorial-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-ui-sans, -apple-system, sans-serif);
+      font-size: 0.9rem;
+      text-align: left;
+    }
+
+    table.editorial-table th {
+      background: var(--mck-surface-subtle, #F4F6F8);
+      color: var(--mck-navy, #00205B);
+      font-weight: 700;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--mck-border-strong, #D1D5DB);
+      white-space: nowrap;
+    }
+
+    table.editorial-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--mck-border-subtle, #F3F4F6);
+      color: var(--mck-text-main, #1F2937);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+
+    table.editorial-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    table.editorial-table tr:hover td {
+      background: #FAFBFD;
+    }
+
+    code {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.86rem;
+      background: #F1F4F8;
+      color: #1E293B;
+      padding: 2px 5px;
+      border-radius: 3px;
+      border: 1px solid #E2E8F0;
+    }
+
+    /* Pipeline Step Cards */
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin: 24px 0;
+    }
+
+    .step-card {
+      background: #FFFFFF;
+      border: 1px solid var(--mck-border, #E5E7EB);
+      border-top: 2px solid var(--mck-navy, #00205B);
+      border-radius: 4px;
+      padding: 20px 24px;
+    }
+
+    .step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--mck-border-subtle, #F3F4F6);
+      padding-bottom: 8px;
+    }
+
+    .step-title {
+      font-family: var(--font-ui-sans, -apple-system, sans-serif);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--mck-navy, #00205B);
+      margin: 0;
+    }
+
+    .step-badge {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.78rem;
+      background: var(--mck-blue-tint, #F0F6FB);
+      color: var(--mck-blue, #005A9C);
+      padding: 2px 8px;
+      border-radius: 3px;
+      border: 1px solid var(--mck-blue-line, #B8D5ED);
+      font-weight: 600;
+    }
+
+    .step-body ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .step-body li {
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: var(--mck-text-secondary, #4B5563);
+      text-wrap: pretty;
+    }
+
+    .step-body li:last-child {
+      margin-bottom: 0;
+    }
+
+    footer.doc-footer {
+      border-top: 1px solid var(--mck-border, #E5E7EB);
+      padding-top: 24px;
+      margin-top: 60px;
+      font-family: var(--font-ui-sans, -apple-system, sans-serif);
+      font-size: 0.85rem;
+      color: var(--mck-text-muted, #6B7280);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="editorial-wrapper">
+    <header class="doc-header">
+      <div class="kicker">Executive Briefing & Workflow Architecture</div>
+      <h1 class="doc-title">칼 바르트 칭의론 학술 정찰 및 파이프라인 작업 수행 기록</h1>
+      <div class="doc-meta">
+        <span class="meta-tag">일시: 2026-10-19</span>
+        <span class="meta-tag">도구체인: ego lite (v0.6.0.12)</span>
+        <span class="meta-tag">규약: google-scholar-semantic Level 2</span>
+        <span class="meta-tag">파이프라인: TAWP</span>
+      </div>
+    </header>
+
+    <div class="executive-takeaway">
+      <div class="takeaway-title">핵심 요약 및 정찰 성과</div>
+      <ul class="takeaway-list">
+        <li><strong>Level 2 시맨틱 쿼리 5대 차원 체계 구축</strong>: 칼 바르트 칭의론(Rechtfertigung Karl Barths)에 대해 존재론, 방법론, 비판, 융합, 난제의 5대 차원을 직격하는 독일어 및 영어 완결 의문문 10개 쿼리 세트를 수립했다.</li>
+        <li><strong>순수 피어리뷰 학술 논문 100편 무결성 수집</strong>: 상주형 브라우저 엔진인 <code>ego-browser</code>를 통해 단행본(Book) 및 구글 북스 도메인을 배제하고, 자동 페이지네이션으로 5개 질문당 각 20편씩 총 100편의 논문 데이터를 단일 진실 공급원(SSOT)으로 정밀 구축했다.</li>
+        <li><strong>TAWP 파이프라인 연동 및 각주 1대1 순차 재배열</strong>: 현대신학 분석가 페르소나 적용, 바르트 『교회교의학』(KD IV/1, IV/2) 1차 문헌 대조, <code>reindex_footnotes_strict.py</code>를 통한 20개 각주 순서 보정, 그리고 린트 무결성 검증을 마쳤다.</li>
+      </ul>
+    </div>
+
+    <section class="editorial-section">
+      <h2 class="section-heading">1. 사용자 프롬프트 기록</h2>
+      <p>본격적인 연구 및 파이프라인 집행을 위해 입력된 사용자 지시 프롬프트는 다음과 같다.</p>
+
+      <div class="prompt-box">
+        <div class="prompt-label">프롬프트 10 (연구 집행 지시)</div>
+        <p class="prompt-content">"칼 바르트 칭의에 대해 구글 스콜라 시맨틱 레벨 2 질문 생성(5개, 영독으로만)해서, 에고 라이트로 레퍼런스 수집한 뒤, tawp의 기능 일부를 활용해 리포트 작성 생성해봐. 저장 경로: 바탕화면."</p>
+      </div>
+
+      <div class="prompt-box">
+        <div class="prompt-label">프롬프트 11 (수집 규모 명시)</div>
+        <p class="prompt-content">"각 질문당 레퍼런스 수집 20개"</p>
+      </div>
+    </section>
+
+    <section class="editorial-section">
+      <h2 class="section-heading">2. 단계적 작업 수행 내역</h2>
+
+      <div class="pipeline-grid">
+        <article class="step-card">
+          <div class="step-header">
+            <h3 class="step-title">Step 1: Level 2 시맨틱 질문 설계</h3>
+            <span class="step-badge">Phase: Query Design</span>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li><code>google-scholar-semantic</code> 스킬의 책임 연구원(Principal Investigator) 인지 규약을 적용했다.</li>
+              <li>키워드 나열을 엄격히 배제하고, 5대 차원(존재론, 방법론, 비판, 융합, 난제)에 맞춘 완결된 독일어 및 영어 의문문 쌍 10개를 교차 설계했다.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <div class="step-header">
+            <h3 class="step-title">Step 2: ego-browser 기반 단행본 배제 및 논문 100편 수집</h3>
+            <span class="step-badge">Phase: Recon & Extraction</span>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li><code>[BOOK]</code>, <code>[BUCH]</code>, <code>[B]</code> 라벨 및 <code>books.google</code> 도메인을 DOM 레벨에서 식별하여 배제하는 Node.js 필터링 수집 엔진(<code>collect_20_per_question.js</code>)을 구축했다.</li>
+              <li>각 질문마다 순수 논문 20편이 확보될 때까지 페이지네이션(<code>start=0, 10, 20...</code>)을 자동 순회했다.</li>
+              <li>JSTOR, Wiley, Sage, De Gruyter, Brill, ZThK, MThZ, IJST, NZSTh 등 권위 있는 저널 논문 100편의 메타데이터와 피인용 수(Cited by)를 추출하여 <code>scholar_papers_100.json</code>에 저장했다.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <div class="step-header">
+            <h3 class="step-title">Step 3: TAWP 파이프라인 연동 및 신학적 심층 분석</h3>
+            <span class="step-badge">Phase: Synthesis & Footnotes</span>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li><strong>현대신학 분석가 페르소나 적용</strong>(<code>Modern_Theology_Analyst</code>): 칸트적 자율성 및 슐라이어마허적 주관주의에 대항하는 바르트 기독론적 존재론의 긴장을 중심으로 분석을 전개했다.</li>
+              <li><strong>1차 문헌 대조</strong>(<code>primary_works.json</code>): 바르트 『교회교의학』(KD IV/1 §61, KD IV/2 §66) 정본 독일어 표제와 본문 맥락을 엄밀 대조했다.</li>
+              <li><strong>신학 용어 린터 준수</strong>(<code>tre_terms.csv</code>): <strong>Rechtfertigung</strong>, <strong>Heiligung</strong>, <strong>Versöhnung</strong>, <strong>Urteil Gottes</strong>, <strong>Simul iustus et peccator</strong>, <strong>Ordo Salutis</strong> 등 표준 학술 표기를 엄수했다.</li>
+              <li><strong>각주 1대1 순차 재배열</strong>(<code>reindex_footnotes_strict.py</code>): TAWP 핵심 스크립트로 본문 20개 인용과 각주 미주 정의의 1대1 물리적 순차 정합성을 검증하고 보정했다.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="step-card">
+          <div class="step-header">
+            <h3 class="step-title">Step 4: 포맷 무결성 및 린터 검증</h3>
+            <span class="step-badge">Phase: Quality Gate</span>
+          </div>
+          <div class="step-body">
+            <ul>
+              <li>시스템 헌법 규약에 따라 <code>bin/lint-md.py</code>를 실행했다.</li>
+              <li>이탤릭 일체 배제, 괄호 외부 볼드 배치, 엠대시 미사용, 평어체 종결어미를 자체 검증하여 오류 0건(PASS)을 달성했다.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="editorial-section">
+      <h2 class="section-heading">3. 데이터 및 주요 산출물 일람</h2>
+      <p>본 작업 수행 과정에서 생성 및 연동된 산출물과 도구체인 목록은 다음과 같다.</p>
+
+      <div class="table-container">
+        <table class="editorial-table">
+          <thead>
+            <tr>
+              <th scope="col">구분</th>
+              <th scope="col">파일명</th>
+              <th scope="col">비고 및 설명</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>최종 분석 리포트</strong></td>
+              <td><code>Karl_Barth_Justification_Report.md</code></td>
+              <td>바탕화면에 저장된 최종 신학 학술 리포트 (각주 20개 완비)</td>
+            </tr>
+            <tr>
+              <td><strong>작업 수행 기록 문서</strong></td>
+              <td><code>Karl_Barth_Research_Workflow_Summary.md</code></td>
+              <td>작업 수행 단계 및 프롬프트 기록 마크다운 문서</td>
+            </tr>
+            <tr>
+              <td><strong>수집 논문 원천 데이터</strong>(SSOT)</td>
+              <td><code>scholar_papers_100.json</code></td>
+              <td>5개 질문당 20편씩 수집된 순수 학술 논문 100편 메타데이터</td>
+            </tr>
+            <tr>
+              <td><strong>100편 자동 수집 스크립트</strong></td>
+              <td><code>collect_20_per_question.js</code></td>
+              <td><code>ego-browser</code> 기반 단행본 필터링 및 페이지네이션 수집기</td>
+            </tr>
+            <tr>
+              <td><strong>리포트 생성 및 조판 스크립트</strong></td>
+              <td><code>generate_desktop_report.py</code></td>
+              <td>린트 안전 서식과 TAWP 분석 패널이 적용된 리포트 빌더</td>
+            </tr>
+            <tr>
+              <td><strong>각주 재배열 도구</strong>(TAWP)</td>
+              <td><code>reindex_footnotes_strict.py</code></td>
+              <td>본문 각주 물리 순서 기반 1대1 순차 재배열 엔진</td>
+            </tr>
+            <tr>
+              <td><strong>웹 에디토리얼 브리핑</strong></td>
+              <td><code>karl_barth_research_workflow.html</code></td>
+              <td>본 에그제큐티브 브리핑 HTML 웹 문서 (GitHub Pages 배포본)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="doc-footer">
+      <div>Antigravity IDE &bull; TAWP Engineering Protocol</div>
+      <div>Canonical Host: mitmirsein.github.io/html</div>
+    </footer>
+  </main>
+
+</body>
+</html>
