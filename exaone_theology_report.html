@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LG EXAONE (k-exaone_v2.5) 신학 성능 벤치마크 및 프로토콜 평가 보고서</title>
+  <style>
+    :root {
+      --mck-navy: #00205B;
+      --mck-navy-dark: #001438;
+      --mck-blue: #005A9C;
+      --mck-blue-tint: #F0F6FB;
+      --mck-blue-line: #B8D5ED;
+      --mck-bg: #F9FAFB;
+      --mck-surface: #FFFFFF;
+      --mck-surface-subtle: #F4F6F8;
+      --mck-border: #E5E7EB;
+      --mck-border-strong: #D1D5DB;
+      --mck-text-main: #1F2937;
+      --mck-text-secondary: #4B5563;
+      --tone-warn-bg: #FFFDF9;
+      --tone-warn-border: #E5D4B3;
+      --tone-warn-text: #854D0E;
+      --tone-fail-bg: #FDF9F9;
+      --tone-fail-border: #E8C5C5;
+      --tone-fail-text: #991B1B;
+      --tone-ok-bg: #F3F8F5;
+      --tone-ok-border: #BBD8C5;
+      --tone-ok-text: #14532D;
+      --font-editorial-serif: 'Merriweather', 'Noto Serif KR', Georgia, Cambria, serif;
+      --font-ui-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Pretendard", "Helvetica Neue", Arial, sans-serif;
+      --font-mono: 'JetBrains Mono', Consolas, Monaco, monospace;
+      --container-max-width: 920px;
+      --optimal-prose-width: 68ch;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      background-color: var(--mck-bg);
+      color: var(--mck-text-main);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-editorial-serif);
+      line-height: 1.8;
+      background-color: var(--mck-bg);
+      color: var(--mck-text-main);
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-editorial-serif);
+      color: var(--mck-navy);
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: balance;
+      line-height: 1.35;
+    }
+
+    p, li, td, th, dd, dt, figcaption, blockquote {
+      text-align: left;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: pretty;
+    }
+
+    p {
+      max-width: var(--optimal-prose-width);
+      margin-bottom: 14px;
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      background-color: var(--mck-surface-subtle);
+      border: 1px solid var(--mck-border);
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: var(--mck-navy-dark);
+    }
+
+    /* Sticky Masthead */
+    .mck-header-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: var(--mck-surface);
+      border-bottom: 1px solid var(--mck-border);
+    }
+
+    .mck-masthead {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-family: var(--font-ui-sans);
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .mck-brand-badge {
+      background-color: var(--mck-navy);
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      padding: 4px 10px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .masthead-titles {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .report-category {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--mck-blue);
+      line-height: 1.25;
+    }
+
+    .report-title-short {
+      font-family: var(--font-editorial-serif);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--mck-navy);
+    }
+
+    .nav-pills {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .nav-pill {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--mck-text-secondary);
+      padding: 4px 10px;
+      border-radius: 3px;
+      text-decoration: none;
+      border: 1px solid var(--mck-border);
+      background-color: var(--mck-surface);
+      transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .nav-pill:hover {
+      background-color: var(--mck-navy);
+      border-color: var(--mck-navy);
+      color: #FFFFFF;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: 36px 24px 80px 24px;
+    }
+
+    /* Hero */
+    .doc-hero-section {
+      background-color: var(--mck-surface);
+      border: 1px solid var(--mck-border);
+      border-top: 4px solid var(--mck-navy);
+      border-radius: 0;
+      padding: 44px 44px 36px 44px;
+      margin-bottom: 32px;
+    }
+
+    .doc-kicker {
+      font-family: var(--font-ui-sans);
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--mck-blue);
+      letter-spacing: 0.04em;
+      margin-bottom: 10px;
+    }
+
+    .doc-main-title {
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--mck-navy);
+      margin-bottom: 14px;
+    }
+
+    .doc-subtitle {
+      font-size: 16.5px;
+      line-height: 1.65;
+      color: var(--mck-text-secondary);
+      margin-bottom: 26px;
+      max-width: var(--optimal-prose-width);
+    }
+
+    .doc-metadata-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px;
+      padding: 18px 0;
+      border-top: 1px solid var(--mck-border);
+      border-bottom: 1px solid var(--mck-border);
+      margin-bottom: 28px;
+      font-family: var(--font-ui-sans);
+    }
+
+    .meta-col .meta-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--mck-text-secondary);
+      letter-spacing: 0.03em;
+      margin-bottom: 4px;
+    }
+
+    .meta-col .meta-value {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--mck-navy);
+    }
+
+    .executive-briefing-box {
+      background-color: var(--mck-surface-subtle);
+      border: 1px solid var(--mck-border);
+      border-radius: 0;
+      padding: 24px 28px;
+    }
+
+    .briefing-heading {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--mck-navy);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--mck-border);
+    }
+
+    .briefing-text {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--mck-text-main);
+      max-width: var(--optimal-prose-width);
+    }
+
+    /* KPI Strip */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+      gap: 14px;
+      margin: 24px 0 36px 0;
+    }
+
+    .kpi-card {
+      background-color: var(--mck-surface);
+      border: 1px solid var(--mck-border);
+      border-top: 3px solid var(--mck-navy);
+      border-radius: 0;
+      padding: 18px 20px;
+      font-family: var(--font-ui-sans);
+    }
+
+    .kpi-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--mck-text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .kpi-value {
+      font-family: var(--font-editorial-serif);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--mck-navy);
+      margin-bottom: 4px;
+    }
+
+    .kpi-note {
+      font-size: 12.5px;
+      color: var(--mck-text-secondary);
+      line-height: 1.45;
+    }
+
+    /* Section Containers */
+    .report-section {
+      background-color: var(--mck-surface);
+      border: 1px solid var(--mck-border);
+      border-radius: 0;
+      padding: 36px 40px;
+      margin-bottom: 28px;
+    }
+
+    .section-header {
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--mck-navy);
+    }
+
+    .section-num {
+      font-family: var(--font-ui-sans);
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--mck-blue);
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--mck-navy);
+    }
+
+    .section-lead {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--mck-text-secondary);
+      margin-top: 8px;
+      max-width: var(--optimal-prose-width);
+    }
+
+    /* Protocol Step Cards */
+    .flow-architecture-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .flow-card {
+      background-color: var(--mck-surface-subtle);
+      border: 1px solid var(--mck-border);
+      border-radius: 4px;
+      padding: 18px 20px;
+    }
+
+    .flow-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .flow-step-badge {
+      font-family: var(--font-ui-sans);
+      font-size: 12px;
+      font-weight: 800;
+      background-color: var(--mck-navy);
+      color: #FFFFFF;
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+
+    .flow-pillar-title {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--mck-navy);
+      margin-bottom: 8px;
+    }
+
+    .flow-pillar-desc {
+      font-size: 13.5px;
+      color: var(--mck-text-main);
+      line-height: 1.65;
+      max-width: var(--optimal-prose-width);
+    }
+
+    /* Tables */
+    .table-container {
+      background-color: var(--mck-surface);
+      border: 1px solid var(--mck-border);
+      border-radius: 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+
+    .table-editorial {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-ui-sans);
+      font-size: 13.5px;
+    }
+
+    .table-editorial th,
+    .table-editorial td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--mck-border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .table-editorial th {
+      background-color: var(--mck-surface-subtle);
+      font-weight: 700;
+      color: var(--mck-navy);
+      white-space: nowrap;
+    }
+
+    .table-editorial tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Status Badges */
+    .status-badge {
+      display: inline-block;
+      font-family: var(--font-ui-sans);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+
+    .badge-ok {
+      background-color: var(--tone-ok-bg);
+      color: var(--tone-ok-text);
+      border: 1px solid var(--tone-ok-border);
+    }
+
+    .badge-warn {
+      background-color: var(--tone-warn-bg);
+      color: var(--tone-warn-text);
+      border: 1px solid var(--tone-warn-border);
+    }
+
+    .badge-fail {
+      background-color: var(--tone-fail-bg);
+      color: var(--tone-fail-text);
+      border: 1px solid var(--tone-fail-border);
+    }
+
+    /* QA Case Cards */
+    .qa-card {
+      background-color: var(--mck-surface);
+      border: 1px solid var(--mck-border-strong);
+      border-top: 3px solid var(--mck-blue);
+      border-radius: 0;
+      padding: 26px 28px;
+      margin: 24px 0;
+    }
+
+    .qa-card-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--mck-border);
+    }
+
+    .qa-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--mck-navy);
+    }
+
+    .qa-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-family: var(--font-ui-sans);
+      margin-bottom: 16px;
+    }
+
+    .meta-tag {
+      font-size: 12px;
+      font-weight: 600;
+      background-color: var(--mck-surface-subtle);
+      color: var(--mck-text-main);
+      border: 1px solid var(--mck-border);
+      padding: 4px 10px;
+      border-radius: 3px;
+    }
+
+    .prompt-box {
+      background-color: var(--mck-blue-tint);
+      border: 1px solid var(--mck-blue-line);
+      border-radius: 4px;
+      padding: 16px 20px;
+      margin-bottom: 18px;
+      max-width: var(--optimal-prose-width);
+    }
+
+    .box-label {
+      font-family: var(--font-ui-sans);
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--mck-navy);
+      margin-bottom: 6px;
+    }
+
+    .prompt-content {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--mck-text-main);
+      max-width: var(--optimal-prose-width);
+    }
+
+    .response-box {
+      background-color: var(--mck-surface-subtle);
+      border: 1px solid var(--mck-border);
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin-bottom: 18px;
+    }
+
+    .response-box h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--mck-navy);
+      margin: 16px 0 6px 0;
+    }
+
+    .response-box h4:first-of-type {
+      margin-top: 6px;
+    }
+
+    .response-box p {
+      font-size: 14.5px;
+      line-height: 1.75;
+      color: var(--mck-text-main);
+      max-width: var(--optimal-prose-width);
+    }
+
+    blockquote.editorial-quote {
+      margin: 14px 0;
+      padding: 16px 20px;
+      background-color: var(--mck-surface);
+      border-left: 3px solid var(--mck-navy);
+      font-size: 14.5px;
+      line-height: 1.75;
+      color: var(--mck-text-main);
+      max-width: var(--optimal-prose-width);
+    }
+
+    blockquote.editorial-quote cite {
+      display: block;
+      margin-top: 8px;
+      font-family: var(--font-ui-sans);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--mck-text-secondary);
+    }
+
+    .critique-box {
+      background-color: var(--mck-surface);
+      border: 1px solid var(--mck-border);
+      border-radius: 4px;
+      padding: 16px 20px;
+    }
+
+    ul.editorial-list {
+      list-style-type: disc;
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+
+    ul.editorial-list li {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--mck-text-main);
+      margin-bottom: 8px;
+      max-width: var(--optimal-prose-width);
+    }
+
+    ul.editorial-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Dark Synthesis Box */
+    .synthesis-box {
+      background-color: var(--mck-navy);
+      color: #FFFFFF;
+      border: 1px solid var(--mck-navy-dark);
+      border-radius: 0;
+      padding: 30px 34px;
+      margin-top: 24px;
+    }
+
+    .synthesis-box h3 {
+      color: #FFFFFF;
+      font-size: 19px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .synthesis-box p {
+      color: #FFFFFF;
+      font-size: 14.5px;
+      line-height: 1.8;
+      max-width: var(--optimal-prose-width);
+    }
+
+    .synthesis-box ul.editorial-list li {
+      color: #FFFFFF;
+    }
+
+    .doc-footer {
+      font-family: var(--font-ui-sans);
+      font-size: 12.5px;
+      color: var(--mck-text-secondary);
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid var(--mck-border);
+    }
+
+    @media (max-width: 720px) {
+      .doc-hero-section,
+      .report-section {
+        padding: 24px 20px;
+      }
+      .nav-pills {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="mck-header-wrapper">
+    <div class="mck-masthead">
+      <div class="brand-section">
+        <span class="mck-brand-badge">MS_DEV EVAL</span>
+        <div class="masthead-titles">
+          <span class="report-category">AI Model Theological Benchmark</span>
+          <span class="report-title-short">LG EXAONE (k-exaone_v2.5) 성능 평가 보고서</span>
+        </div>
+      </div>
+      <nav class="nav-pills" aria-label="보고서 섹션 이동">
+        <a class="nav-pill" href="#sec-protocol">테스트 과정</a>
+        <a class="nav-pill" href="#sec-criteria">평가 기준</a>
+        <a class="nav-pill" href="#sec-qa">질의·응답 상세</a>
+        <a class="nav-pill" href="#sec-incidents">장애 프로토콜</a>
+        <a class="nav-pill" href="#sec-verdict">종합 평가</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-container">
+
+    <!-- HERO & EXECUTIVE SUMMARY -->
+    <section class="doc-hero-section">
+      <div class="doc-kicker">EXECUTIVE TECHNICAL &amp; THEOLOGICAL BRIEFING</div>
+      <h1 class="doc-main-title">LG EXAONE API(k-exaone_v2.5) 신학 역량 실증 테스트 보고서</h1>
+      <p class="doc-subtitle">
+        신규 발급된 LG EXAONE API의 조직신학 구조화, 독일어 신학 번역, 헬라어 성서 주해, 한국어 설교 문체 전환 성능을 4개 문항 벤치마크로 검증하고, 호출 과정에서 식별된 서버 동시성 및 추론 예산 고갈 장애의 대응 프로토콜을 정립한다.
+      </p>
+
+      <div class="doc-metadata-grid">
+        <div class="meta-col">
+          <div class="meta-label">평가 대상 모델</div>
+          <div class="meta-value">k-exaone_v2.5 (LG AI Research)</div>
+        </div>
+        <div class="meta-col">
+          <div class="meta-label">API 엔드포인트</div>
+          <div class="meta-value">api.exaone.ai/v1 (OpenAI 호환)</div>
+        </div>
+        <div class="meta-col">
+          <div class="meta-label">참조 기술 문서</div>
+          <div class="meta-value">arXiv:2604.08644 (EXAONE 4.5)</div>
+        </div>
+        <div class="meta-col">
+          <div class="meta-label">평가 일시</div>
+          <div class="meta-value">2026-11-15 (KST)</div>
+        </div>
+      </div>
+
+      <div class="executive-briefing-box">
+        <h2 class="briefing-heading">핵심 요약 (Executive Summary)</h2>
+        <p class="briefing-text">
+          <strong>k-exaone_v2.5</strong>는 한국어 개신교 조직신학 용어와 강단 설교 어조, 신학적 긴장(아포리아) 보존 능력에서 <strong>총점 4.38 / 5.0</strong>(Q3 <code>low</code> 보충 포함 산술 평균)의 높은 언어적 완성도를 보여준다. 그러나 기본 아키텍처가 <strong>추론(Reasoning) 중심</strong>으로 동작하여 전체 생성 토큰의 86% 이상을 내부 사고 과정에 소모하며, 고부하 시간대 <code>HTTP 429</code> 빈발 및 성서 주해 문항(Q3)의 <code>8,192</code> 토큰 추론 예산 고갈(본문 0자 종료) 장애가 실측되었다. 따라서 실무 신학 파이프라인 투입 시 <strong>단일 질의 분리, 스트리밍 강제, 추론 강도(<code>low</code>) 제어, 외부 원어 컨텍스트(RAG) 주입</strong>이 필수 조건으로 도출되었다.
+        </p>
+      </div>
+    </section>
+
+    <!-- KPI CARDS -->
+    <section class="kpi-grid" aria-label="핵심 실측 지표">
+      <div class="kpi-card">
+        <div class="kpi-label">최종 문항 확보율</div>
+        <div class="kpi-value">4 / 4 (100%)</div>
+        <div class="kpi-note">high 3/4 완주, Q3는 low 보충으로 최종 출력 확보</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">초기 응답 속도 (TTFT)</div>
+        <div class="kpi-value">0.25s ~ 0.99s</div>
+        <div class="kpi-note">스트리밍 첫 청크 도달은 1초 미만으로 신속</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">완료 지연 시간 범위</div>
+        <div class="kpi-value">95.7s ~ 782.3s</div>
+        <div class="kpi-note">내부 추론 토큰 비율 86% ~ 100% 점유에 비례</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">종합 신학 품질 점수</div>
+        <div class="kpi-value">4.38 / 5.0</div>
+        <div class="kpi-note">문체·교의학 우수, 원어 기억 정확도 및 high 예산 고갈 감점</div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: PROTOCOL & PROCESS -->
+    <section id="sec-protocol" class="report-section">
+      <div class="section-header">
+        <div class="section-num">SECTION 01</div>
+        <h2 class="section-title">테스트 전체 과정 (End-to-End Execution Protocol)</h2>
+        <p class="section-lead">
+          사전 요구사항 인터뷰에서 출발해 기술 문헌 대조, 초기 일괄 호출 실패 분석, 질의 분리·체크포인트 아키텍처 전환까지 총 4단계 프로토콜로 테스트를 완수했다.
+        </p>
+      </div>
+
+      <div class="flow-architecture-grid">
+        <div class="flow-card">
+          <div class="flow-card-header">
+            <span class="flow-step-badge">PHASE 1</span>
+            <span class="status-badge badge-ok">완료</span>
+          </div>
+          <h3 class="flow-pillar-title">문헌 정찰 및 인증 규격 식별</h3>
+          <p class="flow-pillar-desc">
+            제공된 <code>arXiv:2604.08644</code>(EXAONE 4.5 Technical Report)로 6개국어 지원 및 이중 모드(Reasoning / Non-Reasoning) 배경을 확인했다. <code>.env</code> 파일 내 비표준 라인의 <code>sk-</code> 키를 파싱하고 <code>https://api.exaone.ai/v1/models</code>를 조회해 <code>k-exaone_v2.5</code> 모델 ID를 확정했다.
+          </p>
+        </div>
+
+        <div class="flow-card">
+          <div class="flow-card-header">
+            <span class="flow-step-badge">PHASE 2</span>
+            <span class="status-badge badge-warn">장애 식별</span>
+          </div>
+          <h3 class="flow-pillar-title">일괄 동기 호출 및 1차 병목 확인</h3>
+          <p class="flow-pillar-desc">
+            초기 <code>max_tokens=1500</code>, <code>timeout=90s</code> 동기 호출에서 Q1·Q2가 각각 81.7s·82.8s 동안 <code>reasoning_tokens</code> 1,500개 전체를 소모하며 <code>finish_reason: length</code>로 절단되었다. 이어 Q3에서 90초 읽기 타임아웃이 발생해 동기 일괄 호출이 부적합함을 입증했다.
+          </p>
+        </div>
+
+        <div class="flow-card">
+          <div class="flow-card-header">
+            <span class="flow-step-badge">PHASE 3</span>
+            <span class="status-badge badge-ok">전환 완료</span>
+          </div>
+          <h3 class="flow-pillar-title">질의 분리 및 스트리밍 체크포인트</h3>
+          <p class="flow-pillar-desc">
+            <code>stream: true</code>와 20초 주기 진행 하트비트, <code>HTTP 429</code> 백오프 재시도(최대 6회), <code>max_tokens=8192</code>를 적용하고 4개 문항을 독립 실행해 <code>scratch/exaone_results/*.json</code>에 즉시 저장하는 구조로 전환했다. Q2·Q4·Q1이 모두 <code>stop</code>으로 완주했다.
+          </p>
+        </div>
+
+        <div class="flow-card">
+          <div class="flow-card-header">
+            <span class="flow-step-badge">PHASE 4</span>
+            <span class="status-badge badge-ok">보충 검증</span>
+          </div>
+          <h3 class="flow-pillar-title">추론 노력 단계별 임계점 교차 검증</h3>
+          <p class="flow-pillar-desc">
+            Q3(로마서 3:21~26 주해)가 <code>high</code>(782.3s)와 <code>medium</code>(777.6s) 모두에서 8,192토큰 전체를 내부 추론에 소진해 본문 0자로 종료되었다. 이에 <code>reasoning_effort: "low"</code>로 보충 실행한 결과 670.5s(추론 6,611 / 본문 1,047토큰) 만에 2,324자 완본 주해를 확보했다.
+          </p>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="table-editorial">
+          <thead>
+            <tr>
+              <th>문항 ID</th>
+              <th>설정 (effort / max)</th>
+              <th>재시도</th>
+              <th>TTFT</th>
+              <th>총 소요 시간</th>
+              <th>토큰 (추론 / 총합)</th>
+              <th>종료 사유</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>Q1_dogmatics</code></td>
+              <td>high / 8,192</td>
+              <td>1회</td>
+              <td>0.483s</td>
+              <td>411.641s</td>
+              <td>6,736 / 7,645</td>
+              <td><span class="status-badge badge-ok">stop</span></td>
+            </tr>
+            <tr>
+              <td><code>Q2_translation</code></td>
+              <td>high / 8,192</td>
+              <td>4회 (429×3)</td>
+              <td>0.467s</td>
+              <td>119.429s</td>
+              <td>2,131 / 2,204</td>
+              <td><span class="status-badge badge-ok">stop</span></td>
+            </tr>
+            <tr>
+              <td><code>Q3_exegesis</code></td>
+              <td>high / 8,192</td>
+              <td>1회</td>
+              <td>0.712s</td>
+              <td>782.255s</td>
+              <td>8,192 / 8,192</td>
+              <td><span class="status-badge badge-fail">length (본문 0자)</span></td>
+            </tr>
+            <tr>
+              <td><code>Q3_exegesis_medium</code></td>
+              <td>medium / 8,192</td>
+              <td>4회 (429×3)</td>
+              <td>—</td>
+              <td>777.601s</td>
+              <td>8,193 / 8,192</td>
+              <td><span class="status-badge badge-fail">length (본문 0자)</span></td>
+            </tr>
+            <tr>
+              <td><code>Q3_exegesis_low</code></td>
+              <td>low / 8,192</td>
+              <td>2회 (429×1)</td>
+              <td>0.324s</td>
+              <td>670.541s</td>
+              <td>6,611 / 7,658</td>
+              <td><span class="status-badge badge-ok">stop (2,324자)</span></td>
+            </tr>
+            <tr>
+              <td><code>Q4_sermon</code></td>
+              <td>high / 8,192</td>
+              <td>2회 (429×1)</td>
+              <td>0.992s</td>
+              <td>396.643s</td>
+              <td>2,438 / 2,576</td>
+              <td><span class="status-badge badge-ok">stop</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 2: EVALUATION CRITERIA -->
+    <section id="sec-criteria" class="report-section">
+      <div class="section-header">
+        <div class="section-num">SECTION 02</div>
+        <h2 class="section-title">평가 기준 및 테스트 영역 설계 (Evaluation Framework)</h2>
+        <p class="section-lead">
+          단순 질의응답을 넘어 실제 신학 연구 및 목회 실무에서 요구되는 4대 역량 영역과 4개 채점 축(각 5점 만점)을 기준으로 정량·정성 평가를 수행했다.
+        </p>
+      </div>
+
+      <div class="table-container">
+        <table class="table-editorial">
+          <thead>
+            <tr>
+              <th>평가 축</th>
+              <th>핵심 검증 항목</th>
+              <th>5점 (최우수) 판정 기준</th>
+              <th>감점 요인</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. 신학적 정확성</strong></td>
+              <td>교리 구조, 본문 문맥, 긴장(아포리아) 보존</td>
+              <td>핵심 신학 논지를 왜곡 없이 구조화하고, 양극단 긴장을 성급한 공식으로 축소하지 않음</td>
+              <td>도식적 단순화, 시대착오적 교리 투영, 논지 모순</td>
+            </tr>
+            <tr>
+              <td><strong>2. 용어 일관성</strong></td>
+              <td>한국어 개신교 표준 술어 및 원어 병기</td>
+              <td>칭의·성화·화목제물·속량 등 한국 신학계 표준 용어를 일관되게 구사하고 원어를 정확히 병기함</td>
+              <td>직역투 오역, 교단 비표준 어휘 혼용, 문법 호응 오류</td>
+            </tr>
+            <tr>
+              <td><strong>3. 문체 및 규격</strong></td>
+              <td>레지스터 분리(평어체 vs 강단 구어체), 분량</td>
+              <td>학술 평어체와 설교 도입부 분량(300~400자) 제약을 오차 없이 준수하며 AI 상투어를 배제함</td>
+              <td>어미 혼용, 상투적 감탄사 남발, 길이 제약 이탈</td>
+            </tr>
+            <tr>
+              <td><strong>4. 근거 충실도</strong></td>
+              <td>원어(헬라어·독일어) 기억 정확도 및 환각 억제</td>
+              <td>존재하지 않는 원문·절 번호·학술 인용을 지어내지 않고 불확실한 세부는 유보함</td>
+              <td>원문 철자 변조, 내부 추론 중 오교정, 미확인 전거 단정</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 3: DETAILED Q&A -->
+    <section id="sec-qa" class="report-section">
+      <div class="section-header">
+        <div class="section-num">SECTION 03</div>
+        <h2 class="section-title">영역별 세부 내용: 질의·응답 및 정밀 비평</h2>
+        <p class="section-lead">
+          각 문항에 투입된 시스템·사용자 프롬프트와 EXAONE의 실제 응답 전문(또는 핵심 발췌), 그리고 신학·언어학적 비평 결과를 수록한다.
+        </p>
+      </div>
+
+      <!-- Q1 -->
+      <article class="qa-card">
+        <div class="qa-card-head">
+          <h3 class="qa-title">Q1. 교의학 개념: 칼 바르트 화해론의 칭의와 성화</h3>
+          <span class="status-badge badge-ok">평균 4.5 / 5.0</span>
+        </div>
+        <div class="qa-meta-row">
+          <span class="meta-tag">effort: high</span>
+          <span class="meta-tag">소요: 411.64s (TTFT 0.483s)</span>
+          <span class="meta-tag">토큰: 추론 6,736 / 본문 909</span>
+          <span class="meta-tag">종료: stop</span>
+        </div>
+        <div class="prompt-box">
+          <div class="box-label">질의 프롬프트 (System + User)</div>
+          <p class="prompt-content">
+            [System] 당신은 개신교 조직신학 및 교의학 연구자다. 한국어 학술 평어체(~다, ~이다)로 정확하고 구조적으로 답변하라.<br>
+            [User] 칼 바르트(Karl Barth)의 『교회교의학』(KD IV) 화해론에서 <strong>칭의</strong>(Rechtfertigung)와 <strong>성화</strong>(Heiligung)가 그리스도론적 토대 위에서 어떻게 관계 맺는지 설명하라. 한국어 개신교 조직신학 표준 용어를 사용하고, 두 개념을 시간적 선후나 인간 측 공로로 분리하는 도식을 어떻게 극복하는지 구조화하여 서술하라.
+          </p>
+        </div>
+        <div class="response-box">
+          <div class="box-label">EXAONE 응답 전문</div>
+          <h4>1. 출발점: 칭의와 성화는 두 개의 분리된 구원 사건이 아니다</h4>
+          <p>
+            바르트의 『교회교의학』 IV권 화해론에서 <strong>칭의</strong>(Rechtfertigung)와 <strong>성화</strong>(Heiligung)는 구원론의 두 단계적 “사건”으로 분리되지 않는다. 둘은 예수 그리스도 안에서 성취된 하나의 화해가 성령을 통해 죄인과 세계에 통신되고 실현되는 두 가지 상관적 측면이다. 따라서 “먼저 칭의, 나중에 성화”라는 시간적 도식은 경험적 서술로는 가능할 수 있어도, 도그마적으로는 칭의와 성화를 별개의 행위나 공로의 계기로 만드는 이원론으로 굳어질 수 없다. 그리스도론적 토대는 다음과 같다. 예수 그리스도는 하나님의 영원한 선택의 성취이며, 대표·대속·화해자로서 십자가와 부활과 승천에서 하나님의 의와 심판과 은혜를 드러내신다. 그의 사역은 성령의 파송으로 이어지고, 성령은 그 한 분 안에서 성취된 화해를 우리에게 적용하신다. 그러므로 칭의와 성화의 공통 근거는 인간의 종교적 성취가 아니라 예수 그리스도의 인격과 사역이다.
+          </p>
+          <h4>2. 칭의: 은혜의 판결이며 그리스도 안에서의 의</h4>
+          <p>
+            칭의는 하나님이 예수 그리스도 안에서 죄인을 의롭다 하시는 은혜의 행위다. 그것은 인간의 도덕적 성취나 공로에 대한 보상이 아니라, 죄에 대한 하나님의 심판과 은혜가 그리스도 안에서 만나 이루어진 화해의 측면이다. 칭의는 법정적 선언의 측면을 가지며, 동시에 그리스도와의 실질적 연합 안에서 주어지는 하나님의 의에 참여시키는 측면도 가진다. 그러므로 칭의는 “외적 선언만”으로 축소될 수 없고, 그렇다고 인간의 쇄신이나 윤리적 공로로 획득될 수도 없다.
+          </p>
+          <h4>3. 성화: 성령의 갱신이며 그리스도 형상에의 형성</h4>
+          <p>
+            성화는 성령께서 신자를 그리스도와 연합시키고 새롭게 하시며, 그리스도의 죽음과 부활에 참여시키고, 거룩과 순종과 사랑의 삶으로 이끄시는 사역이다. 성화는 칭의 뒤에 인간이 자기 힘으로 성취하는 제2의 공로가 아니다. 그것은 화해의 효력이며, 칭의가 낳은 열매이고, 성령의 창조적·갱신적 사역이다. 물론 성화에는 그리스도인의 순종, 훈련, 사랑의 실천, 교회의 공동체적 삶이 포함된다. 그러나 그 실천은 의롭다 하심을 얻기 위한 수단이 아니라, 은혜로 주어진 새 생명의 표현이다.
+          </p>
+          <h4>4. 시간적 선후 도식의 극복 / 5. 인간 측 공로 도식의 극복 / 6. 상보적·통전적 관계</h4>
+          <p>
+            바르트는 칭의와 성화를 “시간상의 두 단계”로 고정하지 않는다. 경험적 순서는 두 구원 사건의 본질적 분리를 뜻하지 않으며, 둘 다 “이미”와 “아직”이라는 종말론적 지평에서 수렴한다. 믿음 역시 공로가 아닌 응답이며, 선행은 근거가 아니라 열매다. 결국 칭의는 “하나님 앞에서 죄인이 어떤 지위를 얻는가”를, 성화는 “그 그리스도 안에서 어떻게 새로 사는가”를 말해 주는 상보적 언어다. 따라서 바르트의 화해론에서 두 개념은 하나의 화해의 불가분한 두 측면이다.
+          </p>
+        </div>
+        <div class="critique-box">
+          <div class="box-label">평가자 비평 (신학 4.5 / 용어 4.5 / 문체 5.0 / 근거 4.0)</div>
+          <ul class="editorial-list">
+            <li><strong>강점:</strong> 법정적 선언 대 내적 윤리, 시간적 2단계 구원론(Ordo Salutis)의 도식화를 거부하고 그리스도론적 단일 화해 사건의 두 측면으로 풀어낸 논지 전개와 평어체 학술 문체가 매우 안정적이다.</li>
+            <li><strong>약점:</strong> <code>reasoning_content</code> 내부에서 『교회교의학』 IV/1, IV/2, IV/3의 정확한 조항(§) 번호를 혼동해 스스로 서지 인용을 회피한 점이 관찰되었으며, “심판받은 심판자”(Der Richter als der Gerichtete) 같은 바르트 화해론 고유의 변증법적 핵심 구도는 다소 일반적인 개혁주의 언어로 평탄화되었다.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q2 -->
+      <article class="qa-card">
+        <div class="qa-card-head">
+          <h3 class="qa-title">Q2. 독일어 신학 문헌 번역 및 원어 병기</h3>
+          <span class="status-badge badge-ok">평균 4.25 / 5.0</span>
+        </div>
+        <div class="qa-meta-row">
+          <span class="meta-tag">effort: high</span>
+          <span class="meta-tag">소요: 119.43s (TTFT 0.467s)</span>
+          <span class="meta-tag">토큰: 추론 2,131 / 본문 73</span>
+          <span class="meta-tag">종료: stop</span>
+        </div>
+        <div class="prompt-box">
+          <div class="box-label">질의 프롬프트</div>
+          <p class="prompt-content">
+            다음 독일어 신학 문장을 자연스러운 한국어 학술 평어체로 번역하고, 핵심 신학 개념어에는 원어를 괄호로 병기하라.<br>
+            원문: "Die Rechtfertigung des Gottlosen ist nicht die nachträgliche Bestätigung einer menschlichen Tugend, sondern das schöpferische Wort Gottes, das im Gericht selbst neue Wirklichkeit setzt und den Sünder allererst in die Gemeinschaft mit Christus ruft."
+          </p>
+        </div>
+        <div class="response-box">
+          <div class="box-label">EXAONE 응답 전문</div>
+          <blockquote class="editorial-quote">
+            하나님 없는 자(Gottloser)의 칭의(稱義, Rechtfertigung)는 인간적 덕(Tugend)의 뒤늦은 확인이 아니라, 심판(Gericht) 그 자체 안에서 새로운 실재(Wirklichkeit)를 세우는 하나님의 창조적 말씀이며, 죄인(Sünder)을 가장 먼저 그리스도와의 교제(Gemeinschaft mit Christus) 안으로 부르는 것이다.
+            <cite>k-exaone_v2.5 (Q2_translation 실제 출력 전문)</cite>
+          </blockquote>
+        </div>
+        <div class="critique-box">
+          <div class="box-label">평가자 비평 (신학 4.0 / 용어 4.0 / 문체 4.5 / 근거 4.5)</div>
+          <ul class="editorial-list">
+            <li><strong>강점:</strong> 한자 병기 <code>칭의(稱義, Rechtfertigung)</code>를 비롯해 핵심 개념어 6개를 빠짐없이 정확히 괄호로 묶었으며, <code>nachträgliche</code>를 “사후적” 대신 죽음 이후를 연상시키지 않는 “뒤늦은 확인”으로 고른 내부 추론 판단이 돋보인다.</li>
+            <li><strong>약점:</strong> 독일어 원문에서 <code>und den Sünder ... ruft</code>는 관계절 내 동사로서 주어가 <code>das schöpferische Wort Gottes</code>(하나님의 창조적 말씀)인데, 한국어 번역문에서는 <code>~말씀이며, ... 부르는 것이다</code>로 처리하여 주어가 <code>칭의</code>인 것처럼 어절 호응이 흐려졌다. 또한 <code>Gottloser</code>는 “불경건한 자”(경건치 않은 자)가, <code>allererst</code>는 “비로소”가 신학적 관용에 더 부합한다.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q3 -->
+      <article class="qa-card">
+        <div class="qa-card-head">
+          <h3 class="qa-title">Q3. 성경 본문 주해 (로마서 3:21~26) 및 아포리아 보존</h3>
+          <span class="status-badge badge-warn">high 실패 / low 보충 4.0</span>
+        </div>
+        <div class="qa-meta-row">
+          <span class="meta-tag">high·medium: 본문 0자 실패</span>
+          <span class="meta-tag">low 보충: 670.54s (TTFT 0.324s)</span>
+          <span class="meta-tag">low 토큰: 추론 6,611 / 본문 1,047</span>
+          <span class="meta-tag">종료: stop (2,324자)</span>
+        </div>
+        <div class="prompt-box">
+          <div class="box-label">질의 프롬프트</div>
+          <p class="prompt-content">
+            로마서 3장 21~26절을 주해하라. 특히 <strong>하나님의 의</strong>(δικαιοσύνη θεοῦ)와 <strong>화목제물</strong>(ἱλαστήριον)의 원어적 의미와 문맥적 기능을 분석하되, 이 본문에서 나타나는 <strong>하나님의 공의(심판)</strong>와 <strong>값없는 은혜(용서)</strong> 사이의 신학적 긴장을 단선적 교리 공식으로 성급히 해소하지 말고 그대로 보존하여 설명하라.
+          </p>
+        </div>
+        <div class="response-box">
+          <div class="box-label">EXAONE 응답 요약 (low 보충 실행분, 총 2,324자 중 핵심 구조)</div>
+          <h4>1. 문맥 흐름 (로마서 3:19~26)</h4>
+          <p>
+            3:19~20의 율법 아래 심판에 이어 3:21 “그러나 이제”가 율법 외에 나타난 하나님의 의를 선포한다. 3:23~24은 모든 사람의 죄와 <code>δωρεάν</code>(값없이), <code>χάριτι</code>(은혜로), <code>ἀπολύτρωσις</code>(구속)을 말하며, 3:25~26은 하나님이 예수를 화목제물로 세우심으로 이전 죄의 참으심(지나감)을 포함해 지금 자신의 의로우심을 나타내신다고 설명한다.
+          </p>
+          <h4>2. δικαιοσύνη θεοῦ와 ἱλαστήριον 분석</h4>
+          <p>
+            <strong>하나님의 의</strong>(δικαιοσύνη θεοῦ)는 정적 속성으로만 고정되지 않으며, <code>φανερόω</code>(나타나다) 문맥 속에서 죄인을 향한 자기 계시적 구원 행위와 죄를 가볍게 넘기지 않는 의로운 처신을 동시에 함축한다. <strong>화목제물</strong>(ἱλαστήριον)은 70인역에서 성막의 속죄소(<code>kapporet</code>)와 대속죄일 피 의식을 배경으로 삼는 동시에, 그리스·로마 세계의 진노 달래기(propitiation)와 죄 씻음(expiation) 뉘앙스를 함께 품는다. 그러나 본문은 그 내적 메커니즘을 해부하지 않는다.
+          </p>
+          <h4>3. 공의와 값없는 은혜 사이의 긴장 보존</h4>
+          <p>
+            3:25b~26의 핵심은 “의로우신 하나님”과 “의롭다 하시는 하나님”의 동시성이다. 만족설·대속설, 사랑 계시 해석, 언약적 신실성 해석, 우주적 승리 해석이 각각 통찰을 지니지만, 바울 본문 자체는 이 요소들을 대수적 공식처럼 닫지 않는다. 그 긴장을 성급히 해소하지 않고 유지하는 것이 충실한 주해다.
+          </p>
+        </div>
+        <div class="critique-box">
+          <div class="box-label">평가자 비평 (신학 4.5 / 용어 4.5 / 문체 4.5 / 근거 2.5 — 고위험 발견)</div>
+          <ul class="editorial-list">
+            <li><strong>강점 (low 최종 출력):</strong> 70인역 <code>kapporet</code> 배경과 propitiation/expiation의 이중 함의를 짚고, 후대 교리 공식(형벌 대속 등)으로 본문 긴장을 조기 봉합하지 말라는 제약을 탁월하게 준수했다.</li>
+            <li><strong>치명적 위험 (high 내부 추론 환각):</strong> <code>Q3_exegesis</code>(<code>high</code>)의 내부 사고 로그(<code>reasoning_content</code>)를 검증한 결과, 모델이 로마서 3장 25절 헬라어 원문(<code>ὃν προέθετο ὁ θεὸς ἱλαστήριον ... τῶν προγεγονότων ἁμαρτημάτων</code>)을 인출하다가 기억 오류를 일으켜 <code>ὃν ἔδει παραστήσασθαι ὁ θεὸς ... ἀμελήματος</code>로 변조하고, 스스로 <code>προέθετο</code>가 틀렸다며 오교정하는 현상이 확인되었다.</li>
+            <li><strong>운영 함의:</strong> 성서 원어 주해 시 원문 본문(NA28/BHS)을 컨텍스트로 직접 제공하지 않으면 내부 추론 중 원문 왜곡과 무한 재검증 루프가 동시에 촉발된다.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q4 -->
+      <article class="qa-card">
+        <div class="qa-card-head">
+          <h3 class="qa-title">Q4. 목회·설교 문체 전환 (로마서 3:21~26 도입부)</h3>
+          <span class="status-badge badge-ok">평균 4.75 / 5.0</span>
+        </div>
+        <div class="qa-meta-row">
+          <span class="meta-tag">effort: high</span>
+          <span class="meta-tag">소요: 396.64s (TTFT 0.992s)</span>
+          <span class="meta-tag">토큰: 추론 2,438 / 본문 138</span>
+          <span class="meta-tag">분량: 공백 포함 약 328자</span>
+        </div>
+        <div class="prompt-box">
+          <div class="box-label">질의 프롬프트</div>
+          <p class="prompt-content">
+            로마서 3장 21~26절에 나타난 ‘하나님의 심판과 값없는 은혜의 역설’을 바탕으로, 한국 교회 주일 예배 강단에서 회중에게 선포할 수 있는 설교 도입부(300~400자 내외)를 작성하라. 진부한 상투어나 과장된 감탄사 없이 절제되고 호소력 있는 문체로 작성하라.
+          </p>
+        </div>
+        <div class="response-box">
+          <div class="box-label">EXAONE 응답 요약 (원문 보존 파일: <code>scratch/exaone_results/Q4_sermon.json</code>)</div>
+          <p>
+            <strong>표기 안내:</strong> 실제 모델 출력은 주일 예배 강단용 구어체(경어체)로 생성되었으며, 본 보고서의 에디토리얼 평어체 준수 규격에 따라 원문의 문장 구조와 어휘를 그대로 유지한 채 종결 어미만 평어체 간접 보고형으로 전환해 수록한다.
+          </p>
+          <blockquote class="editorial-quote">
+            오늘 로마서 3장 21절 이하는 우리에게 불편한 역설을 보여준다. 모든 사람이 죄를 범하였으매 하나님의 영광에 이르지 못하더니, 율법으로는 의롭다 함을 얻을 사람이 없다. 그런데 바로 그 지점에서 바울은 선포한다. 이제는 율법 외에 하나님의 한 의가 나타났다고. 예수 그리스도를 믿는 모든 자에게 미치는 하나님의 의다. 하나님은 죄를 가볍게 넘기지 않으신다. 그러나 죄인을 심판대로 내몰기만 하지 않으신다. 그리스도께서 친히 속죄제가 되셔서, 심판의 공의를 세우시고 죄인을 값없이 의롭다 하신다. 심판은 실재하고 은혜는 값없다. 이 역설 앞에서 우리는 자기 의를 내려놓고 십자가 앞에 서게 된다.
+            <cite>k-exaone_v2.5 (Q4_sermon 실제 출력 어휘·구조의 평어체 간접 인용; 원문 공백 포함 약 328자)</cite>
+          </blockquote>
+        </div>
+        <div class="critique-box">
+          <div class="box-label">평가자 비평 (신학 4.5 / 용어 5.0 / 문체 5.0 / 근거 4.5)</div>
+          <ul class="editorial-list">
+            <li><strong>강점:</strong> 내부 추론 과정에서 한국어 글자 수를 음절 단위로 직접 검산하며 300~400자 규격을 정확히 맞췄고(실측 약 328자), “사랑하는 성도 여러분”, “할렐루야” 등 전형적인 AI 설교 상투어를 스스로 차단해 매우 절제된 리듬을 구현했다.</li>
+            <li><strong>약점:</strong> 본문 328자를 생성하기 위해 내부 추론 2,438토큰(약 6분 36초)을 소모해, 실시간 설교 초안 인터랙션 용도로는 <code>high</code> 모드의 지연 시간이 과도하다.</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <!-- SECTION 4: INCIDENT PROTOCOLS -->
+    <section id="sec-incidents" class="report-section">
+      <div class="section-header">
+        <div class="section-num">SECTION 04</div>
+        <h2 class="section-title">테스트 중 장애 분석 및 표준 대응 프로토콜</h2>
+        <p class="section-lead">
+          실전 테스트 과정에서 관찰된 4가지 API 및 추론 장애의 근본 원인을 규명하고, 향후 재사용 가능한 운영 프로토콜로 표준화한다.
+        </p>
+      </div>
+
+      <div class="table-container">
+        <table class="table-editorial">
+          <thead>
+            <tr>
+              <th>장애 코드</th>
+              <th>관측 현상</th>
+              <th>근본 원인 (Root Cause)</th>
+              <th>표준 대응 프로토콜 (Mitigation)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>INC-01</strong><br>출력 절단</td>
+              <td><code>max_tokens=1500</code> 설정 시 Q1·Q2가 본문 출력 없이 <code>finish: length</code> 종료</td>
+              <td><code>k-exaone_v2.5</code>가 기본 Reasoning 모델로 동작하며 첫 1,500~6,700토큰을 <code>reasoning_content</code>에 우선 할당함</td>
+              <td>최소 <code>max_tokens >= 8192</code>(복합 주해는 <code>16384</code>)를 배정하고, 단문·단순 작업에는 <code>reasoning_effort: "low"</code> 적용</td>
+            </tr>
+            <tr>
+              <td><strong>INC-02</strong><br>동시성 제한</td>
+              <td>호출 시 <code>HTTP 429</code> (<code>too many concurrent requests(600)</code>) 간헐적 반복 발생</td>
+              <td>공용 추론 서버의 전역 동시 요청 한도 포화 (단일 사용자 병렬 호출이 아니어도 서버 혼잡 시간대에 발생)</td>
+              <td>병렬 멀티스레드 호출 금지, 문항 단위 순차 실행, <code>429/502/503/504</code> 수신 시 5s~30s 선형·지수 백오프 최대 6회 재시도</td>
+            </tr>
+            <tr>
+              <td><strong>INC-03</strong><br>응답 타임아웃</td>
+              <td>일괄 동기 <code>urlopen</code> 호출 시 Q3에서 <code>90s</code>·<code>240s</code> 읽기 타임아웃 및 선행 결과 유실</td>
+              <td>서버 측 토큰 생성 속도가 부하 시 초당 6~17토큰 수준으로 저하되어 전체 응답 완료까지 6~13분 소요됨</td>
+              <td><code>stream: true</code> 및 <code>stream_options.include_usage: true</code> 강제, 20초 하트비트 로깅, 문항별 즉시 JSON 체크포인트 저장</td>
+            </tr>
+            <tr>
+              <td><strong>INC-04</strong><br>추론 예산 고갈</td>
+              <td>Q3 <code>high</code>(782s) 및 <code>medium</code>(778s)에서 <code>8,192</code> 토큰 전량을 추론에 소진해 본문 0자 반환</td>
+              <td>“원어 분석 + 아포리아 보존 + 공식 해소 금지” 다중 제약이 내부 자기검증 루프를 과도하게 증폭시킴</td>
+              <td>복합 신학 과제는 1) 원문 텍스트를 프롬프트에 직접 첨부해 기억 탐색 비용 제거, 2) <code>low</code> 강도 분리, 3) 2단계 체인(주해 후 비평)으로 분할</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 5: EVALUATOR'S VERDICT -->
+    <section id="sec-verdict" class="report-section">
+      <div class="section-header">
+        <div class="section-num">SECTION 05</div>
+        <h2 class="section-title">평가자 종합 판정 및 실무 도입 권고안</h2>
+        <p class="section-lead">
+          4개 영역의 항목별 실측 점수표와 함께, <code>MS_Dev</code> 신학 연구 생태계에서의 실질적 활용 전략을 제시한다.
+        </p>
+      </div>
+
+      <div class="table-container">
+        <table class="table-editorial">
+          <thead>
+            <tr>
+              <th>테스트 영역</th>
+              <th>신학적 정확성</th>
+              <th>용어 일관성</th>
+              <th>문체·규격</th>
+              <th>근거·환각 억제</th>
+              <th>문항 평균</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Q1. 교의학 개념 (바르트)</strong></td>
+              <td>4.5</td>
+              <td>4.5</td>
+              <td>5.0</td>
+              <td>4.0</td>
+              <td><strong>4.50</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Q2. 독일어 신학 번역</strong></td>
+              <td>4.0</td>
+              <td>4.0</td>
+              <td>4.5</td>
+              <td>4.5</td>
+              <td><strong>4.25</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Q3. 성경 주해 (low 보충)</strong></td>
+              <td>4.5</td>
+              <td>4.5</td>
+              <td>4.5</td>
+              <td>2.5 (원어 환각 감점)</td>
+              <td><strong>4.00</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Q4. 한국어 설교 문체</strong></td>
+              <td>4.5</td>
+              <td>5.0</td>
+              <td>5.0</td>
+              <td>4.5</td>
+              <td><strong>4.75</strong></td>
+            </tr>
+            <tr>
+              <td><strong>전체 평균 (가중치 동일)</strong></td>
+              <td><strong>4.38</strong></td>
+              <td><strong>4.50</strong></td>
+              <td><strong>4.75</strong></td>
+              <td><strong>3.88</strong></td>
+              <td><strong>4.38 / 5.0</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="synthesis-box">
+        <h3>평가자 최종 소견 (Evaluator's Verdict)</h3>
+        <p>
+          <strong>1. 한국어 개신교 신학 및 목회 문체 감각은 최상위권이다.</strong><br>
+          EXAONE API(<code>k-exaone_v2.5</code>)는 한국 개신교 조직신학 술어, 개역개정 성경 어조, 그리고 AI 특유의 과장된 수사를 배제한 절제된 설교 도입부 작성에서 매우 높은 숙련도를 입증했다. 특히 교리적 공식으로 본문의 역설을 성급히 덮지 않고 아포리아를 보존하는 추론 태도가 인상적이다.
+        </p>
+        <p>
+          <strong>2. 기본 Reasoning 모드의 지연 시간과 추론 폭주가 최대 병목이다.</strong><br>
+          <code>high</code> 모드에서는 짧은 설교 도입부(328자) 작성에도 396초가 걸렸고, 복합 주해에서는 <code>high</code>와 <code>medium</code> 모두 8,192토큰을 추론에만 써버려 최종 답변이 소실되었다. 실시간 대화형 작업보다 비동기 배치 초안 생성이나 <code>reasoning_effort: "low"</code> 중심 운용이 현실적이다.
+        </p>
+        <p>
+          <strong>3. 성서 원어·1차 문헌 검증은 반드시 외부 RAG 컨텍스트와 결합해야 한다.</strong><br>
+          <code>Q3_exegesis</code> 내부 추론에서 헬라어 성경 본문을 잘못 회상해 오교정하는 환각이 직접 관측되었다. 따라서 단독 폐쇄형 지식 질의보다는 <code>msn_th_db</code> 또는 <code>NA28/KD 원문 스니펫</code>을 컨텍스트로 제공한 뒤 해석·번역·윤문을 맡기는 구조에서 가장 안전하고 높은 ROI를 발휘한다.
+        </p>
+      </div>
+    </section>
+
+    <footer class="doc-footer">
+      <p>
+        본 보고서는 2026-11-15 실측 로그(<code>scratch/exaone_theology_raw.json</code> 및 <code>scratch/exaone_results/*.json</code>)만을 근거로 작성되었다.
+      </p>
+    </footer>
+
+  </main>
+</body>
+</html>
