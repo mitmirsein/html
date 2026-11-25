@@ -31,7 +31,7 @@
       --color-success-bg: #F0FDF4;
       --color-alert: #991B1B;
 
-      /* Typography Stacks (Offline-safe local fallbacks, Latin first for optical parity) */
+      /* Typography Stacks (3-font McKinsey SSOT, Latin first for optical parity) */
       --font-editorial-serif: 'Merriweather', Georgia, 'Noto Serif KR', 'AppleMyungjo', 'Batang', Cambria, serif;
       --font-ui-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", Roboto, "Helvetica Neue", Arial, sans-serif;
       --font-mono: 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, Monaco, monospace;
@@ -56,7 +56,7 @@
       --en-text-label: 12px; --en-lh-label: 1.35; --en-ls-label: 0.04em;
       --en-measure: 65ch;    --en-word-break: normal;
 
-      /* Active Semantic Typography Bindings (Default: Korean Set A) */
+      /* Active Semantic Typography Bindings (Default: Set A Korean) */
       --text-h1: var(--ko-text-h1);       --lh-h1: var(--ko-lh-h1);       --ls-h1: var(--ko-ls-h1);
       --text-h2: var(--ko-text-h2);       --lh-h2: var(--ko-lh-h2);       --ls-h2: var(--ko-ls-h2);
       --text-h3: var(--ko-text-h3);       --lh-h3: var(--ko-lh-h3);       --ls-h3: var(--ko-ls-h3);
@@ -85,6 +85,7 @@
       --radius-card: 0px;
       --radius-control: 4px;
       --shadow-none: none;
+      --ease-out-smooth: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     :root:lang(en),
@@ -176,7 +177,7 @@
       color: var(--color-brand-accent);
       text-decoration: underline;
       text-underline-offset: 3px;
-      transition: color 0.15s ease;
+      transition: color 0.16s var(--ease-out-smooth);
     }
 
     a.inline-link:hover {
@@ -185,7 +186,8 @@
 
     a.inline-link:focus-visible,
     .nav-link:focus-visible,
-    .btn-action:focus-visible {
+    .btn-action:focus-visible,
+    .seg-tab:focus-visible {
       outline: 2px solid var(--color-brand-accent);
       outline-offset: 2px;
     }
@@ -202,12 +204,8 @@
       overflow-wrap: break-word;
     }
 
-    code.code-nowrap {
-      white-space: nowrap;
-    }
-
     /* ==========================================================================
-       3. STICKY MASTHEAD (60px height, 40px controls)
+       3. STICKY MASTHEAD (60px desktop + clean scrolled separation + mobile rail)
        ========================================================================== */
     .mck-header-wrapper {
       position: sticky;
@@ -215,6 +213,12 @@
       z-index: 100;
       background-color: var(--color-surface);
       border-bottom: 1px solid var(--color-border);
+      transition: border-color 0.18s var(--ease-out-smooth), background-color 0.18s var(--ease-out-smooth);
+    }
+
+    .mck-header-wrapper.is-scrolled {
+      border-bottom-color: var(--color-border-strong);
+      background-color: rgba(255, 255, 255, 0.98);
     }
 
     .mck-masthead {
@@ -250,7 +254,7 @@
 
     .report-title-short {
       font-family: var(--font-editorial-serif);
-      font-size: var(--text-ui);
+      font-size: 15px;
       font-weight: 700;
       color: var(--color-brand-primary);
       white-space: nowrap;
@@ -271,17 +275,25 @@
       color: var(--color-text-secondary);
       text-decoration: none;
       white-space: nowrap;
-      transition: color 0.15s ease;
+      padding: var(--space-1) 0;
+      transition: color 0.16s var(--ease-out-smooth);
     }
 
-    .nav-link:hover {
+    .nav-link:hover,
+    .nav-link.is-active {
       color: var(--color-brand-primary);
+      font-weight: 600;
     }
 
     .header-actions {
       display: flex;
       align-items: center;
       gap: var(--space-2);
+    }
+
+    /* Mobile-only horizontal jump bar so 390px viewports retain section navigation */
+    .mobile-toc-bar {
+      display: none;
     }
 
     .btn-action {
@@ -300,7 +312,7 @@
       justify-content: center;
       gap: var(--space-2);
       white-space: nowrap;
-      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+      transition: background-color 0.16s var(--ease-out-smooth), border-color 0.16s var(--ease-out-smooth), color 0.16s var(--ease-out-smooth);
     }
 
     .btn-action:hover {
@@ -309,7 +321,7 @@
       color: var(--color-brand-primary);
     }
 
-    /* Single Primary CTA on the page (Copy Starter Prompt) */
+    /* Single Primary CTA on the entire page (Copy Starter Prompt) */
     .btn-primary {
       background-color: var(--color-brand-primary);
       border-color: var(--color-brand-primary);
@@ -329,7 +341,7 @@
     }
 
     /* ==========================================================================
-       4. EDITORIAL CONTAINER & HERO SECTION
+       4. EDITORIAL CONTAINER & IMMEDIATE CONTENT OPENING (No 100vh hero banner)
        ========================================================================== */
     .editorial-wrapper {
       max-width: var(--container-max-width);
@@ -362,7 +374,16 @@
       line-height: var(--lh-h1);
       font-weight: 700;
       letter-spacing: var(--ls-h1);
-      margin-bottom: var(--space-5);
+      margin-bottom: var(--space-4);
+    }
+
+    .doc-lead {
+      font-size: var(--text-lead);
+      line-height: var(--lh-lead);
+      letter-spacing: var(--ls-lead);
+      color: var(--color-text-secondary);
+      max-width: var(--optimal-prose-width);
+      margin-bottom: var(--space-6);
     }
 
     .doc-metadata-grid {
@@ -393,9 +414,9 @@
       font-variant-numeric: tabular-nums;
     }
 
+    /* Executive Takeaway: surface tint + top keyline only (no 4-sided nested cage) */
     .executive-takeaway {
       background-color: var(--color-surface-subtle);
-      border: 1px solid var(--color-border);
       border-top: 3px solid var(--color-brand-primary);
       border-radius: var(--radius-card);
       padding: var(--space-6);
@@ -419,7 +440,7 @@
     }
 
     /* ==========================================================================
-       5. SECTION STRUCTURE, GRIDS, CARDS & CALLOUTS
+       5. SECTION STRUCTURE — FLAT HAIRLINE GRIDS (Zero Nested Card Cages)
        ========================================================================== */
     .doc-section {
       margin-bottom: var(--space-10);
@@ -437,42 +458,23 @@
       font-weight: 700;
       padding-bottom: var(--space-3);
       border-bottom: 1px solid var(--color-border);
-      margin-bottom: var(--space-5);
+      margin-bottom: var(--space-6);
     }
 
-    /* 2x2 Editorial Grid for Section 1 */
+    /* Section 1: 2x2 hairline grid — no 4-sided card cages, no decorative badges */
     .reason-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-4);
-      margin-top: var(--space-5);
+      column-gap: var(--space-8);
+      row-gap: var(--space-6);
     }
 
-    .sharp-card {
-      background-color: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-card);
-      padding: var(--space-5);
-      box-shadow: var(--shadow-none);
+    .reason-block {
+      padding-top: var(--space-4);
+      border-top: 2px solid var(--color-brand-primary);
     }
 
-    .card-tag {
-      display: inline-block;
-      font-family: var(--font-ui-sans);
-      font-size: var(--text-label);
-      line-height: var(--lh-label);
-      letter-spacing: var(--ls-label);
-      font-weight: 700;
-      color: var(--color-brand-accent);
-      background-color: var(--color-brand-tint);
-      border: 1px solid var(--color-brand-line);
-      padding: 4px 8px;
-      border-radius: var(--radius-card);
-      margin-bottom: var(--space-3);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .card-title {
+    .reason-title {
       font-size: var(--text-h3);
       line-height: var(--lh-h3);
       letter-spacing: var(--ls-h3);
@@ -481,22 +483,23 @@
       margin-bottom: var(--space-3);
     }
 
-    .card-body {
-      font-family: var(--font-ui-sans);
-      font-size: var(--text-ui);
-      line-height: 1.70;
-      letter-spacing: var(--ls-ui);
+    /* Body Prose Parity: 16px serif body instead of shrunk 13.5px UI text */
+    .reason-body {
+      font-family: var(--font-editorial-serif);
+      font-size: var(--text-body);
+      line-height: var(--lh-body);
+      letter-spacing: var(--ls-body);
       color: var(--color-text-main);
+      max-width: var(--optimal-prose-width);
     }
 
-    /* Section 2 Tip Callout (Sharp 0px top-keyline box, no side-tab) */
+    /* Section 2 Tip Callout: surface tint + top keyline, body-size prose */
     .tip-callout {
       margin-top: var(--space-5);
       background-color: var(--color-brand-tint);
-      border: 1px solid var(--color-brand-line);
       border-top: 3px solid var(--color-brand-accent);
       border-radius: var(--radius-card);
-      padding: var(--space-5);
+      padding: var(--space-5) var(--space-6);
     }
 
     .tip-label {
@@ -510,15 +513,15 @@
     }
 
     .tip-callout p {
-      font-family: var(--font-ui-sans);
-      font-size: var(--text-ui);
-      line-height: 1.70;
+      font-family: var(--font-editorial-serif);
+      font-size: var(--text-body);
+      line-height: var(--lh-body);
       color: var(--color-text-main);
       max-width: var(--optimal-prose-width);
     }
 
     /* ==========================================================================
-       6. QUANTITATIVE EDITORIAL TABLES (Inset padding 16px 20px)
+       6. QUANTITATIVE EDITORIAL TABLES (Explicit literal inset padding 16px 20px)
        ========================================================================== */
     .table-container {
       background-color: var(--color-surface);
@@ -540,7 +543,7 @@
 
     .table-editorial th,
     .table-editorial td {
-      padding: var(--space-3) var(--space-3);
+      padding: var(--space-3);
       border-bottom: 1px solid var(--color-border);
       text-align: left;
       vertical-align: top;
@@ -576,21 +579,26 @@
     }
 
     /* ==========================================================================
-       7. 4-STEP SETUP TIMELINE (Section 3)
+       7. 4-STEP SETUP FLOW — HAIRLINE DIVIDERS (Zero Nested Card Cages)
        ========================================================================== */
     .step-stack {
       display: flex;
       flex-direction: column;
-      gap: var(--space-5);
-      margin-top: var(--space-5);
+      gap: 0;
     }
 
     .step-item {
-      background-color: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-top: 2px solid var(--color-brand-primary);
-      border-radius: var(--radius-card);
-      padding: var(--space-6);
+      padding: var(--space-6) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .step-item:first-child {
+      padding-top: var(--space-2);
+    }
+
+    .step-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
     }
 
     .step-header {
@@ -601,17 +609,13 @@
       flex-wrap: wrap;
     }
 
-    .step-badge {
-      display: inline-block;
+    .step-index {
       font-family: var(--font-ui-sans);
       font-size: var(--text-label);
       line-height: var(--lh-label);
       letter-spacing: var(--ls-label);
       font-weight: 700;
-      color: var(--color-text-inverse);
-      background-color: var(--color-brand-primary);
-      padding: 4px 10px;
-      border-radius: var(--radius-card);
+      color: var(--color-brand-accent);
       white-space: nowrap;
       font-variant-numeric: tabular-nums;
     }
@@ -645,6 +649,7 @@
       margin-bottom: 0;
     }
 
+    /* Body Prose & List Parity: identical 16px body scale */
     ul.editorial-list li {
       font-size: var(--text-body);
       line-height: var(--lh-body);
@@ -658,16 +663,17 @@
       margin-bottom: 0;
     }
 
+    /* Approval note: surface tint + top hairline only (no nested 4-sided box) */
     .step-approval-note {
       margin-top: var(--space-4);
-      padding: var(--space-4);
+      padding: var(--space-4) var(--space-5);
       background-color: var(--color-surface-subtle);
-      border: 1px solid var(--color-border);
+      border-top: 2px solid var(--color-brand-primary);
       border-radius: var(--radius-card);
     }
 
     /* ==========================================================================
-       8. STARTER PROMPT CODE BLOCK WITH COPY CONTROL (Section 4)
+       8. STARTER PROMPT WITH NON-BUTTON SEGMENTED TOGGLE (Section 4)
        ========================================================================== */
     .prompt-frame {
       margin-top: var(--space-5);
@@ -692,7 +698,7 @@
     .prompt-meta {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 4px;
     }
 
     .prompt-label {
@@ -703,16 +709,47 @@
       color: var(--color-brand-primary);
     }
 
-    .prompt-hint {
+    /* Non-button connected segmented control (mode switch without button cluster) */
+    .segmented-control {
+      display: inline-flex;
+      align-items: center;
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border-strong);
+      border-radius: var(--radius-control);
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .seg-tab {
+      font-family: var(--font-ui-sans);
       font-size: var(--text-label);
       line-height: var(--lh-label);
+      font-weight: 600;
       color: var(--color-text-secondary);
+      background-color: transparent;
+      border: none;
+      border-radius: 2px;
+      padding: 6px 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.16s var(--ease-out-smooth), color 0.16s var(--ease-out-smooth);
+    }
+
+    .seg-tab:hover {
+      color: var(--color-brand-primary);
+    }
+
+    .seg-tab[aria-selected="true"] {
+      background-color: var(--color-brand-tint);
+      color: var(--color-brand-primary);
+      font-weight: 700;
     }
 
     .prompt-controls {
       display: flex;
       align-items: center;
       gap: var(--space-3);
+      flex-wrap: wrap;
     }
 
     .copy-feedback {
@@ -747,40 +784,35 @@
     }
 
     /* ==========================================================================
-       9. OPERATING PRINCIPLES LIST (Section 5)
+       9. OPERATING PRINCIPLES — FLAT HAIRLINE LIST (Section 5)
        ========================================================================== */
     .principle-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: var(--space-3);
-      margin-top: var(--space-5);
+      margin-top: var(--space-2);
     }
 
     .principle-item {
       display: grid;
-      grid-template-columns: 44px 1fr;
+      grid-template-columns: 36px 1fr;
       gap: var(--space-4);
-      align-items: start;
-      padding: var(--space-5);
-      background-color: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-card);
+      align-items: baseline;
+      padding: var(--space-5) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .principle-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
     }
 
     .principle-num {
       font-family: var(--font-ui-sans);
-      font-size: 18px;
+      font-size: var(--text-h3);
       font-weight: 700;
       line-height: 1.2;
-      color: var(--color-brand-primary);
-      background-color: var(--color-surface-subtle);
-      border: 1px solid var(--color-border);
-      height: 36px;
-      width: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      color: var(--color-brand-accent);
       font-variant-numeric: tabular-nums;
     }
 
@@ -794,15 +826,16 @@
     .principle-title {
       display: block;
       font-family: var(--font-editorial-serif);
-      font-size: 16.5px;
-      line-height: 1.5;
+      font-size: var(--text-h3);
+      line-height: var(--lh-h3);
+      letter-spacing: var(--ls-h3);
       font-weight: 700;
       color: var(--color-brand-primary);
       margin-bottom: var(--space-2);
     }
 
     /* ==========================================================================
-       10. FOOTER & RESPONSIVE BREAKPOINTS
+       10. FOOTER, REDUCED MOTION & RESPONSIVE BREAKPOINTS
        ========================================================================== */
     .doc-footer {
       margin-top: var(--space-10);
@@ -818,13 +851,61 @@
       flex-wrap: wrap;
     }
 
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *, *::before, *::after {
+        transition-duration: 0.01ms;
+        animation-duration: 0.01ms;
+      }
+    }
+
     @media (max-width: 768px) {
       .mck-masthead {
         padding: 0 var(--space-4);
+        height: 52px;
       }
 
       .header-nav {
         display: none;
+      }
+
+      .mck-brand-badge {
+        display: none;
+      }
+
+      .report-title-short {
+        font-size: 14px;
+      }
+
+      .btn-action {
+        height: 36px;
+        padding: 6px 12px;
+        font-size: 12.5px;
+      }
+
+      /* Mobile horizontal section tab strip */
+      .mobile-toc-bar {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        padding: var(--space-2) var(--space-4);
+        border-top: 1px solid var(--color-border);
+        background-color: var(--color-surface-subtle);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        font-family: var(--font-ui-sans);
+      }
+
+      .mobile-toc-bar .nav-link {
+        font-size: 12.5px;
+        flex: 0 0 auto;
+      }
+
+      .doc-section {
+        scroll-margin-top: 104px;
       }
 
       .editorial-wrapper {
@@ -848,14 +929,9 @@
         grid-template-columns: 1fr;
       }
 
-      .step-item {
-        padding: var(--space-4);
-      }
-
       .principle-item {
-        grid-template-columns: 1fr;
-        gap: var(--space-2);
-        padding: var(--space-4);
+        grid-template-columns: 28px 1fr;
+        gap: var(--space-3);
       }
 
       .prompt-toolbar {
@@ -867,16 +943,13 @@
         font-size: 13px;
       }
 
-      .col-item {
+      .col-item,
+      .col-half {
         width: auto;
       }
 
       .col-num {
         width: 40px;
-      }
-
-      .col-half {
-        width: auto;
       }
 
       .table-container {
@@ -914,7 +987,8 @@
       }
 
       .mck-header-wrapper,
-      .prompt-controls {
+      .prompt-controls,
+      .segmented-control {
         display: none;
       }
 
@@ -932,7 +1006,13 @@
 
       .doc-title {
         font-size: 19pt;
+        margin-bottom: 10px;
+      }
+
+      .doc-lead {
+        font-size: 10.5pt;
         margin-bottom: 12px;
+        max-width: none;
       }
 
       .doc-metadata-grid {
@@ -957,18 +1037,15 @@
         page-break-after: avoid;
       }
 
-      p {
+      p,
+      .reason-body,
+      ul.editorial-list li,
+      .principle-text {
         orphans: 2;
         widows: 2;
         max-width: none;
         font-size: 10pt;
         line-height: 1.60;
-      }
-
-      ul.editorial-list li {
-        font-size: 10pt;
-        line-height: 1.60;
-        max-width: none;
       }
 
       .doc-section {
@@ -982,54 +1059,11 @@
 
       .reason-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        margin-top: 12px;
+        column-gap: 18px;
+        row-gap: 12px;
       }
 
-      .sharp-card {
-        padding: 12px 14px;
-      }
-
-      .step-stack {
-        gap: 12px;
-        margin-top: 12px;
-      }
-
-      .step-item {
-        padding: 14px 16px;
-      }
-
-      .step-header {
-        margin-bottom: 8px;
-      }
-
-      .step-approval-note {
-        margin-top: 10px;
-        padding: 10px 12px;
-      }
-
-      .principle-list {
-        gap: 8px;
-        margin-top: 10px;
-      }
-
-      .principle-item {
-        padding: 11px 14px;
-        gap: 12px;
-      }
-
-      .principle-text {
-        font-size: 10pt;
-        line-height: 1.55;
-        max-width: none;
-      }
-
-      .principle-title {
-        font-size: 11pt;
-        margin-bottom: 4px;
-      }
-
-      .sharp-card,
+      .reason-block,
       .tip-callout,
       .step-item,
       .principle-item,
@@ -1062,11 +1096,6 @@
         padding: 7px 8px;
       }
 
-      .tip-callout {
-        margin-top: 10px;
-        padding: 12px 14px;
-      }
-
       .doc-footer {
         margin-top: 14px;
         padding-top: 8px;
@@ -1082,7 +1111,7 @@
   </style>
 </head>
 <body>
-  <header class="mck-header-wrapper">
+  <header class="mck-header-wrapper" id="siteHeader">
     <div class="mck-masthead">
       <div class="brand-section">
         <span class="mck-brand-badge">ORCA GUIDE</span>
@@ -1100,12 +1129,21 @@
         <button type="button" class="btn-action" id="printBtn">인쇄 / PDF 저장</button>
       </div>
     </div>
+    <nav class="mobile-toc-bar" aria-label="모바일 빠른 이동">
+      <a class="nav-link" href="#section-why">핵심 개념</a>
+      <a class="nav-link" href="#section-prep">준비물</a>
+      <a class="nav-link" href="#section-steps">4단계 절차</a>
+      <a class="nav-link" href="#section-prompt">첫 프롬프트</a>
+      <a class="nav-link" href="#section-principles">운영 원칙</a>
+      <a class="nav-link" href="#section-summary">역할 분담표</a>
+    </nav>
   </header>
 
   <main class="editorial-wrapper">
     <header class="doc-hero">
       <div class="doc-kicker">Orca Bot Onboarding Guide · 비서실장 1호 위임형</div>
       <h1 class="doc-title">Orca Bot 시작 가이드 (비서실장 1호 위임형)</h1>
+      <p class="doc-lead">복잡한 설정 파일이나 코딩 없이 1호 비서실장 봇 하나만 먼저 세우고, 작업 공간 분석부터 산하 전문 봇 팀 편성·세부 세팅까지 일괄 위임하는 실무 온보딩 절차다.</p>
 
       <div class="doc-metadata-grid">
         <div>
@@ -1128,41 +1166,37 @@
 
       <div class="executive-takeaway">
         <div class="takeaway-title">핵심 개요</div>
-        <p>코딩이나 복잡한 설정 파일(<code>SOUL.md</code>, <code>MEMORY.md</code>)을 직접 다루지 않고도 내 컴퓨터의 문서와 자료를 함께 처리하는 나만의 AI 봇 팀을 만들 수 있습니다. 가장 간단하고 정밀한 방법은 <strong>1호 봇으로 '비서실장(총괄 지휘) 봇' 하나만 먼저 만든 뒤, 내 작업 공간 분석부터 산하 전문 봇 설계·생성 제안·세부 세팅까지 통째로 맡기는 것</strong>입니다.</p>
+        <p>코딩이나 복잡한 설정 파일(<code>SOUL.md</code>, <code>MEMORY.md</code>)을 직접 다루지 않고도 내 컴퓨터의 문서와 자료를 함께 처리하는 나만의 AI 봇 팀을 구축할 수 있다. 가장 간단하고 정밀한 방법은 <strong>1호 봇으로 '비서실장(총괄 지휘) 봇' 하나만 먼저 만든 뒤, 내 작업 공간 분석부터 산하 전문 봇 설계·생성 제안·세부 세팅까지 통째로 맡기는 것</strong>이다.</p>
       </div>
     </header>
 
     <section class="doc-section" id="section-why">
-      <h2 class="section-heading">1. 왜 "비서실장 1호 봇"부터 만들면 간단한가요?</h2>
+      <h2 class="section-heading">1. 비서실장 1호 봇부터 시작해야 하는 4가지 이유</h2>
       <div class="reason-grid">
-        <article class="sharp-card">
-          <span class="card-tag">이유 1</span>
-          <h3 class="card-title">처음 직접 만들 봇은 단 1개뿐입니다</h3>
-          <p class="card-body">비서실장 봇(예: <code>maestro</code>, <code>chief</code>) 하나만 먼저 만들어 두면, 이후 필요한 전문 봇들은 비서실장이 채팅창에 <strong>생성 제안 카드</strong>(<span lang="en">Create bot</span>)로 올려 줍니다. 사용자는 제안 내용을 보고 버튼만 클릭하면 됩니다.</p>
+        <article class="reason-block">
+          <h3 class="reason-title">처음 직접 만들 봇은 단 1개뿐이다</h3>
+          <p class="reason-body">비서실장 봇(예: <code>maestro</code>, <code>chief</code>) 하나만 먼저 만들어 두면, 이후 필요한 전문 봇들은 비서실장이 채팅창에 <strong>생성 제안 카드</strong>(<span lang="en">Create bot</span>)로 올려 준다. 사용자는 제안 내용을 검토하고 버튼만 클릭하면 된다.</p>
         </article>
 
-        <article class="sharp-card">
-          <span class="card-tag">이유 2</span>
-          <h3 class="card-title">내 작업 공간을 먼저 파악해 맞춤 팀을 설계합니다</h3>
-          <p class="card-body">비서실장이 내 컴퓨터의 자료 폴더와 노트 보관함(<span lang="en">Obsidian</span> 볼트, 문서 폴더 등)을 읽기 전용으로 먼저 훑어 평소 작업 흐름과 문체를 파악한 뒤, 기성 템플릿이 아니라 내 업무에 꼭 맞는 팀 편제를 제안합니다.</p>
+        <article class="reason-block">
+          <h3 class="reason-title">내 작업 공간을 먼저 파악해 맞춤 팀을 설계한다</h3>
+          <p class="reason-body">비서실장이 내 컴퓨터의 자료 폴더와 노트 보관함(<span lang="en">Obsidian</span> 볼트, 문서 폴더 등)을 읽기 전용으로 먼저 훑어 평소 작업 흐름과 문체를 파악한 뒤, 기성 템플릿이 아니라 내 업무에 꼭 맞는 팀 편제를 제안한다.</p>
         </article>
 
-        <article class="sharp-card">
-          <span class="card-tag">이유 3</span>
-          <h3 class="card-title">창구가 하나로 통일됩니다</h3>
-          <p class="card-body">봇이 늘어나도 "이 일을 어느 봇에게 맡겨야 하지?" 고민할 필요 없이 비서실장에게 말하면, 작업 성격을 판단해 적합한 전문 봇에 분배하고 진행 현황과 검수 결과를 한눈에 보고해 줍니다.</p>
+        <article class="reason-block">
+          <h3 class="reason-title">창구가 하나로 통일된다</h3>
+          <p class="reason-body">봇이 늘어나도 어느 봇에게 일을 맡겨야 할지 고민할 필요 없이 비서실장에게 지시하면, 작업 성격을 판단해 적합한 전문 봇에 분배하고 진행 현황과 검수 결과를 한눈에 보고한다.</p>
         </article>
 
-        <article class="sharp-card">
-          <span class="card-tag">이유 4</span>
-          <h3 class="card-title">필요할 때 자연스럽게 확장할 수 있습니다</h3>
-          <p class="card-body">처음에는 2~3개 핵심 봇으로 가볍게 시작했다가, 새로운 반복 업무가 생기면 비서실장에게 말해 새 전문 봇을 제안받고 기존 팀 규칙에 바로 연결할 수 있습니다.</p>
+        <article class="reason-block">
+          <h3 class="reason-title">필요할 때 자연스럽게 확장한다</h3>
+          <p class="reason-body">처음에는 2~3개 핵심 봇으로 가볍게 시작했다가, 새로운 반복 업무가 생기면 비서실장에게 말해 새 전문 봇을 제안받고 기존 팀 규칙에 바로 연결한다.</p>
         </article>
       </div>
     </section>
 
     <section class="doc-section" id="section-prep">
-      <h2 class="section-heading">2. 시작 전 준비물 (딱 4가지)</h2>
+      <h2 class="section-heading">2. 시작 전 준비물 (4가지)</h2>
       <div class="table-container">
         <table class="table-editorial">
           <thead>
@@ -1176,17 +1210,17 @@
             <tr>
               <td class="col-num">1</td>
               <td class="col-item">Orca 앱 + AI 계정 로그인</td>
-              <td>컴퓨터(<span lang="en">Mac</span>)에 <span lang="en">Orca</span>를 설치하고 사용할 AI 에이전트(<span lang="en">Antigravity</span>, <span lang="en">Claude</span>, <span lang="en">Codex</span> 중 1개 이상)에 로그인합니다.</td>
+              <td>컴퓨터(<span lang="en">Mac</span>)에 <span lang="en">Orca</span>를 설치하고 사용할 AI 에이전트(<span lang="en">Antigravity</span>, <span lang="en">Claude</span>, <span lang="en">Codex</span> 중 1개 이상)에 로그인한다.</td>
             </tr>
             <tr>
               <td class="col-num">2</td>
               <td class="col-item">내 작업 폴더 경로</td>
-              <td>참고 자료(PDF·문헌), 내 원본 문서·노트, AI 결과물을 저장할 작업대 폴더의 위치를 미리 확인해 둡니다.</td>
+              <td>참고 자료(PDF·문헌), 내 원본 문서·노트, AI 결과물을 저장할 작업대 폴더의 위치를 미리 확인해 둔다.</td>
             </tr>
             <tr>
               <td class="col-num">3</td>
               <td class="col-item">원하는 업무 영역 메모 (3~5줄)</td>
-              <td>전문 용어 없이 "자료 조사·요약, 초안 작성 협업, 원고 비판적 검수, 문서 정리"처럼 맡기고 싶은 일을 편하게 적습니다.</td>
+              <td>전문 용어 없이 "자료 조사·요약, 초안 작성 협업, 원고 비판적 검수, 문서 정리"처럼 맡기고 싶은 일을 편하게 적는다.</td>
             </tr>
             <tr>
               <td class="col-num">4</td>
@@ -1199,7 +1233,7 @@
 
       <aside class="tip-callout" aria-label="Google 연동 안내">
         <div class="tip-label">TIP · Google 연동 안내</div>
-        <p><span lang="en">Google Drive</span>, <span lang="en">Docs</span>, <span lang="en">Gmail</span>, <span lang="en">Calendar</span> 연동이 필요하면 사용할 <strong>Google 계정</strong>만 정해 두시면 됩니다. 연결 과정도 나중에 비서실장 채팅에서 "Google 연결해 줘"라고 말하면 나오는 안내 카드를 따라 클릭만 하면 완료됩니다.</p>
+        <p><span lang="en">Google Drive</span>, <span lang="en">Docs</span>, <span lang="en">Gmail</span>, <span lang="en">Calendar</span> 연동이 필요하면 사용할 <strong>Google 계정</strong>만 정해 두면 된다. 연결 과정도 나중에 비서실장 채팅에서 "Google 연결해 줘"라고 말하면 나오는 안내 카드를 따라 클릭만 하면 완료된다.</p>
       </aside>
     </section>
 
@@ -1208,24 +1242,24 @@
       <div class="step-stack">
         <article class="step-item">
           <div class="step-header">
-            <span class="step-badge">1단계</span>
+            <span class="step-index">1단계</span>
             <h3 class="step-title">1호 봇 '비서실장' 하나만 생성하기</h3>
           </div>
           <div class="step-body">
             <ul class="editorial-list">
-              <li><span lang="en">Orca</span>에서 첫 번째 봇을 <strong>단 하나만</strong> 생성합니다(이름 예: <code>maestro</code> 또는 <code>chief</code>).</li>
-              <li>이 봇의 역할은 모든 일을 직접 처리하는 만능 봇이 아니라, <strong>내 작업 공간을 파악해 산하 전문 봇 팀을 설계·세팅하고 작업 판단·분배·품질 점검을 총괄하는 비서실장</strong>으로 정합니다.</li>
+              <li><span lang="en">Orca</span>에서 첫 번째 봇을 <strong>단 하나만</strong> 생성한다(이름 예: <code>maestro</code> 또는 <code>chief</code>).</li>
+              <li>이 봇의 역할은 모든 일을 직접 처리하는 만능 봇이 아니라, <strong>내 작업 공간을 파악해 산하 전문 봇 팀을 설계·세팅하고 작업 판단·분배·품질 점검을 총괄하는 비서실장</strong>으로 정한다.</li>
             </ul>
           </div>
         </article>
 
         <article class="step-item">
           <div class="step-header">
-            <span class="step-badge">2단계</span>
+            <span class="step-index">2단계</span>
             <h3 class="step-title">비서실장에게 "작업 공간 조사 + 팀 청사진 제안" 맡기기</h3>
           </div>
           <div class="step-body">
-            <p>비서실장의 <span lang="en">Home Chat</span>이 열리면 아래 <a class="inline-link" href="#section-prompt"><strong>4장의 복사-붙여넣기 프롬프트</strong></a>를 보냅니다. 그러면 비서실장이 다음 작업을 자동으로 수행합니다.</p>
+            <p>비서실장의 <span lang="en">Home Chat</span>이 열리면 아래 <a class="inline-link" href="#section-prompt"><strong>4장의 복사-붙여넣기 프롬프트</strong></a>를 보낸다. 그러면 비서실장이 다음 작업을 자동으로 수행한다.</p>
             <ul class="editorial-list">
               <li><span lang="en">Orca</span> 봇의 협업 방식과 기능 파악</li>
               <li>내 문서 폴더와 볼트를 <strong>읽기 전용</strong>으로 훑어 폴더 구조와 평소 작업 스타일 파악</li>
@@ -1236,11 +1270,11 @@
 
         <article class="step-item">
           <div class="step-header">
-            <span class="step-badge">3단계</span>
+            <span class="step-index">3단계</span>
             <h3 class="step-title">제안서 승인 후, 생성 카드에서 클릭만 하기</h3>
           </div>
           <div class="step-body">
-            <p>비서실장이 가져온 청사진에서 아래 네 가지만 확인하고 수정할 점을 말로 지시합니다.</p>
+            <p>비서실장이 가져온 청사진에서 아래 네 가지만 확인하고 수정할 점을 말로 지시한다.</p>
             <ul class="editorial-list">
               <li><strong>역할 분담</strong>: 내 평소 업무 흐름에 꼭 맞는 봇들로 구성되었는가?</li>
               <li><strong>모델과 추론 강도 배분</strong>: 단순 정리·분류·요약 봇은 가볍고 빠른 모델과 낮은 추론 강도로, 깊은 분석·비판적 검수(레드팀) 봇은 상위 모델과 높은 추론 강도로 속도와 비용 균형이 맞게 제안되었는가?</li>
@@ -1248,21 +1282,21 @@
               <li><strong>사용자 판단 구간 보호</strong>: 내가 직접 깊이 생각하고 결정해야 하는 핵심 업무는 AI가 먼저 완성본을 대필하지 않고 질문과 대화로 돕도록 설계되었는가?</li>
             </ul>
             <div class="step-approval-note">
-              <p>제안이 마음에 들면 <strong>"승인한다. 제안한 산하 봇들을 생성 카드로 올려 줘"</strong>라고 말합니다. 채팅창에 각 봇의 제안 카드가 뜨면 추천받은 모델과 추론 강도를 확인한 뒤 <strong>Create bot</strong> 버튼을 눌러 생성합니다.</p>
+              <p>제안이 마음에 들면 <strong>"승인한다. 제안한 산하 봇들을 생성 카드로 올려 줘"</strong>라고 말한다. 채팅창에 각 봇의 제안 카드가 뜨면 추천받은 모델과 추론 강도를 확인한 뒤 <strong>Create bot</strong> 버튼을 눌러 생성한다.</p>
             </div>
           </div>
         </article>
 
         <article class="step-item">
           <div class="step-header">
-            <span class="step-badge">4단계</span>
+            <span class="step-index">4단계</span>
             <h3 class="step-title">산하 봇 세부 세팅 일괄 위임 및 점검</h3>
           </div>
           <div class="step-body">
-            <p>모든 산하 봇 생성이 끝나면 비서실장에게 <strong>"방금 만든 산하 봇들에 승인한 설계대로 <code>SOUL.md</code>, <code>MEMORY.md</code>, 폴더 권한, 협업 편제표를 일괄 세팅하고 전체 점검 결과를 보고해 줘"</strong>라고 지시합니다.</p>
+            <p>모든 산하 봇 생성이 끝나면 비서실장에게 <strong>"방금 만든 산하 봇들에 승인한 설계대로 <code>SOUL.md</code>, <code>MEMORY.md</code>, 폴더 권한, 협업 편제표를 일괄 세팅하고 전체 점검 결과를 보고해 줘"</strong>라고 지시한다.</p>
             <ul class="editorial-list">
-              <li>비서실장이 각 봇의 홈 폴더(<code>~/.orca/bots/&lt;봇이름&gt;/</code>)에 맞춤 규칙과 장기 기억 파일을 작성하고 연결합니다.</li>
-              <li>마지막으로 작은 실제 과제 1건(예: PDF 문서 1편 요약 또는 초안 검토)을 시범 가동해 보고 어색한 부분만 말로 다듬으면 구축이 끝납니다.</li>
+              <li>비서실장이 각 봇의 홈 폴더(<code>~/.orca/bots/&lt;봇이름&gt;/</code>)에 맞춤 규칙과 장기 기억 파일을 작성하고 연결한다.</li>
+              <li>마지막으로 작은 실제 과제 1건(예: PDF 문서 1편 요약 또는 초안 검토)을 시범 가동해 보고 어색한 부분만 말로 다듬으면 구축이 끝난다.</li>
             </ul>
           </div>
         </article>
@@ -1271,13 +1305,16 @@
 
     <section class="doc-section" id="section-prompt">
       <h2 class="section-heading">4. 비서실장 1호 봇에 붙여 넣는 "첫 지시 프롬프트"</h2>
-      <p>비서실장 봇을 생성한 뒤, 아래 문구의 <code>[대괄호]</code> 부분만 채워 첫 메시지로 보내시면 조사부터 설계·세팅까지 일관되게 진행됩니다.</p>
+      <p>비서실장 봇을 생성한 뒤, 아래 문구의 <code>[대괄호]</code> 부분만 채워 첫 메시지로 보내면 조사부터 설계·세팅까지 일관되게 진행된다.</p>
 
       <div class="prompt-frame">
         <div class="prompt-toolbar">
           <div class="prompt-meta">
             <span class="prompt-label">첫 지시 프롬프트 (복사용 원문)</span>
-            <span class="prompt-hint">복사 후 [대괄호] 항목만 내 폴더 경로와 업무 내용으로 바꿔 전송합니다.</span>
+            <div class="segmented-control" role="tablist" aria-label="프롬프트 보기 전환">
+              <button type="button" class="seg-tab" role="tab" id="tabTemplate" aria-selected="true" data-mode="template">빈 템플릿</button>
+              <button type="button" class="seg-tab" role="tab" id="tabExample" aria-selected="false" data-mode="example">작성 예시 포함</button>
+            </div>
           </div>
           <div class="prompt-controls">
             <span class="copy-feedback" id="copyFeedback" role="status" aria-live="polite"></span>
@@ -1288,16 +1325,16 @@
 내가 설정 파일을 직접 작성하지 않고, 너에게 설계와 세부 세팅을 맡기고 싶어.
 
 [내 작업 공간(폴더·볼트) 경로]
-- 참고 자료 폴더(읽기 전용): [예: /Users/이름/Documents/Library]
-- 내 원본 문서·노트 폴더(원본 보호): [예: /Users/이름/Documents/Workspace]
-- AI 결과물을 저장할 작업대 폴더: [예: /Users/이름/Documents/AI_Output]
+• 참고 자료 폴더(읽기 전용): [예: /Users/이름/Documents/Library]
+• 내 원본 문서·노트 폴더(원본 보호): [예: /Users/이름/Documents/Workspace]
+• AI 결과물을 저장할 작업대 폴더: [예: /Users/이름/Documents/AI_Output]
 
 [내가 사용 중인 AI 구독 / 모델]
-- 예: Claude, Antigravity, Codex 중 보유한 계정과 모델 기재
+• 예: Claude, Antigravity, Codex 중 보유한 계정과 모델 기재
 
 [내가 만들고 싶은 팀과 업무]
-- 예: 자료 조사 및 요약, 문서 초안 협업, 결과물 비판적 검수, 최종 정리 및 배포 등
-- (원하는 업무 영역을 3~5줄로 편하게 작성)
+• 예: 자료 조사 및 요약, 문서 초안 협업, 결과물 비판적 검수, 최종 정리 및 배포 등
+• (원하는 업무 영역을 3~5줄로 편하게 작성)
 
 [절대 지켜야 할 원칙]
 1. 너(비서실장)는 지휘와 점검만 맡고, 산하 전문 봇이 생긴 뒤에는 실무 문서를 직접 대신 집필하지 말 것
@@ -1313,13 +1350,13 @@
     </section>
 
     <section class="doc-section" id="section-principles">
-      <h2 class="section-heading">5. 운영할 때 알아 두면 좋은 핵심 원칙 5가지</h2>
+      <h2 class="section-heading">5. 운영할 때 지켜야 할 핵심 원칙 5가지</h2>
       <ol class="principle-list">
         <li class="principle-item">
           <div class="principle-num" aria-hidden="true">1</div>
           <div class="principle-text">
             <span class="principle-title">비서실장은 지휘만 하고 직접 연주하지 않는다</span>
-            산하 전문 봇이 갖춰진 뒤에는 비서실장에게 직접 실무 작성을 맡기지 않고 작업 분해·배분·현황 점검만 맡겨야 컨텍스트가 가볍고 전체 팀이 질서 있게 돌아갑니다.
+            산하 전문 봇이 갖춰진 뒤에는 비서실장에게 직접 실무 작성을 맡기지 않고 작업 분해·배분·현황 점검만 맡겨야 컨텍스트가 가볍고 전체 팀이 질서 있게 돌아간다.
           </div>
         </li>
 
@@ -1327,7 +1364,7 @@
           <div class="principle-num" aria-hidden="true">2</div>
           <div class="principle-text">
             <span class="principle-title">깊은 1:1 대화가 필요한 업무는 전문 봇과 직접 소통한다</span>
-            여러 단계가 얽힌 복합 과제는 비서실장에게 맡기되, 호흡이 긴 아이디어나 초안을 다듬는 대화는 해당 전문 봇의 채팅방에서 직접 1:1로 진행하는 편이 자연스럽습니다.
+            여러 단계가 얽힌 복합 과제는 비서실장에게 맡기되, 호흡이 긴 아이디어나 초안을 다듬는 대화는 해당 전문 봇의 채팅방에서 직접 1:1로 진행하는 편이 자연스럽다.
           </div>
         </li>
 
@@ -1335,7 +1372,7 @@
           <div class="principle-num" aria-hidden="true">3</div>
           <div class="principle-text">
             <span class="principle-title">작성 봇과 검수(레드팀) 봇은 역할을 분리한다 (이종 AI 모델 권장)</span>
-            결과물을 만드는 봇과 논리적 허점·출처 오류를 비판적으로 점검하는 감수(레드팀) 봇은 별도 봇으로 분리해 두는 편이 좋습니다. 하나의 AI 서비스만 구독 중이라면 같은 모델로 역할을 나누어도 충분히 동작하며, 여유가 된다면 서로 다른 AI 모델(이종 모델)을 배치해 교차 검증하면 편향을 한층 더 줄일 수 있습니다. (수정 재시도는 최대 2회로 제한해 무한 반복을 방지합니다.)
+            결과물을 만드는 봇과 논리적 허점·출처 오류를 비판적으로 점검하는 감수(레드팀) 봇은 별도 봇으로 분리해 두는 편이 좋다. 하나의 AI 서비스만 구독 중이라면 같은 모델로 역할을 나누어도 충분히 동작하며, 여유가 된다면 서로 다른 AI 모델(이종 모델)을 배치해 교차 검증하면 편향을 한층 더 줄일 수 있다. (수정 재시도는 최대 2회로 제한해 무한 반복을 방지한다.)
           </div>
         </li>
 
@@ -1343,7 +1380,7 @@
           <div class="principle-num" aria-hidden="true">4</div>
           <div class="principle-text">
             <span class="principle-title">대화가 길어지면 "새 채팅 시작해 줘"로 정리한다</span>
-            <span lang="en">Home Chat</span>에 대화가 길게 쌓이면 응답이 느려질 수 있습니다. "새 채팅 시작해 줘"라고 말하면 기존 대화는 기록으로 남고, 세팅된 규칙(<code>SOUL.md</code>)과 장기 기억(<code>MEMORY.md</code>)만 깔끔하게 유지된 새 세션이 열립니다. 긴 프로젝트는 별도 채팅방으로 분리해 진행하는 편이 안정적입니다.
+            <span lang="en">Home Chat</span>에 대화가 길게 쌓이면 응답이 느려질 수 있다. "새 채팅 시작해 줘"라고 말하면 기존 대화는 기록으로 남고, 세팅된 규칙(<code>SOUL.md</code>)과 장기 기억(<code>MEMORY.md</code>)만 깔끔하게 유지된 새 세션이 열린다. 긴 프로젝트는 별도 채팅방으로 분리해 진행하는 편이 안정적이다.
           </div>
         </li>
 
@@ -1351,7 +1388,7 @@
           <div class="principle-num" aria-hidden="true">5</div>
           <div class="principle-text">
             <span class="principle-title">여러 기기에서 함께 쓴다면 (상시 구동 호스트 + 단말기 구조)</span>
-            일반적으로는 항상 켜져 있는 <strong>메인 호스트 1대</strong>(데스크톱·맥 미니·클라우드 서버 등)에 봇과 정기 자동화를 두고, 이동 중에는 노트북·휴대폰·태블릿 같은 단말기에서 접속해 지시하는 구조가 가장 깔끔합니다. 만약 데스크톱과 노트북 양쪽에 각각 <span lang="en">Orca</span>를 설치해 함께 쓰신다면, 매주 자동 실행되는 정기 스케줄은 <strong>메인 호스트 1대에서만 활성화</strong>하고 보조 기기에서는 비활성화해 두어야 중복 실행을 막을 수 있습니다.
+            일반적으로는 항상 켜져 있는 <strong>메인 호스트 1대</strong>(데스크톱·맥 미니·클라우드 서버 등)에 봇과 정기 자동화를 두고, 이동 중에는 노트북·휴대폰·태블릿 같은 단말기에서 접속해 지시하는 구조가 가장 깔끔하다. 만약 데스크톱과 노트북 양쪽에 각각 <span lang="en">Orca</span>를 설치해 함께 쓴다면, 매주 자동 실행되는 정기 스케줄은 <strong>메인 호스트 1대에서만 활성화</strong>하고 보조 기기에서는 비활성화해 두어야 중복 실행을 막을 수 있다.
           </div>
         </li>
       </ol>
@@ -1407,11 +1444,81 @@
 
   <script>
     (function () {
+      var headerEl = document.getElementById('siteHeader');
       var copyBtn = document.getElementById('copyPromptBtn');
       var promptEl = document.getElementById('starterPrompt');
       var feedbackEl = document.getElementById('copyFeedback');
       var printBtn = document.getElementById('printBtn');
+      var tabTemplate = document.getElementById('tabTemplate');
+      var tabExample = document.getElementById('tabExample');
       var resetTimer = null;
+
+      var PROMPTS = {
+        template: promptEl ? promptEl.textContent : '',
+        example: [
+          '너는 앞으로 나의 산하 전문 봇 팀을 설계하고, 작업 판단·분배·품질 점검·유지보수를 총괄하는 비서실장(Chief of Staff) 봇이야.',
+          '내가 설정 파일을 직접 작성하지 않고, 너에게 설계와 세부 세팅을 맡기고 싶어.',
+          '',
+          '[내 작업 공간(폴더·볼트) 경로]',
+          '• 참고 자료 폴더(읽기 전용): /Users/kim/Documents/Research_Library',
+          '• 내 원본 문서·노트 폴더(원본 보호): /Users/kim/Documents/Obsidian_Vault',
+          '• AI 결과물을 저장할 작업대 폴더: /Users/kim/Documents/AI_Workbench',
+          '',
+          '[내가 사용 중인 AI 구독 / 모델]',
+          '• Antigravity (Gemini 4 계열), Claude Pro (Sonnet/Opus)',
+          '',
+          '[내가 만들고 싶은 팀과 업무]',
+          '• 주간 자료 조사 및 PDF 문헌 요약 (가벼운 모델)',
+          '• 내 메모를 바탕으로 한 초안 구조화 및 협업 (균형 모델)',
+          '• 완성 원고의 논리 허점·출처 오류 비판적 검수(레드팀, 상위 모델)',
+          '',
+          '[절대 지켜야 할 원칙]',
+          '1. 너(비서실장)는 지휘와 점검만 맡고, 산하 전문 봇이 생긴 뒤에는 실무 문서를 직접 대신 집필하지 말 것',
+          '2. 내 기존 원본 폴더와 참고 자료 폴더는 절대 덮어쓰거나 삭제하지 말 것',
+          '3. 확인되지 않은 출처나 사실을 추측해서 지어내지 말 것',
+          '4. 내 명시적 승인 없이 메일 발송, 외부 공유, 자동화 변경, 파일 삭제를 실행하지 말 것',
+          '',
+          '[진행 순서]',
+          '1단계: 먼저 아무 파일도 수정하지 말고, Orca 봇의 기능과 내 위 폴더들의 구조·평소 작업 스타일을 읽기 전용으로 파악해 줘.',
+          '2단계: 파악한 내용을 바탕으로 나에게 맞는 비서실장 규칙(SOUL.md) 초안과 산하 전문 봇 편제표(봇 이름, 역할, 협업 흐름, 폴더 권한)를 종합 제안해 줘. 이때 각 봇의 업무 난이도와 내 구독 환경에 맞춰 추천 AI 모델과 추론 강도(낮음·보통·높음) 및 선정 이유까지 함께 제안해 줘.',
+          '3단계: 내가 제안서를 승인하면 산하 봇 생성 제안 카드(Create bot)를 올려 주고, 내가 추천 모델과 추론 강도를 확인해 생성을 완료한 뒤 각 봇의 SOUL.md와 MEMORY.md 세팅까지 일괄 마무리해 줘.'
+        ].join('\n')
+      };
+
+      function switchPromptMode(mode) {
+        if (!promptEl) return;
+        var codeNode = promptEl.querySelector('code');
+        if (codeNode) {
+          codeNode.textContent = PROMPTS[mode] || PROMPTS.template;
+        }
+        if (tabTemplate && tabExample) {
+          tabTemplate.setAttribute('aria-selected', mode === 'template' ? 'true' : 'false');
+          tabExample.setAttribute('aria-selected', mode === 'example' ? 'true' : 'false');
+        }
+      }
+
+      if (tabTemplate) {
+        tabTemplate.addEventListener('click', function () {
+          switchPromptMode('template');
+        });
+      }
+
+      if (tabExample) {
+        tabExample.addEventListener('click', function () {
+          switchPromptMode('example');
+        });
+      }
+
+      function onScroll() {
+        if (!headerEl) return;
+        if (window.scrollY > 8) {
+          headerEl.classList.add('is-scrolled');
+        } else {
+          headerEl.classList.remove('is-scrolled');
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
 
       function setCopiedState(success) {
         if (resetTimer) {
@@ -1420,10 +1527,10 @@
         if (success) {
           copyBtn.classList.add('is-copied');
           copyBtn.textContent = '복사 완료';
-          feedbackEl.textContent = '클립보드에 복사되었습니다.';
+          feedbackEl.textContent = '클립보드에 복사되었다.';
         } else {
           copyBtn.classList.remove('is-copied');
-          feedbackEl.textContent = '자동 복사에 실패했습니다. 텍스트를 직접 선택해 복사해 주세요.';
+          feedbackEl.textContent = '자동 복사에 실패했다. 텍스트를 직접 선택해 복사한다.';
         }
         resetTimer = window.setTimeout(function () {
           copyBtn.classList.remove('is-copied');
