@@ -1,0 +1,3747 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>연구과정 로그: 율법과 복음의 순서 · Phase 3 파일럿 완주 기록</title>
+  <style id="gesso-font-smoothing">html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}</style>
+  <style id="gesso-text-wrap">h1,h2,h3{text-wrap:balance}p,li,figcaption,blockquote{text-wrap:pretty}</style>
+  <style>
+    /* ==========================================================================
+       1. DESIGN TOKENS (McKinsey Editorial SSOT · Dual KO/EN Scale)
+       ========================================================================== */
+    :root {
+      --color-brand-primary: #00205B;
+      --color-brand-primary-dark: #001438;
+      --color-brand-accent: #005A9C;
+      --color-brand-tint: #F0F6FB;
+      --color-hairline-accent: rgba(0, 90, 156, 0.09);
+      --color-stroke-primary: #00205B;
+      --color-stroke-accent: #005A9C;
+      --color-stroke-alert: #991B1B;
+      --color-stroke-success: #166534;
+
+      --color-canvas: #F9FAFB;
+      --color-surface: #FFFFFF;
+      --color-surface-subtle: #F4F6F8;
+      --color-divider: rgba(15, 23, 42, 0.09);
+      --color-divider-strong: #D1D5DB;
+
+      --color-text-main: #1F2937;
+      --color-text-secondary: #4B5563;
+      --color-text-inverse: #FFFFFF;
+
+      --color-highlight: #B45309;
+      --color-highlight-bg: #FFFBEB;
+      --color-hairline-highlight: rgba(180, 83, 9, 0.09);
+      --color-alert: #991B1B;
+      --color-alert-bg: #FDF9F9;
+      --color-hairline-alert: rgba(153, 27, 27, 0.09);
+      --color-success: #166534;
+      --color-success-bg: #F0FDF4;
+      --color-hairline-success: rgba(22, 101, 52, 0.09);
+
+      /* Offline system + local font stack (no external CDN) */
+      --font-editorial-serif: 'Merriweather', Georgia, 'Noto Serif KR', 'AppleMyungjo', Cambria, serif;
+      --font-ui-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Pretendard", "Apple SD Gothic Neo", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, Monaco, monospace;
+
+      /* Set A: Korean Scale */
+      --ko-text-h1: 32px;    --ko-lh-h1: 1.35;    --ko-ls-h1: -0.02em;
+      --ko-text-h2: 24px;    --ko-lh-h2: 1.35;    --ko-ls-h2: -0.015em;
+      --ko-text-h3: 18px;    --ko-lh-h3: 1.45;    --ko-ls-h3: -0.01em;
+      --ko-text-lead: 17px;  --ko-lh-lead: 1.65;  --ko-ls-lead: -0.01em;
+      --ko-text-body: 16px;  --ko-lh-body: 1.80;  --ko-ls-body: -0.01em;
+      --ko-text-ui: 13.5px;  --ko-lh-ui: 1.60;    --ko-ls-ui: -0.005em;
+      --ko-text-label: 12px; --ko-lh-label: 1.45; --ko-ls-label: 0.02em;
+      --ko-measure: 70ch;    --ko-word-break: keep-all;
+
+      /* Set B: English Scale */
+      --en-text-h1: 36px;    --en-lh-h1: 1.20;    --en-ls-h1: -0.02em;
+      --en-text-h2: 26px;    --en-lh-h2: 1.25;    --en-ls-h2: -0.015em;
+      --en-text-h3: 19px;    --en-lh-h3: 1.30;    --en-ls-h3: -0.005em;
+      --en-text-lead: 18px;  --en-lh-lead: 1.55;  --en-ls-lead: 0em;
+      --en-text-body: 17px;  --en-lh-body: 1.60;  --en-ls-body: 0em;
+      --en-text-ui: 14px;    --en-lh-ui: 1.50;    --en-ls-ui: 0em;
+      --en-text-label: 12px; --en-lh-label: 1.35; --en-ls-label: 0.04em;
+      --en-measure: 65ch;    --en-word-break: normal;
+
+      /* Active Bindings (Default: Set A Korean) */
+      --text-h1: var(--ko-text-h1);       --lh-h1: var(--ko-lh-h1);       --ls-h1: var(--ko-ls-h1);
+      --text-h2: var(--ko-text-h2);       --lh-h2: var(--ko-lh-h2);       --ls-h2: var(--ko-ls-h2);
+      --text-h3: var(--ko-text-h3);       --lh-h3: var(--ko-lh-h3);       --ls-h3: var(--ko-ls-h3);
+      --text-lead: var(--ko-text-lead);   --lh-lead: var(--ko-lh-lead);   --ls-lead: var(--ko-ls-lead);
+      --text-body: var(--ko-text-body);   --lh-body: var(--ko-lh-body);   --ls-body: var(--ko-ls-body);
+      --text-ui: var(--ko-text-ui);       --lh-ui: var(--ko-lh-ui);       --ls-ui: var(--ko-ls-ui);
+      --text-label: var(--ko-text-label); --lh-label: var(--ko-lh-label); --ls-label: var(--ko-ls-label);
+      --optimal-prose-width: var(--ko-measure);
+      --prose-word-break: var(--ko-word-break);
+
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+
+      --container-max-width: 900px;
+      --header-height: 60px;
+      --control-height: 40px;
+      --radius-control: 4px;
+    }
+
+    :root:lang(en),
+    .lang-en {
+      --text-h1: var(--en-text-h1);       --lh-h1: var(--en-lh-h1);       --ls-h1: var(--en-ls-h1);
+      --text-h2: var(--en-text-h2);       --lh-h2: var(--en-lh-h2);       --ls-h2: var(--en-ls-h2);
+      --text-h3: var(--en-text-h3);       --lh-h3: var(--en-lh-h3);       --ls-h3: var(--en-ls-h3);
+      --text-lead: var(--en-text-lead);   --lh-lead: var(--en-lh-lead);   --ls-lead: var(--en-ls-lead);
+      --text-body: var(--en-text-body);   --lh-body: var(--en-lh-body);   --ls-body: var(--en-ls-body);
+      --text-ui: var(--en-text-ui);       --lh-ui: var(--en-lh-ui);       --ls-ui: var(--en-ls-ui);
+      --text-label: var(--en-text-label); --lh-label: var(--en-lh-label); --ls-label: var(--en-ls-label);
+      --optimal-prose-width: var(--en-measure);
+      --prose-word-break: var(--en-word-break);
+      word-break: var(--en-word-break);
+    }
+
+    /* ==========================================================================
+       2. RESET & BASE TYPOGRAPHY
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      background-color: var(--color-canvas);
+      color: var(--color-text-main);
+      overflow-x: clip;
+    }
+
+    body {
+      font-family: var(--font-editorial-serif);
+      font-size: var(--text-body);
+      line-height: var(--lh-body);
+      letter-spacing: var(--ls-body);
+      background-color: var(--color-canvas);
+      color: var(--color-text-main);
+      overflow-x: clip;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-editorial-serif);
+      color: var(--color-brand-primary);
+      word-break: var(--prose-word-break);
+      overflow-wrap: break-word;
+      max-width: none;
+    }
+
+    p, li, td, th, dd, dt, figcaption, blockquote {
+      text-align: left;
+      word-break: var(--prose-word-break);
+      overflow-wrap: break-word;
+    }
+
+    p :lang(en),
+    li :lang(en),
+    blockquote :lang(en) {
+      font-kerning: normal;
+      font-variant-ligatures: common-ligatures;
+      letter-spacing: 0em;
+    }
+
+    p {
+      font-size: var(--text-body);
+      line-height: var(--lh-body);
+      letter-spacing: var(--ls-body);
+      max-width: var(--optimal-prose-width);
+      margin-bottom: var(--space-4);
+    }
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    a {
+      color: var(--color-brand-accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    a:hover {
+      color: var(--color-brand-primary);
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      background-color: var(--color-surface-subtle);
+      border: 1px solid var(--color-divider);
+      padding: 2px 6px;
+      color: var(--color-brand-primary-dark);
+    }
+
+    .tabular {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ==========================================================================
+       3. STICKY MASTHEAD (60px height, 40px controls, 1 Primary CTA)
+       ========================================================================== */
+    .mck-header-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: var(--color-surface);
+      border-bottom: 1px solid var(--color-divider);
+    }
+
+    .mck-masthead {
+      max-width: var(--container-max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+      min-height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      font-family: var(--font-ui-sans);
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      min-width: 0;
+    }
+
+    .mck-brand-badge {
+      background-color: var(--color-brand-primary);
+      color: var(--color-text-inverse);
+      font-size: var(--text-label);
+      line-height: var(--lh-label);
+      font-weight: 700;
+      letter-spacing: var(--ls-label);
+      padding: 4px 8px;
+      white-space: nowrap;
+    }
+
+    .report-title-short {
+      font-family: var(--font-editorial-serif);
+      font-size: var(--text-ui);
+      font-weight: 700;
+      color: var(--color-brand-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      font-size: var(--text-label);
+    }
+
+    .header-nav a {
+      color: var(--color-text-secondary);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .header-nav a:hover {
+      color: var(--color-brand-primary);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex-shrink: 0;
+    }
+
+    .segmented-control {
+      display: inline-flex;
+      border: 1px solid var(--color-divider-strong);
+      border-radius: var(--radius-control);
+      background-color: var(--color-surface-subtle);
+      padding: 2px;
+      font-family: var(--font-ui-sans);
+    }
+
+    .seg-btn {
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-label);
+      font-weight: 600;
+      min-height: 34px;
+      padding: 4px 12px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-control);
+      background-color: transparent;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .seg-btn:hover {
+      color: var(--color-brand-primary);
+    }
+
+    .seg-btn[aria-pressed="true"],
+    .seg-btn.is-active {
+      background-color: var(--color-surface);
+      color: var(--color-brand-primary);
+      border-color: var(--color-divider);
+    }
+
+    .btn-action {
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-ui);
+      font-weight: 600;
+      height: var(--control-height);
+      padding: var(--space-2) var(--space-4);
+      border: 1px solid var(--color-divider-strong);
+      border-radius: var(--radius-control);
+      background-color: var(--color-surface);
+      color: var(--color-text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      white-space: nowrap;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .btn-action:hover {
+      background-color: var(--color-surface-subtle);
+      border-color: var(--color-brand-accent);
+      color: var(--color-brand-primary);
+    }
+
+    .btn-primary {
+      background-color: var(--color-brand-primary);
+      border-color: var(--color-brand-primary);
+      color: var(--color-text-inverse);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--color-brand-primary-dark);
+      border-color: var(--color-brand-primary-dark);
+      color: var(--color-text-inverse);
+    }
+
+    /* ==========================================================================
+       4. MAIN EDITORIAL CONTAINER & HERO
+       ========================================================================== */
+    .editorial-wrapper {
+      max-width: var(--container-max-width);
+      margin: var(--space-8) auto var(--space-12);
+      padding: var(--space-12);
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-divider);
+    }
+
+    .doc-hero {
+      padding-bottom: var(--space-8);
+      border-bottom: 2px solid var(--color-brand-primary);
+      margin-bottom: var(--space-10);
+    }
+
+    .doc-kicker {
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-label);
+      line-height: var(--lh-label);
+      font-weight: 700;
+      color: var(--color-brand-accent);
+      letter-spacing: var(--ls-label);
+      margin-bottom: var(--space-3);
+    }
+
+    .doc-title {
+      font-size: var(--text-h1);
+      line-height: var(--lh-h1);
+      font-weight: 700;
+      letter-spacing: var(--ls-h1);
+      margin-bottom: var(--space-4);
+    }
+
+    .doc-subtitle {
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-lead);
+      line-height: var(--lh-lead);
+      letter-spacing: var(--ls-lead);
+      color: var(--color-text-secondary);
+      max-width: var(--optimal-prose-width);
+      margin-bottom: var(--space-6);
+    }
+
+    .doc-metadata-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-4);
+      padding: var(--space-5) 0;
+      border-top: 1px solid var(--color-divider);
+      border-bottom: 1px solid var(--color-divider);
+      margin-bottom: var(--space-6);
+      font-family: var(--font-ui-sans);
+    }
+
+    .doc-metadata-grid > div {
+      min-width: 0;
+    }
+
+    .meta-label {
+      font-size: var(--text-label);
+      line-height: var(--lh-label);
+      font-weight: 700;
+      color: var(--color-text-secondary);
+      letter-spacing: var(--ls-label);
+      margin-bottom: var(--space-1);
+    }
+
+    .meta-value {
+      font-size: var(--text-ui);
+      line-height: var(--lh-ui);
+      font-weight: 600;
+      color: var(--color-brand-primary);
+      font-variant-numeric: tabular-nums;
+      overflow-wrap: break-word;
+    }
+
+    .executive-takeaway {
+      background-color: var(--color-surface-subtle);
+      border-top: 3px solid var(--color-stroke-primary);
+      border-bottom: 1px solid var(--color-divider);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+
+    .takeaway-title {
+      font-size: var(--text-h3);
+      line-height: var(--lh-h3);
+      letter-spacing: var(--ls-h3);
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+    }
+
+    .executive-takeaway p {
+      max-width: var(--optimal-prose-width);
+    }
+
+    /* 4-KPI Strip */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+
+    .kpi-cell {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-divider);
+      border-top: 2px solid var(--color-stroke-accent);
+      padding: var(--space-4);
+      min-width: 0;
+    }
+
+    .kpi-cell.kpi-alert-clear {
+      border-top-color: var(--color-stroke-success);
+    }
+
+    .kpi-label {
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-label);
+      line-height: var(--lh-label);
+      font-weight: 700;
+      color: var(--color-text-secondary);
+      letter-spacing: var(--ls-label);
+      margin-bottom: var(--space-2);
+    }
+
+    .kpi-number {
+      font-family: var(--font-ui-sans);
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: 700;
+      color: var(--color-brand-primary);
+      font-variant-numeric: tabular-nums;
+      margin-bottom: var(--space-1);
+    }
+
+    .kpi-sub {
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-label);
+      line-height: var(--lh-label);
+      color: var(--color-text-secondary);
+    }
+
+    /* ==========================================================================
+       5. SECTION STRUCTURE & SHARED CONTROLS
+       ========================================================================== */
+    .doc-section {
+      margin-bottom: var(--space-12);
+      scroll-margin-top: 76px;
+    }
+
+    .doc-section:last-of-type {
+      margin-bottom: var(--space-8);
+    }
+
+    .section-header-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--color-divider);
+      margin-bottom: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .section-heading {
+      font-size: var(--text-h2);
+      line-height: var(--lh-h2);
+      letter-spacing: var(--ls-h2);
+      font-weight: 700;
+    }
+
+    .section-lead {
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-lead);
+      line-height: var(--lh-lead);
+      letter-spacing: var(--ls-lead);
+      color: var(--color-text-secondary);
+      max-width: var(--optimal-prose-width);
+      margin-bottom: var(--space-6);
+    }
+
+    .status-badge {
+      display: inline-block;
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-label);
+      line-height: var(--lh-label);
+      letter-spacing: var(--ls-label);
+      font-weight: 700;
+      padding: 4px 8px;
+      border: 1px solid var(--color-divider);
+      background-color: var(--color-surface-subtle);
+      color: var(--color-text-main);
+      white-space: nowrap;
+    }
+
+    .badge-pass {
+      background-color: var(--color-success-bg);
+      border-color: var(--color-hairline-success);
+      color: var(--color-success);
+    }
+
+    .badge-accent {
+      background-color: var(--color-brand-tint);
+      border-color: var(--color-hairline-accent);
+      color: var(--color-brand-accent);
+    }
+
+    .badge-warn {
+      background-color: var(--color-highlight-bg);
+      border-color: var(--color-hairline-highlight);
+      color: var(--color-highlight);
+    }
+
+    .badge-alert {
+      background-color: var(--color-alert-bg);
+      border-color: var(--color-hairline-alert);
+      color: var(--color-alert);
+    }
+
+    /* ==========================================================================
+       6. MODULE 2: 9-PHASE TIMELINE STEPPER
+       ========================================================================== */
+    .stepper-rail {
+      display: grid;
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+      border: 1px solid var(--color-divider);
+      background-color: var(--color-surface-subtle);
+      margin-bottom: var(--space-5);
+    }
+
+    .step-tab {
+      font-family: var(--font-ui-sans);
+      border: 0;
+      border-right: 1px solid var(--color-divider);
+      border-top: 3px solid transparent;
+      background-color: transparent;
+      padding: var(--space-3) var(--space-2);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .step-tab:last-child {
+      border-right: 0;
+    }
+
+    .step-tab:hover {
+      background-color: var(--color-surface);
+    }
+
+    .step-tab[aria-selected="true"] {
+      background-color: var(--color-surface);
+      border-top-color: var(--color-brand-primary);
+    }
+
+    .step-tab-code {
+      font-family: var(--font-mono);
+      font-size: var(--text-label);
+      font-weight: 700;
+      color: var(--color-brand-accent);
+    }
+
+    .step-tab-name {
+      font-size: var(--text-label);
+      line-height: 1.35;
+      font-weight: 700;
+      color: var(--color-brand-primary);
+      word-break: keep-all;
+    }
+
+    .step-tab-time {
+      font-size: var(--text-label);
+      color: var(--color-text-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .phase-detail-panel {
+      border: 1px solid var(--color-divider);
+      border-top: 3px solid var(--color-stroke-primary);
+      background-color: var(--color-surface);
+      padding: var(--space-6);
+    }
+
+    .phase-detail-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-divider);
+      margin-bottom: var(--space-5);
+      flex-wrap: wrap;
+    }
+
+    .phase-kicker {
+      font-family: var(--font-mono);
+      font-size: var(--text-label);
+      font-weight: 700;
+      color: var(--color-brand-accent);
+      margin-bottom: var(--space-1);
+    }
+
+    .phase-title {
+      font-size: var(--text-h3);
+      line-height: var(--lh-h3);
+      font-weight: 700;
+      color: var(--color-brand-primary);
+    }
+
+    .phase-nav-group {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .phase-meta-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+      padding: var(--space-4);
+      background-color: var(--color-surface-subtle);
+      margin-bottom: var(--space-5);
+      font-family: var(--font-ui-sans);
+    }
+
+    .phase-meta-strip > div {
+      min-width: 0;
+    }
+
+    .phase-detail-list {
+      list-style-type: disc;
+      padding-left: var(--space-5);
+      margin-bottom: var(--space-5);
+    }
+
+    .phase-detail-list li {
+      font-size: var(--text-body);
+      line-height: var(--lh-body);
+      max-width: var(--optimal-prose-width);
+      margin-bottom: var(--space-2);
+    }
+
+    .phase-outputs-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-2);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-divider);
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-label);
+    }
+
+    .phase-all-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+
+    .phase-all-list[hidden],
+    #timeline-focus-view[hidden] {
+      display: none;
+    }
+
+    /* ==========================================================================
+       7. MODULE 3: BLIND PEER CRITIQUE DASHBOARD + UNMASK
+       ========================================================================== */
+    .dashboard-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      background-color: var(--color-surface-subtle);
+      border-top: 2px solid var(--color-stroke-primary);
+      border-bottom: 1px solid var(--color-divider);
+      margin-bottom: var(--space-5);
+      font-family: var(--font-ui-sans);
+      flex-wrap: wrap;
+    }
+
+    .toolbar-facts {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: var(--text-ui);
+      color: var(--color-text-main);
+    }
+
+    .table-container {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-divider);
+      padding: 16px 20px;
+      margin-bottom: var(--space-6);
+      overflow-x: auto;
+    }
+
+    .table-editorial {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-ui);
+      line-height: var(--lh-ui);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .table-editorial th,
+    .table-editorial td {
+      padding: var(--space-3) var(--space-3);
+      border-bottom: 1px solid var(--color-divider);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .table-editorial th {
+      background-color: var(--color-surface-subtle);
+      color: var(--color-brand-primary);
+      font-weight: 700;
+      border-bottom: 2px solid var(--color-brand-primary);
+      white-space: nowrap;
+    }
+
+    .table-editorial tbody tr.is-row-selected {
+      background-color: var(--color-brand-tint);
+    }
+
+    .table-editorial tbody tr.is-row-spb {
+      background-color: var(--color-alert-bg);
+    }
+
+    .table-editorial tbody tr.is-row-clickable {
+      cursor: pointer;
+    }
+
+    .panel-selector-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border: 1px solid var(--color-divider);
+      background-color: var(--color-surface-subtle);
+      margin-bottom: var(--space-5);
+    }
+
+    .panel-tab-btn {
+      font-family: var(--font-ui-sans);
+      border: 0;
+      border-right: 1px solid var(--color-divider);
+      border-bottom: 3px solid transparent;
+      background-color: transparent;
+      padding: var(--space-3) var(--space-4);
+      text-align: left;
+      cursor: pointer;
+      min-width: 0;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .panel-tab-btn:last-child {
+      border-right: 0;
+    }
+
+    .panel-tab-btn[aria-selected="true"] {
+      background-color: var(--color-surface);
+      border-bottom-color: var(--color-brand-primary);
+    }
+
+    .panel-tab-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: 4px;
+    }
+
+    .panel-tab-title {
+      font-size: var(--text-ui);
+      font-weight: 700;
+      color: var(--color-brand-primary);
+    }
+
+    .panel-tab-score {
+      font-family: var(--font-mono);
+      font-size: var(--text-ui);
+      font-weight: 700;
+      color: var(--color-brand-accent);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .panel-tab-sub {
+      font-size: var(--text-label);
+      color: var(--color-text-secondary);
+    }
+
+    .panel-detail-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+      gap: var(--space-6);
+      border: 1px solid var(--color-divider);
+      padding: var(--space-6);
+      background-color: var(--color-surface);
+    }
+
+    .panel-detail-grid > div {
+      min-width: 0;
+    }
+
+    .subblock-title {
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-ui);
+      font-weight: 700;
+      color: var(--color-brand-primary);
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--color-divider);
+      margin-bottom: var(--space-4);
+    }
+
+    .rubric-bar-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      font-family: var(--font-ui-sans);
+    }
+
+    .rubric-row-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--space-2);
+      margin-bottom: 4px;
+      font-size: var(--text-label);
+    }
+
+    .rubric-name {
+      font-weight: 600;
+      color: var(--color-text-main);
+    }
+
+    .rubric-val {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--color-brand-primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .bar-track {
+      height: 10px;
+      background-color: var(--color-surface-subtle);
+      border: 1px solid var(--color-divider);
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background-color: var(--color-brand-accent);
+      transform-origin: left center;
+    }
+
+    .bar-fill.is-top {
+      background-color: var(--color-brand-primary);
+    }
+
+    .bar-fill.is-low {
+      background-color: var(--color-highlight);
+    }
+
+    .spb-alert-box {
+      margin-top: var(--space-4);
+      padding: var(--space-4);
+      background-color: var(--color-alert-bg);
+      border-top: 2px solid var(--color-stroke-alert);
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-ui);
+      line-height: var(--lh-ui);
+    }
+
+    .spb-alert-title {
+      font-weight: 700;
+      color: var(--color-alert);
+      margin-bottom: var(--space-1);
+    }
+
+    .critique-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .critique-item {
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-divider);
+      font-family: var(--font-ui-sans);
+    }
+
+    .critique-item:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .critique-reviewer {
+      font-size: var(--text-label);
+      font-weight: 700;
+      color: var(--color-brand-accent);
+      margin-bottom: var(--space-2);
+    }
+
+    .critique-line {
+      font-size: var(--text-ui);
+      line-height: var(--lh-ui);
+      color: var(--color-text-main);
+      margin-bottom: var(--space-2);
+      max-width: var(--optimal-prose-width);
+    }
+
+    .critique-line:last-child {
+      margin-bottom: 0;
+    }
+
+    .unmask-hint {
+      margin-top: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      background-color: var(--color-surface-subtle);
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-label);
+      color: var(--color-text-secondary);
+    }
+
+    /* ==========================================================================
+       8. MODULE 4: 5 EVOLUTION TURNING POINTS (BEFORE -> AFTER)
+       ========================================================================== */
+    .evolution-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .evo-item {
+      border: 1px solid var(--color-divider);
+      background-color: var(--color-surface);
+    }
+
+    .evo-trigger {
+      width: 100%;
+      border: 0;
+      background-color: var(--color-surface);
+      padding: var(--space-4) var(--space-5);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-ui-sans);
+      transition: background-color 0.15s ease;
+    }
+
+    .evo-trigger:hover {
+      background-color: var(--color-surface-subtle);
+    }
+
+    .evo-trigger[aria-expanded="true"] {
+      background-color: var(--color-surface-subtle);
+      border-bottom: 1px solid var(--color-divider);
+    }
+
+    .evo-trigger-left {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-3);
+      min-width: 0;
+    }
+
+    .evo-num {
+      font-family: var(--font-mono);
+      font-size: var(--text-label);
+      font-weight: 700;
+      color: var(--color-brand-accent);
+      white-space: nowrap;
+    }
+
+    .evo-title {
+      font-family: var(--font-editorial-serif);
+      font-size: var(--text-h3);
+      line-height: var(--lh-h3);
+      font-weight: 700;
+      color: var(--color-brand-primary);
+    }
+
+    .evo-trigger-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      flex-shrink: 0;
+    }
+
+    .evo-toggle-mark {
+      font-family: var(--font-mono);
+      font-size: var(--text-ui);
+      font-weight: 700;
+      color: var(--color-brand-primary);
+    }
+
+    .evo-body {
+      padding: var(--space-5);
+    }
+
+    .evo-body[hidden] {
+      display: none;
+    }
+
+    .before-after-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-5);
+      margin-bottom: var(--space-4);
+    }
+
+    .ba-col {
+      padding: var(--space-4);
+      background-color: var(--color-surface-subtle);
+      border-top: 2px solid var(--color-divider-strong);
+      min-width: 0;
+    }
+
+    .ba-col.ba-after {
+      background-color: var(--color-brand-tint);
+      border-top-color: var(--color-brand-primary);
+    }
+
+    .ba-label {
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-label);
+      font-weight: 700;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-2);
+    }
+
+    .ba-col.ba-after .ba-label {
+      color: var(--color-brand-primary);
+    }
+
+    .ba-col p {
+      font-size: var(--text-ui);
+      line-height: 1.70;
+      color: var(--color-text-main);
+    }
+
+    .evo-evidence-line {
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-label);
+      color: var(--color-text-secondary);
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--color-divider);
+    }
+
+    /* ==========================================================================
+       9. MODULE 5: 26 EVIDENCE PACK FILTER EXPLORER
+       ========================================================================== */
+    .filter-panel {
+      background-color: var(--color-surface-subtle);
+      border-top: 2px solid var(--color-stroke-primary);
+      border-bottom: 1px solid var(--color-divider);
+      padding: var(--space-5);
+      margin-bottom: var(--space-5);
+      font-family: var(--font-ui-sans);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .filter-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+
+    .filter-row-label {
+      font-size: var(--text-label);
+      font-weight: 700;
+      color: var(--color-brand-primary);
+      min-width: 64px;
+    }
+
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .filter-chip {
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-label);
+      font-weight: 600;
+      padding: 6px 10px;
+      border: 1px solid var(--color-divider-strong);
+      border-radius: var(--radius-control);
+      background-color: var(--color-surface);
+      color: var(--color-text-main);
+      cursor: pointer;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .filter-chip:hover {
+      border-color: var(--color-brand-accent);
+      color: var(--color-brand-primary);
+    }
+
+    .filter-chip[aria-pressed="true"] {
+      background-color: var(--color-brand-primary);
+      border-color: var(--color-brand-primary);
+      color: var(--color-text-inverse);
+    }
+
+    .search-bar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+
+    .search-field-wrap {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex: 1 1 280px;
+      min-width: 0;
+    }
+
+    .search-input {
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-ui);
+      height: var(--control-height);
+      width: 100%;
+      max-width: 420px;
+      padding: var(--space-2) var(--space-3);
+      border: 1px solid var(--color-divider-strong);
+      border-radius: var(--radius-control);
+      background-color: var(--color-surface);
+      color: var(--color-text-main);
+      transition: border-color 0.15s ease;
+    }
+
+    .search-input:focus {
+      outline: 2px solid var(--color-brand-accent);
+      border-color: transparent;
+    }
+
+    .result-counter {
+      font-size: var(--text-ui);
+      font-weight: 700;
+      color: var(--color-brand-primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .evidence-list {
+      border-top: 2px solid var(--color-brand-primary);
+      border-bottom: 1px solid var(--color-divider);
+    }
+
+    .evidence-row {
+      padding: var(--space-4) 0;
+      border-bottom: 1px solid var(--color-divider);
+    }
+
+    .evidence-row:last-child {
+      border-bottom: 0;
+    }
+
+    .evidence-row-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-3);
+      margin-bottom: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    .evidence-id-block {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    .evidence-id {
+      font-family: var(--font-mono);
+      font-size: var(--text-ui);
+      font-weight: 700;
+      color: var(--color-text-inverse);
+      background-color: var(--color-brand-primary);
+      padding: 4px 8px;
+    }
+
+    .evidence-year {
+      font-family: var(--font-mono);
+      font-size: var(--text-label);
+      color: var(--color-text-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .evidence-title {
+      font-family: var(--font-editorial-serif);
+      font-size: 16px;
+      line-height: 1.5;
+      font-weight: 700;
+      color: var(--color-brand-primary);
+      margin-bottom: 4px;
+    }
+
+    .evidence-meta {
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-ui);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-2);
+    }
+
+    .evidence-summary {
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-ui);
+      line-height: var(--lh-ui);
+      color: var(--color-text-main);
+      max-width: var(--optimal-prose-width);
+      margin-bottom: var(--space-2);
+    }
+
+    .evidence-detail-toggle {
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-label);
+      font-weight: 700;
+      color: var(--color-brand-accent);
+      background-color: transparent;
+      border: 0;
+      padding: 4px 0;
+      cursor: pointer;
+    }
+
+    .evidence-detail-toggle:hover {
+      color: var(--color-brand-primary);
+    }
+
+    .evidence-drawer {
+      margin-top: var(--space-3);
+      padding: var(--space-4);
+      background-color: var(--color-surface-subtle);
+      border-top: 1px solid var(--color-divider);
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-ui);
+      line-height: var(--lh-ui);
+    }
+
+    .evidence-drawer[hidden] {
+      display: none;
+    }
+
+    .evidence-excerpt {
+      margin-top: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background-color: var(--color-surface);
+      border-top: 2px solid var(--color-stroke-primary);
+      font-family: var(--font-editorial-serif);
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--color-text-main);
+      max-width: var(--optimal-prose-width);
+    }
+
+    .empty-state {
+      padding: var(--space-8) var(--space-4);
+      text-align: center;
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-ui);
+      color: var(--color-text-secondary);
+      background-color: var(--color-surface-subtle);
+    }
+
+    /* ==========================================================================
+       10. MODULE 6: 1ST & 2ND AUDIT TRACKER
+       ========================================================================== */
+    .audit-summary-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+      font-family: var(--font-ui-sans);
+    }
+
+    .audit-round-box {
+      padding: var(--space-4);
+      background-color: var(--color-surface-subtle);
+      border-top: 2px solid var(--color-stroke-primary);
+      min-width: 0;
+    }
+
+    .audit-round-box.is-pass {
+      background-color: var(--color-success-bg);
+      border-top-color: var(--color-stroke-success);
+    }
+
+    .audit-round-title {
+      font-size: var(--text-label);
+      font-weight: 700;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-1);
+    }
+
+    .audit-round-verdict {
+      font-size: var(--text-h3);
+      font-weight: 700;
+      color: var(--color-brand-primary);
+      margin-bottom: var(--space-1);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .audit-round-desc {
+      font-size: var(--text-label);
+      line-height: var(--lh-label);
+      color: var(--color-text-secondary);
+    }
+
+    .audit-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+      font-family: var(--font-ui-sans);
+    }
+
+    .audit-tab {
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-ui);
+      font-weight: 600;
+      height: var(--control-height);
+      padding: 0 var(--space-4);
+      border: 1px solid var(--color-divider-strong);
+      border-radius: var(--radius-control);
+      background-color: var(--color-surface);
+      color: var(--color-text-main);
+      cursor: pointer;
+      font-variant-numeric: tabular-nums;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .audit-tab:hover {
+      border-color: var(--color-brand-accent);
+      color: var(--color-brand-primary);
+    }
+
+    .audit-tab[aria-selected="true"] {
+      background-color: var(--color-brand-primary);
+      border-color: var(--color-brand-primary);
+      color: var(--color-text-inverse);
+    }
+
+    .audit-code-cell {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--color-brand-primary);
+      white-space: nowrap;
+    }
+
+    /* ==========================================================================
+       11. FOOTER & ARTIFACT MAP
+       ========================================================================== */
+    .doc-footer {
+      margin-top: var(--space-10);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-divider);
+      font-family: var(--font-ui-sans);
+      font-size: var(--text-label);
+      color: var(--color-text-secondary);
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       12. RESPONSIVE BREAKPOINTS (1024px, 880px, 768px, 480px)
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .editorial-wrapper {
+        margin: var(--space-6) var(--space-4) var(--space-10);
+        padding: var(--space-8);
+      }
+      .header-nav {
+        display: none;
+      }
+    }
+
+    @media (max-width: 880px) {
+      .doc-metadata-grid,
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .stepper-rail {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+      .step-tab {
+        border-bottom: 1px solid var(--color-divider);
+      }
+      .panel-selector-tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .panel-tab-btn {
+        border-bottom: 1px solid var(--color-divider);
+      }
+      .panel-detail-grid {
+        grid-template-columns: 1fr;
+      }
+      .audit-summary-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mck-masthead {
+        padding: var(--space-2) var(--space-4);
+        flex-wrap: wrap;
+        height: auto;
+      }
+      .editorial-wrapper {
+        margin: var(--space-3) var(--space-2) var(--space-8);
+        padding: var(--space-5);
+      }
+      .doc-title {
+        font-size: 26px;
+      }
+      .section-heading {
+        font-size: 20px;
+      }
+      .phase-meta-strip,
+      .before-after-grid {
+        grid-template-columns: 1fr;
+      }
+      .table-container {
+        padding: 12px 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .doc-metadata-grid,
+      .kpi-grid,
+      .panel-selector-tabs {
+        grid-template-columns: 1fr;
+      }
+      .stepper-rail {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .step-tab:nth-child(2n) {
+        border-right: 0;
+      }
+      .panel-tab-btn {
+        border-right: 0;
+      }
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .report-title-short {
+        font-size: 13px;
+      }
+      .evo-trigger {
+        padding: var(--space-3) var(--space-4);
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .evo-trigger-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .audit-tab {
+        height: auto;
+        min-height: 36px;
+        padding: 6px 12px;
+      }
+    }
+
+    @media print {
+      .mck-header-wrapper,
+      .phase-nav-group,
+      .filter-panel,
+      .audit-tabs,
+      .evidence-detail-toggle,
+      .unmask-hint {
+        display: none;
+      }
+      .editorial-wrapper {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        max-width: none;
+      }
+      .evo-body[hidden],
+      .evidence-drawer[hidden] {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="mck-header-wrapper">
+    <div class="mck-masthead">
+      <div class="brand-section">
+        <span class="mck-brand-badge">COUNCIL LOG</span>
+        <span class="report-title-short">율법과 복음의 순서 · 연구과정 로그</span>
+      </div>
+      <nav class="header-nav" aria-label="섹션 바로가기">
+        <a href="#sec-timeline">타임라인</a>
+        <a href="#sec-critique">블라인드 비평</a>
+        <a href="#sec-evolution">논지 진화</a>
+        <a href="#sec-evidence">26근거 팩</a>
+        <a href="#sec-audit">감사 추적</a>
+      </nav>
+      <div class="header-actions">
+        <div class="segmented-control" role="group" aria-label="열람 모드 전환">
+          <button type="button" id="btn-mode-focus" class="seg-btn is-active" aria-pressed="true">단계별 집중</button>
+          <button type="button" id="btn-mode-expand" class="seg-btn" aria-pressed="false">전체 펼치기</button>
+        </div>
+        <button type="button" id="btn-print" class="btn-action btn-primary">인쇄 보기</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="editorial-wrapper">
+    <!-- ======================================================================
+         MODULE 1: REPORT HEADER & 4-KPI STRIP
+         ====================================================================== -->
+    <header class="doc-hero" id="sec-overview">
+      <div class="doc-kicker">신학 심의 협업 스위트 · Phase 3 파일럿 Full Council 완주 기록</div>
+      <h1 class="doc-title">4중 근거 고정, 블라인드 교차 심의, 2회 독립 감사로 「율법과 복음의 순서」 아포리아를 검증한다</h1>
+      <p class="doc-subtitle">안건: "율법과 복음의 순서: 루터·고전 개혁주의의 '율법 → 복음' 구별과 바르트의 '복음 → 율법' 역전은 양립 가능한가, 해소 불가한 신학적 아포리아인가?" 연구 입수부터 Level 3 학술 원고 마감, 마크다운 서식 거버넌스 개선, Council v1.1 운용성 고도화 및 출판용 클린본(각주 191개) 산출까지 전 과정을 인터랙티브 로그로 정리한다.</p>
+
+      <div class="doc-metadata-grid">
+        <div>
+          <div class="meta-label">작업 패킷 ID</div>
+          <div class="meta-value">2026-11-27_council_law-and-gospel</div>
+        </div>
+        <div>
+          <div class="meta-label">수행 기간 (KST)</div>
+          <div class="meta-value">2026-11-27 21:30 - 11-28 12:18</div>
+        </div>
+        <div>
+          <div class="meta-label">총괄 의장 · 원칙</div>
+          <div class="meta-value">bot:maestro (중립 의장제 · v1.1)</div>
+        </div>
+        <div>
+          <div class="meta-label">최종 게이트 판정</div>
+          <div class="meta-value">PASS_WITH_NOTES · 각주 191/191 PASS</div>
+        </div>
+      </div>
+
+      <div class="executive-takeaway">
+        <h2 class="takeaway-title">핵심 요약 (Executive Summary)</h2>
+        <p>본 파일럿은 <strong>폐쇄형 인용 계약</strong>(팩 외 미확인 문헌 추정 금지)과 <strong>블라인드 교차 채점</strong>(자기 평가 제외 및 SPB 자동 탐지)을 적용해, 율법과 복음의 순서 논쟁을 단순 이분법에서 <strong>4층위 분석 틀</strong>(1a·1b·2·3·4층)과 <strong>비대칭적 3극 구도</strong>로 정련하였다. 1차 독립 감사 반려(치명 1 · 중대 14 · 경미 14)를 전수 교정해 2차 재감사 <code>PASS_WITH_NOTES</code>를 달성하였고, 후속 운용성 리뷰를 통해 <strong>Council v1.1 거버넌스 고도화</strong>와 이탤릭 없는 학술 각주 191개가 결합된 출판용 클린본(<code>03b_manuscript_clean.md</code>)까지 완결하였다.</p>
+      </div>
+
+      <div class="kpi-grid" aria-label="핵심 성과 지표">
+        <div class="kpi-cell">
+          <div class="kpi-label">전체 공정 완주</div>
+          <div class="kpi-number">9단계 완주</div>
+          <div class="kpi-sub tabular">Phase 0 - Phase 8 (v1.1 고도화 포함)</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="kpi-label">검증 문헌 근거</div>
+          <div class="kpi-number">26개 근거 ID</div>
+          <div class="kpi-sub tabular">실제 25종 문헌 · 환각 서지 0건</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="kpi-label">다관점 블라인드 심의</div>
+          <div class="kpi-number">4패널 이종 모델</div>
+          <div class="kpi-sub">Gemini 2 · Sonnet 5.5 · Opus 5.5</div>
+        </div>
+        <div class="kpi-cell kpi-alert-clear">
+          <div class="kpi-label">독립 감사 · 출판 클린본</div>
+          <div class="kpi-number">29/29 · 각주 191</div>
+          <div class="kpi-sub">PASS_WITH_NOTES · 각주 감사 PASS</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ======================================================================
+         MODULE 2: 9-PHASE TIMELINE STEPPER
+         ====================================================================== -->
+    <section class="doc-section" id="sec-timeline">
+      <div class="section-header-row">
+        <h2 class="section-heading">1. 9단계 연구 타임라인 스테퍼 (Phase 0 - Phase 8)</h2>
+        <span class="status-badge badge-accent">키보드 좌·우 화살표 전환 지원</span>
+      </div>
+      <p class="section-lead">각 단계를 클릭하거나 방향키(<code>ArrowLeft</code> / <code>ArrowRight</code>)로 이동해 시각, 투입 주체·모델, 핵심 작업, 생성 산출물, 게이트 판정을 확인한다. 상단 "전체 펼치기"를 선택하면 9단계 전체가 연속 목록으로 펼쳐진다.</p>
+
+      <div id="timeline-focus-view">
+        <div class="stepper-rail" role="tablist" aria-label="9단계 연구 타임라인" id="stepper-rail"></div>
+        <div class="phase-detail-panel" role="tabpanel" id="phase-detail-panel" aria-live="polite"></div>
+      </div>
+
+      <div id="timeline-expanded-view" class="phase-all-list" hidden></div>
+    </section>
+
+    <!-- ======================================================================
+         MODULE 3: BLIND PEER CRITIQUE DASHBOARD + UNMASK TOGGLE
+         ====================================================================== -->
+    <section class="doc-section" id="sec-critique">
+      <div class="section-header-row">
+        <h2 class="section-heading">2. 블라인드 교차 비평 대시보드 및 실명 공개 (Unmask)</h2>
+        <div class="segmented-control" role="group" aria-label="블라인드 익명 및 실명 공개 토글">
+          <button type="button" id="btn-mask-blind" class="seg-btn is-active" aria-pressed="true">익명 보기 (A-D)</button>
+          <button type="button" id="btn-mask-reveal" class="seg-btn" aria-pressed="false">실명 공개 (Unmask)</button>
+        </div>
+      </div>
+      <p class="section-lead"><code>blind-pack</code> 익명 셔플(<code id="shuffle-seed">blind-pack seed</code>) 이후 4개 패널이 자기 평가를 제외한 5대 루브릭 교차 채점을 수행하였다. 상단 토글로 익명 입장(<code>A</code>-<code>D</code>)과 실제 패널 ID·모델·동료 평가자 실명을 즉시 전환한다.</p>
+
+      <div class="dashboard-toolbar">
+        <div class="toolbar-facts">
+          <span><strong>평가 방식</strong>: 4인 교차 채점 (자기 평가 자동 제외)</span>
+          <span><strong>최고 합의</strong>: C · D 충돌 지수 SD <code>0.094</code></span>
+          <span class="status-badge badge-alert">SPB 경고 1건: B (+1.267)</span>
+        </div>
+        <div id="unmask-status-badge" class="status-badge badge-accent">현재 상태: 블라인드 익명 모드</div>
+      </div>
+
+      <div class="table-container">
+        <table class="table-editorial" aria-label="4개 익명 입장 집계 비교표">
+          <thead>
+            <tr>
+              <th>순위</th>
+              <th id="th-identity">익명 입장</th>
+              <th>Peer 평균</th>
+              <th>Borda</th>
+              <th>충돌 지수 (SD)</th>
+              <th>자기 평가 (제외)</th>
+              <th>SPB 편차</th>
+            </tr>
+          </thead>
+          <tbody id="critique-summary-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="panel-selector-tabs" role="tablist" aria-label="세부 루브릭 및 비평 입장 선택" id="panel-selector-tabs"></div>
+
+      <div class="panel-detail-grid" id="panel-detail-grid" role="tabpanel" aria-live="polite"></div>
+    </section>
+
+    <!-- ======================================================================
+         MODULE 4: 5 EVOLUTION TURNING POINTS (BEFORE -> AFTER)
+         ====================================================================== -->
+    <section class="doc-section" id="sec-evolution">
+      <div class="section-header-row">
+        <h2 class="section-heading">3. 연구 논지 5대 진화 전환점 (Before → After)</h2>
+        <button type="button" id="btn-evo-toggle-all" class="btn-action">5건 모두 펼치기</button>
+      </div>
+      <p class="section-lead">초기 안건과 1라운드 초안이 보충 원전(<code>E16-E21</code>)과 1·2차 독립 감사를 거치며 어떤 핵심 논지 전환을 이루었는지 Before-After 비교 카드로 대조한다.</p>
+
+      <div class="evolution-stack" id="evolution-stack"></div>
+    </section>
+
+    <!-- ======================================================================
+         MODULE 5: 26 EVIDENCE PACK FILTER EXPLORER
+         ====================================================================== -->
+    <section class="doc-section" id="sec-evidence">
+      <div class="section-header-row">
+        <h2 class="section-heading">4. 26개 근거 팩 필터 탐색기 (T01-T05 · E01-E21)</h2>
+        <span class="status-badge badge-pass">26개 ID · 25종 문헌 · 환각 0건</span>
+      </div>
+      <p class="section-lead">0단계 4중 근거 20건(<code>T01-T05</code>, <code>E01-E15</code>)과 선택지 A 보충 1차 원전 6건(<code>E16-E21</code>)을 출처 Pillar × 신학 진영 다중 필터와 실시간 검색으로 탐색한다. <code>E09</code>(1차 팩 요지)와 <code>E21</code>(전문 통합)은 동일 논문(Ebeling 1986)의 단계별 등록 ID이다.</p>
+
+      <div class="filter-panel">
+        <div class="filter-row">
+          <span class="filter-row-label">출처 Pillar</span>
+          <div class="chip-group" id="pillar-filter-group" role="group" aria-label="출처 Pillar 필터"></div>
+        </div>
+        <div class="filter-row">
+          <span class="filter-row-label">신학 진영</span>
+          <div class="chip-group" id="camp-filter-group" role="group" aria-label="신학 진영 필터"></div>
+        </div>
+        <div class="search-bar-row">
+          <div class="search-field-wrap">
+            <label for="evidence-search" class="sr-only">근거 팩 검색</label>
+            <input type="search" id="evidence-search" class="search-input" placeholder="ID, 저자, 제목, 핵심어 검색 (예: Ebeling, 갈 3:24, 제3용법)">
+            <button type="button" id="btn-evidence-reset" class="btn-action">필터 초기화</button>
+          </div>
+          <div class="result-counter" id="evidence-count">표시 중: 26 / 26건</div>
+        </div>
+      </div>
+
+      <div class="evidence-list" id="evidence-list"></div>
+    </section>
+
+    <!-- ======================================================================
+         MODULE 6: 1ST & 2ND INDEPENDENT AUDIT TRACKER
+         ====================================================================== -->
+    <section class="doc-section" id="sec-audit">
+      <div class="section-header-row">
+        <h2 class="section-heading">5. 1·2차 독립 감사 추적기 (1차 29건 전수 해소 + N1-N6)</h2>
+        <span class="status-badge badge-pass">최종 게이트 PASS_WITH_NOTES</span>
+      </div>
+      <p class="section-lead">이종 모델 독립 감사관(<code>Claude Opus 5.5 High</code>)이 수행한 1차 반려(<code>REVISE_REQUIRED</code>, 29건)와 2차 재감사(<code>PASS_WITH_NOTES</code>, 29/29 전수 해소 및 신규 경미 6건 <code>N1-N6</code>) 이력을 심각도 탭으로 즉시 필터링한다.</p>
+
+      <div class="audit-summary-strip">
+        <div class="audit-round-box">
+          <div class="audit-round-title">1차 독립 감사 (2026-11-28)</div>
+          <div class="audit-round-verdict">REVISE_REQUIRED</div>
+          <div class="audit-round-desc tabular">치명 1 (C1) · 중대 14 (M1-M14) · 경미 14 (m1-m14) · 환각 서지 0건</div>
+        </div>
+        <div class="audit-round-box is-pass">
+          <div class="audit-round-title">2차 독립 재감사 (2026-11-28)</div>
+          <div class="audit-round-verdict">PASS_WITH_NOTES</div>
+          <div class="audit-round-desc tabular">1차 29/29 전수 해소 · 신규 치명 0 · 중대 0 · 경미 6 (N1-N6)</div>
+        </div>
+        <div class="audit-round-box is-pass">
+          <div class="audit-round-title">최종 문장 다듬기 및 마감</div>
+          <div class="audit-round-verdict">301줄 · 46.8KB</div>
+          <div class="audit-round-desc">N1-N6 6줄 정밀 교정 · 육안 대조 0결함 · 서식 린트 PASS</div>
+        </div>
+      </div>
+
+      <div class="audit-tabs" role="tablist" aria-label="감사 심각도 필터" id="audit-tabs"></div>
+
+      <div class="table-container">
+        <table class="table-editorial" aria-label="독립 감사 결함 및 해소 추적표">
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>구분</th>
+              <th>원고 위치</th>
+              <th>지적 핵심</th>
+              <th>실제 해소 및 교정 내역</th>
+              <th>상태</th>
+            </tr>
+          </thead>
+          <tbody id="audit-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         ARTIFACT MAP (LOGICAL FILENAMES ONLY - ZERO LOCAL PATHS)
+         ====================================================================== -->
+    <section class="doc-section" id="sec-artifacts">
+      <div class="section-header-row">
+        <h2 class="section-heading">6. 패킷 산출물 구성 맵 및 부수 성과</h2>
+        <span class="status-badge badge-accent">단일 패킷 추적 체계</span>
+      </div>
+      <div class="table-container">
+        <table class="table-editorial" aria-label="작업 패킷 산출물 구성표">
+          <thead>
+            <tr>
+              <th>산출물 파일명</th>
+              <th>단계</th>
+              <th>규격 및 분량</th>
+              <th>게이트 검증</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>03b_manuscript_clean.md</code></td>
+              <td>Phase 8</td>
+              <td class="tabular">489줄 · 각주 191개 (출판·발제용 탈스캐폴딩 클린본)</td>
+              <td><span class="status-badge badge-pass">각주 191/191 · 서식 PASS</span></td>
+            </tr>
+            <tr>
+              <td><code>03_manuscript_draft.md</code></td>
+              <td>Phase 6</td>
+              <td class="tabular">301줄 · 46.8KB (감사 이력 보존용 원본 초안)</td>
+              <td><span class="status-badge badge-pass">PASS_WITH_NOTES · 서식 PASS</span></td>
+            </tr>
+            <tr>
+              <td><code>04_audit_report.md</code> / <code>04b_audit_report_round2.md</code></td>
+              <td>Phase 6</td>
+              <td>1차 반려 29건 · 2차 전수 해소 및 N1-N6 보고서</td>
+              <td><span class="status-badge badge-pass">29/29 해소 완료</span></td>
+            </tr>
+            <tr>
+              <td><code>council_verdict.md</code> / <code>tally_summary.json</code></td>
+              <td>Phase 3-4</td>
+              <td>6항목 메타 심의록 · 4패널 기계 집계 JSON</td>
+              <td><span class="status-badge badge-pass">lint-verdict PASS</span></td>
+            </tr>
+            <tr>
+              <td><code>01_evidence_pack.json</code> / <code>01b_counter_evidence_pack.json</code></td>
+              <td>Phase 1 · 5</td>
+              <td class="tabular">26개 근거 ID (T01-T05, E01-E21 · 25종 문헌)</td>
+              <td><span class="status-badge badge-pass">check-citations PASS</span></td>
+            </tr>
+            <tr>
+              <td><code>05_research_process_log.md</code> / <code>05_research_process_log.html</code></td>
+              <td>Phase 7-8</td>
+              <td>연구과정 마크다운 로그 및 단독 인터랙티브 HTML</td>
+              <td><span class="status-badge badge-pass">서식 · HTML 검증</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="doc-footer">
+      <span>작업 패킷: 2026-11-27_council_law-and-gospel · 총괄 의장: bot:maestro</span>
+      <span>오프라인 단독 에디토리얼 HTML (외부 CDN 및 로컬 경로 노출 없음)</span>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /* ======================================================================
+         DATA 1: 8-PHASE TIMELINE (from 05_research_process_log.md)
+         ====================================================================== */
+      const PHASES = [
+        {
+          id: "P0",
+          code: "Phase 0",
+          shortName: "입수·소집",
+          title: "Phase 0. 연구 주제 입수 및 거버넌스 설계",
+          time: "11-27 21:30 - 21:35",
+          actors: "소유자 → maestro",
+          gate: "lint-brief PASS",
+          gateType: "pass",
+          summary: "안건과 심의 헌장을 확정하고, 항목(item 31)을 등록한 뒤 이종 모델 쿼터 폴백 조합을 결정하였다.",
+          details: [
+            "안건 원문 확정: 루터·고전 개혁주의의 '율법 → 복음' 구별과 바르트의 '복음 → 율법' 역전이 양립 가능한지, 해소 불가한 신학적 아포리아인지 검증한다.",
+            "5대 거버넌스 원칙 고정: 중립 의장제(maestro 직접 집필 금지), 0단계 4중 근거 선고정, 폐쇄형 인용 계약, 아포리아 조기 봉합 금지, 임시 워커 완료 같은 턴 정리.",
+            "이종 모델 폴백: codex 주간 사용률 94%(임계치 85% 초과)를 확인하여 Slot 3(Claude Sonnet 5.5 High)과 Slot 4(Claude Opus 5.5 High) 조합을 확정하였다."
+          ],
+          outputs: ["00_pilot_brief.md", "00_charter.md", "item 31 등록"]
+        },
+        {
+          id: "P1",
+          code: "Phase 1",
+          shortName: "0단계 근거",
+          title: "Phase 1. 0단계 4중 학술 근거 고정 (20건)",
+          time: "11-27 21:35 - 21:39",
+          actors: "archivist (Ego Lite 1군)",
+          gate: "check-citations PASS",
+          gateType: "pass",
+          summary: "TRE 개념사, 독일어권 저널(Crossref), Semantic Scholar, Google Scholar 4개 축에서 핵심 근거 20건을 선고정하였다.",
+          details: [
+            "Pillar 0 (TRE 개념사 5건, T01-T05): 대용량 전체 덤프 없이 안건 직결 절만 정밀 발췌하였다(Gesetz und Evangelium, Luther, Calvin, Barth).",
+            "Pillar 1 (독일어권 저널 3건, E01-E03): IxTheo 15초 타임아웃 발생 시 Crossref 신학 저널 검색(NZSTh: Göckeritz, Thaidigsmann, Schloemann)으로 보완하였다.",
+            "Pillar 2 (Semantic Scholar 5건, E04-E08): EN+DE 바이링구얼 쿼리로 Zachman, van Wyk, Couenhoven, Klappert, Ludji를 확보하였다.",
+            "Pillar 3 (Google Scholar Semantic 7건, E09-E15): Ebeling, Gestrich, Nonnenmacher, Linebaugh, Hesselink, Woodard-Lehman, 이형기 서지를 확보하였다."
+          ],
+          outputs: ["01_evidence_pack.json", "T01-T05 (5건)", "E01-E15 (15건)"]
+        },
+        {
+          id: "P2",
+          code: "Phase 2",
+          shortName: "4패널 발제",
+          title: "Phase 2. 1단계 4패널 독립 병렬 발제",
+          time: "11-27 21:41 - 21:48",
+          actors: "exegete · theo-lead · Sonnet 5.5 · Opus 5.5",
+          gate: "미등록 인용 0건",
+          gateType: "pass",
+          summary: "폐쇄형 인용 계약 하에 4개 패널이 서로의 글을 보지 못한 상태에서 총 115KB 분량의 독립 발제문 4건을 병렬 작성하였다.",
+          details: [
+            "p1_exegete (익명 A, Gemini 버킷): 히브리어 תּוֹרָה·출 20:2, 헬라어 νόμος·롬 3:20-31, 갈 3:17-24 원어 통사 분석과 바르트 KD 원문을 결합해 정경 내부의 이중 벡터를 제시하였다.",
+            "p2_reformed (익명 B, Gemini 버킷): 루터의 이중 용법과 칼빈의 제3용법·이중 은혜의 구조적 차이를 변증하며 성령에 의한 용도 전환 논지를 제시하였다.",
+            "p3_barthian (익명 D, Claude Sonnet 5.5 High): 순서 논쟁을 인식의 근거(Erkenntnisgrund) 대 파생된 경험 질서로 재정식화하고 바르트 내부 4대 자가 한계를 개방하였다.",
+            "p4_redteam (익명 C, Claude Opus 5.5 High): 순서를 4개 층위로 분해하고 상보론·아포리아론 양쪽에 4단계 스트레스 테스트(S1-S4)를 적용해 거울상 통제 장치 대리전 테제를 발굴하였다."
+          ],
+          outputs: ["stage1_raw/*.md (4건 · 115KB)"]
+        },
+        {
+          id: "P3",
+          code: "Phase 3",
+          shortName: "익명 비평",
+          title: "Phase 3. 2단계 블라인드 교차 비평 및 기계 집계",
+          time: "11-27 21:48 - 21:54",
+          actors: "maestro(도구) + 4패널",
+          gate: "SPB 경고 1건 탐지",
+          gateType: "warn",
+          summary: "작성자 메타데이터를 제거해 익명 셔플(A-D)한 뒤 5대 루브릭 교차 채점과 기계 집계를 실행하여 자기 선호 편향(SPB)을 자동 탐지하였다.",
+          details: [
+            "익명화 셔플: blind-pack(seed 878434)으로 4개 발제문을 response_A - response_D로 재배치하였다.",
+            "기계 집계 순위(자기 평가 제외): 1위 C(4.533, SD 0.094) → 2위 A(4.267, SD 0.446) → 3위 D(3.667, SD 0.094) → 4위 B(2.933, SD 0.283).",
+            "SPB 자동 경보: 익명 입장 B(p2_reformed)에서 자기 평가 4.200 대 동료 평균 2.933(격차 +1.267)의 자기 선호 편향이 탐지되었으며, 동료 3인 모두 아포리아 조기 봉합과 팩 밖 신조 도입을 공통 지적하였다."
+          ],
+          outputs: ["stage2_blind/*.md (4건)", "stage2_critiques/*.json (4건)", "tally_summary.json"]
+        },
+        {
+          id: "P4",
+          code: "Phase 4",
+          shortName: "메타 심의록",
+          title: "Phase 4. 3단계 메타 심의록 종합 및 후속 선택지 상신",
+          time: "11-27 21:54 - 21:58",
+          actors: "maestro (중립 의장)",
+          gate: "lint-verdict PASS",
+          gateType: "pass",
+          summary: "의장이 바르트 KD 원문을 직접 실사해 100% 실존을 확인하고, 6항목 메타 심의록을 종합한 뒤 임시 워커 전원을 정리하였다.",
+          details: [
+            "KD 원문 직접 실사: p1_exegete가 인용한 KD II/2 §36.1(S. 567), §37.2(S. 635), §37.3(S. 653·655)의 디스크 원문 실존을 100% 검증하였다.",
+            "6항목 심의록 종합: 합의 영역, 보존된 5대 아포리아, 소수의견 및 반론을 구조화해 lint-verdict 오류 0 · 경고 0으로 통과하였다.",
+            "자원 정리 및 의사결정 상신: 임시 워커 전원을 worker-release로 정리하고 소유자에게 4개 후속 선택지를 제시하였다."
+          ],
+          outputs: ["council_verdict.md", "임시 워커 전원 정리"]
+        },
+        {
+          id: "P5",
+          code: "Phase 5",
+          shortName: "보충 원전",
+          title: "Phase 5. 선택지 A 보충 1차 원전 6건 및 에벨링 전문 통합",
+          time: "11-28 07:52 - 08:18",
+          actors: "소유자 + archivist",
+          gate: "26개 ID · 25종 완비",
+          gateType: "pass",
+          summary: "소유자가 선택한 A안에 따라 1라운드 4패널 공통 요청 1차 원전 6건(E16-E21)과 에벨링 1986 전문 PDF(pp. 33-75)를 보충 팩으로 통합하였다.",
+          details: [
+            "바르트 1차 원전(E16, E17): KD II/2(§36.1·37.2·37.3) 및 KD IV/1 §59.2(우리 대신 심판받으시는 재판관, für uns, ohne uns), 1935 강연 한역 OCR + Peters HST 2 대조를 완료하였다.",
+            "종교개혁 1차 원전(E18, E19, E20): 1577년 일치신조 제6조(BSLK + Wenz Bd. 2), 칼빈 1559 기독교 강요(II.7.12·III.11.1), 루터 1535 갈라디아서 대주석(WA 40/I, 207-208)을 정본 대조하였다.",
+            "에벨링 1986 전문(E21): 소유자 제공 3장 발췌(pp. 66-75)에 이어 전문 PDF(pp. 33-75)를 통합하여 바르트 3부작 역전 프로그램, 제3용법 양측 불가, 임종 침상 테스트, 행위자 대 순수 수령자 인간론을 완비하였다."
+          ],
+          outputs: ["01b_counter_evidence_pack.json", "01b_source_brief.md", "E16-E21 (6건)"]
+        },
+        {
+          id: "P6",
+          code: "Phase 6",
+          shortName: "집필·2회 감사",
+          title: "Phase 6. Level 3 학술 원고 집필 및 2회 적대적 독립 감사",
+          time: "11-28 08:21 - 09:11",
+          actors: "theo-lead ↔ Opus 5.5 감사관",
+          gate: "PASS_WITH_NOTES",
+          gateType: "pass",
+          summary: "초안(288줄)이 1차 감사에서 29건 반려(REVISE_REQUIRED)된 뒤 전수 수정(301줄)을 거쳐 2차 PASS_WITH_NOTES와 N1-N6 최종 다듬기를 완료하였다.",
+          details: [
+            "초안 집필(288줄 · 40.7KB): 심의록과 26개 ID를 통합하고 1라운드 SPB 교훈, ἐπίγνωσις 절제 주해, KD IV/1 §59.2 바르트 최강형을 반영하였다.",
+            "1차 독립 감사(REVISE_REQUIRED): 치명 1(C1 갈 3:24 통사 분수령 자기모순), 중대 14(M1-M14), 경미 14(m1-m14), 환각 서지 0건을 적발하였다.",
+            "1차 전수 수정(301줄) 및 2차 재감사(PASS_WITH_NOTES): 1차 29/29 전수 해소, 신규 치명·중대 0건, 신규 경미 6건(N1-N6) 판정을 받았다.",
+            "최종 다듬기(301줄 · 46.8KB): N1-N6 6줄만 정밀 교정하고 maestro 육안 대조 0결함으로 item 35를 마감하였다."
+          ],
+          outputs: ["03_manuscript_draft.md", "04_audit_report.md", "04b_audit_report_round2.md"]
+        },
+        {
+          id: "P7",
+          code: "Phase 7",
+          shortName: "서식 거버넌스",
+          title: "Phase 7. 부수 성과: 마크다운 취소선(U+007E) 근본 방지 3중 아키텍처",
+          time: "11-28 09:15 - 09:36",
+          actors: "maestro (소유자 승인)",
+          gate: "item 36 Done",
+          gateType: "pass",
+          summary: "본문 내 단일 ASCII 물결표(U+007E) 2회 이상 출현 시 발생하는 GFM 취소선 오파싱 원인을 규명하고 팀 공용 서식 린터를 신설·전파하였다.",
+          details: [
+            "원인 규명: 파일럿 문서 3종에서 단일 물결표(U+007E) 41건(원고 31건, 심의록 7건, 요약 3건)이 GFM singleTilde 규칙으로 취소선 오파싱됨을 확인하였다.",
+            "3중 방지 아키텍처: SHARED_FACTS §8 개정(ASCII 물결표 전면 금지 · 하이픈 통일), lint-md-format.py 신설, 기존 심의 도구 통합을 완료하였다.",
+            "전파 완료: 파일럿 문서 3종을 즉시 교정하고 10개 산하 봇에 표준 서식 규약을 전파하였다."
+          ],
+          outputs: ["SHARED_FACTS.md §8 개정", "lint-md-format.py 신설", "10봇 규약 전파"]
+        },
+        {
+          id: "P8",
+          code: "Phase 8",
+          shortName: "v1.1 · 클린본",
+          title: "Phase 8. 운용성 리뷰, Council v1.1 고도화 및 출판용 클린본 산출",
+          time: "11-28 11:42 - 12:18",
+          actors: "소유자 + 아키텍처 리뷰 · 결정론적 도구 v1.1",
+          gate: "15/15 서식 · 각주 191/191 PASS",
+          gateType: "pass",
+          summary: "파일럿 실사 리뷰에서 도출한 6대 운용 병목을 Council v1.1 도구·렌즈·프로토콜·4봇 헌법에 일괄 반영하고, 공정 스캐폴딩을 제거한 출판용 클린본(03b_manuscript_clean.md)을 완성하였다.",
+          details: [
+            "결정론적 도구 v1.1: council-tools.py에 check-pack(중복 DOI·URL, evidence_tier, 미완결 쪽수 탐지), check-citations --target(문장 단위 abstract_only 과잉 귀속 경보), blind-pack 경로 마스킹, export-clean(이탤릭 없는 1:1 각주 컴파일러) 및 lint-brief.py --template-council 슬림 지시서를 추가하였다.",
+            "학파 렌즈 및 거버넌스 개정: 루터교 전담 렌즈(confessional-lutheran.md) 신설 및 7종 렌즈 폐쇄형 인용·자가 한계 개방 대칭화, PROTOCOL.md v1.1(3단 운용 티어, Pillar 0.5 로컬 원전 선스캔, theo-lead 학파 대변 제외·중립 집필 분리, 3버킷 교차 감사)과 핵심 4봇 SOUL.md 동기화를 완료하였다.",
+            "출판용 클린본 실증: 원본 03_manuscript_draft.md를 무수정 보존한 채 공정 메타언어를 제거하고 191개 순차 학술 각주를 결합한 03b_manuscript_clean.md를 산출해 lint-md-format.py(15/15 PASS)와 각주 1:1 구조 감사(191/191 PASS)를 통과하였다."
+          ],
+          outputs: ["03b_manuscript_clean.md", "council-tools.py v1.1", "PROTOCOL.md v1.1", "confessional-lutheran.md"]
+        }
+      ];
+
+      /* ======================================================================
+         DATA 2: BLIND PEER CRITIQUE DASHBOARD (from tally_summary.json)
+         Polite forms normalized to plain style; tildes normalized to hyphens.
+         ====================================================================== */
+      const RUBRIC_LABELS = [
+        { key: "primary_text_fidelity", label: "1차 원전 충실도" },
+        { key: "aporia_integrity", label: "아포리아 보존력" },
+        { key: "argumentative_rigor", label: "논증 완결성" },
+        { key: "historical_dogmatic_depth", label: "교의사적 깊이" },
+        { key: "distinctive_insight", label: "독창적 통찰" }
+      ];
+
+      const PANEL_META = {
+        p4_redteam: {
+          role: "적대적 메타비평 · 구조 감사",
+          model: "Claude Opus 5.5 High",
+          bucket: "Slot 4 (이종 폴백)"
+        },
+        p1_exegete: {
+          role: "성서 원어 주해 · KD 실사",
+          model: "Gemini 버킷 (exegete)",
+          bucket: "Slot 1"
+        },
+        p3_barthian: {
+          role: "바르트 변증법적 신학",
+          model: "Claude Sonnet 5.5 High",
+          bucket: "Slot 3 (이종 폴백)"
+        },
+        p2_reformed: {
+          role: "고전 개혁주의 · 언약신학",
+          model: "Gemini 버킷 (theo-lead)",
+          bucket: "Slot 2"
+        }
+      };
+
+      const STANDINGS = [
+        {
+          rank: 1,
+          label: "C",
+          panel_id: "p4_redteam",
+          peer_borda_points: 8.0,
+          peer_overall_mean: 4.533,
+          conflict_index_stddev: 0.094,
+          self_mean_excluded: 4.200,
+          self_preference_warning: false,
+          rubric_means: {
+            primary_text_fidelity: 4.000,
+            aporia_integrity: 5.000,
+            argumentative_rigor: 5.000,
+            historical_dogmatic_depth: 3.667,
+            distinctive_insight: 5.000
+          },
+          rubric_stddevs: {
+            primary_text_fidelity: 0.000,
+            aporia_integrity: 0.000,
+            argumentative_rigor: 0.000,
+            historical_dogmatic_depth: 0.471,
+            distinctive_insight: 0.000
+          },
+          peer_notes: [
+            {
+              reviewer: "p1_exegete",
+              masked_reviewer: "동료 평가자 1",
+              key_strength: "네 개 층위 분해, 양방향 스트레스 테스트, 반증 가능한 해소 조건, 그리고 창조질서 대 정치적 유비의 거울상 대리전 진단을 통해 심의 전체의 분석 프레임워크를 끌어올렸다.",
+              key_weakness: "성경 원어 주해와 1차 신학 원전(KD II/2, 루터, 칼빈)의 직접 대조가 전무하여 바르트의 허락으로서의 계명이나 칼빈 제3용법의 구조적 고유성이 요약 수준에 머물렀다."
+            },
+            {
+              reviewer: "p2_reformed",
+              masked_reviewer: "동료 평가자 2",
+              key_strength: "4층위 분해, 상보론 4단계 스트레스 테스트, 반증 가능한 아포리아 해소 조건, 그리고 창조질서 오용 대 정치적 유비 오용의 거울상 통제 장치 테제로 심의의 분석 수준을 한 단계 끌어올렸다.",
+              key_weakness: "칼빈의 성령론적 제3용법을 바르트 역전의 선행 형태로 지나치게 근접시키고, 고전 개혁주의의 언약신학, 일반계시, 객관적 속죄 및 성경 원어 주해의 교의사적 두께를 놓쳤다."
+            },
+            {
+              reviewer: "p3_barthian",
+              masked_reviewer: "동료 평가자 3",
+              key_strength: "네 층위 분해, 상보론 스트레스 테스트, 해소 조건 명시, 3극 구도 재설정으로 안건의 양자택일 자체를 재구성했다.",
+              key_weakness: "1차 문헌 접촉이 근거 팩 요지에 머물러 바르트 원문 확인이 모두 보충 요청으로 남았고, 존재와 인식의 질서 분리를 바르트가 거부한다는 반론에 충분히 응답하지 않는다."
+            }
+          ]
+        },
+        {
+          rank: 2,
+          label: "A",
+          panel_id: "p1_exegete",
+          peer_borda_points: 8.0,
+          peer_overall_mean: 4.267,
+          conflict_index_stddev: 0.446,
+          self_mean_excluded: 4.600,
+          self_preference_warning: false,
+          rubric_means: {
+            primary_text_fidelity: 4.000,
+            aporia_integrity: 4.333,
+            argumentative_rigor: 4.000,
+            historical_dogmatic_depth: 4.667,
+            distinctive_insight: 4.333
+          },
+          rubric_stddevs: {
+            primary_text_fidelity: 0.816,
+            aporia_integrity: 0.471,
+            argumentative_rigor: 0.000,
+            historical_dogmatic_depth: 0.471,
+            distinctive_insight: 0.471
+          },
+          peer_notes: [
+            {
+              reviewer: "p2_reformed",
+              masked_reviewer: "동료 평가자 1",
+              key_strength: "출애굽기 20장 2절, 로마서 3장 20-31절, 갈라디아서 3장 24절의 원어 통사 분석과 확인된 1차 원전 대조를 통해 율법과 복음의 아포리아를 정경 자체의 긴장에 단단히 정박시켰다.",
+              key_weakness: "고전 개혁주의의 행위언약·은혜언약 구조, 은혜와 자연의 회복 관계, 객관적 속죄의 법정적 토대 및 개혁 정통주의 내부 긴장에 대한 교의사적 해명이 상대적으로 얇다."
+            },
+            {
+              reviewer: "p3_barthian",
+              masked_reviewer: "동료 평가자 2",
+              key_strength: "갈 3:24의 εἰς Χριστόν 해석 갈림과 KD II/2 인용으로 순서 논쟁의 주해적 분수령을 본문 수준에서 특정했다.",
+              key_weakness: "근거 팩 밖 KD 인용의 대조 검증이 아직 없고 바르트 체계 내부의 긴장은 다루지 않아, 아포리아가 주로 외부 대립으로만 서술된다."
+            },
+            {
+              reviewer: "p4_redteam",
+              masked_reviewer: "동료 평가자 3",
+              key_strength: "갈 3:24 εἰς Χριστόν의 목적적 독법과 시간적 독법을 두 전통의 통사적 분수령으로 지목하고, 바르트의 인식 질서 명제(T05)로 분업형 상보론을 정면 반박했다.",
+              key_weakness: "결정적 논거인 KD 직접 인용과 갈 3:24 바르트 주해가 근거 팩 밖에 있어 검증되지 않았고, 부분 양립 테제와 4.1의 축 분업 반박이 서로 충돌한다."
+            }
+          ]
+        },
+        {
+          rank: 3,
+          label: "D",
+          panel_id: "p3_barthian",
+          peer_borda_points: 5.0,
+          peer_overall_mean: 3.667,
+          conflict_index_stddev: 0.094,
+          self_mean_excluded: 4.200,
+          self_preference_warning: false,
+          rubric_means: {
+            primary_text_fidelity: 3.333,
+            aporia_integrity: 4.000,
+            argumentative_rigor: 4.000,
+            historical_dogmatic_depth: 3.000,
+            distinctive_insight: 4.000
+          },
+          rubric_stddevs: {
+            primary_text_fidelity: 0.471,
+            aporia_integrity: 0.000,
+            argumentative_rigor: 0.000,
+            historical_dogmatic_depth: 0.000,
+            distinctive_insight: 0.000
+          },
+          peer_notes: [
+            {
+              reviewer: "p1_exegete",
+              masked_reviewer: "동료 평가자 1",
+              key_strength: "순서 논쟁을 인식의 근거 대 파생된 경험 질서로 재정식화하고, 바르트 체계 내부의 4대 자가 한계와 루터 오독 가능성까지 정직하게 드러낸 자기 비판적 균형이 탁월하다.",
+              key_weakness: "성경 원어 주해와 바르트 KD 1차 원전 대조가 부재하며, 근거 팩의 [E03], [E07], [E12], [E15] 등 주요 비교 문헌을 누락해 고전 개혁주의 축의 교의사적 깊이가 얕다."
+            },
+            {
+              reviewer: "p2_reformed",
+              masked_reviewer: "동료 평가자 2",
+              key_strength: "바르트 체계 내부의 네 가지 자가 한계를 솔직하게 해부하고, 루터와 바르트의 갈림을 긴장의 유무가 아닌 지위와 포함 관계의 설명력 문제로 정밀하게 포착했다.",
+              key_weakness: "공유 근거 팩의 주요 비교 문헌([E07], [E12], [E03], [E15])과 성경 원어 및 1차 원전 인용이 누락되었고, 창조 질서, 언약 구조, 객관적 속죄의 교의사적 경계를 인식론 문제로 과도하게 축소했다."
+            },
+            {
+              reviewer: "p4_redteam",
+              masked_reviewer: "동료 평가자 3",
+              key_strength: "바르트 옹호자이면서도 죽음-생명 양보의 지위, 복음의 율법화, 루터 오독 가능성을 자기 체계의 약점으로 공개하고 아포리아를 순서 아래의 인식 근거 층위로 정확히 내렸다.",
+              key_weakness: "근거 팩에 없는 바르트 귀속 두 곳이 있고, 율법 선행 인식의 '예 또는 아니오' 이분법이 자신이 활용한 T03의 중간 지대와 모순된다."
+            }
+          ]
+        },
+        {
+          rank: 4,
+          label: "B",
+          panel_id: "p2_reformed",
+          peer_borda_points: 3.0,
+          peer_overall_mean: 2.933,
+          conflict_index_stddev: 0.283,
+          self_mean_excluded: 4.200,
+          self_preference_warning: true,
+          spb_delta: 1.267,
+          rubric_means: {
+            primary_text_fidelity: 2.333,
+            aporia_integrity: 3.000,
+            argumentative_rigor: 3.000,
+            historical_dogmatic_depth: 3.667,
+            distinctive_insight: 2.667
+          },
+          rubric_stddevs: {
+            primary_text_fidelity: 0.471,
+            aporia_integrity: 0.000,
+            argumentative_rigor: 0.000,
+            historical_dogmatic_depth: 0.471,
+            distinctive_insight: 0.471
+          },
+          peer_notes: [
+            {
+              reviewer: "p1_exegete",
+              masked_reviewer: "동료 평가자 1",
+              key_strength: "루터와 칼빈의 구조적 차이를 넘어 후기 개혁 정통주의의 언약 체계, 객관적 속죄의 법정적 토대, 목회와 설교 현장의 실천적 함의를 일관되게 연결하였다.",
+              key_weakness: "성경 원어 주해와 1차 원전 검증 없이 근거 팩 외부의 개혁파 신앙고백 및 언약 도식을 도입하였고, 결론부에서 고전 개혁주의 3단 구도로 아포리아를 사실상 흡수하여 비대칭적 논증을 보였다."
+            },
+            {
+              reviewer: "p3_barthian",
+              masked_reviewer: "동료 평가자 2",
+              key_strength: "루터와 칼빈의 용법 위계와 칭의 성화 배열 차이를 분리해 보여 주어 단일 종교개혁 노선이라는 평탄화를 막는다.",
+              key_weakness: "개혁주의 3단 질서를 최선의 해법으로 제시해 아포리아를 조기 봉합하고, 근거 팩 밖 신조 인용과 문헌 귀속 오류가 많으며 바르트 화해론에 대한 비판이 약한 형태다."
+            },
+            {
+              reviewer: "p4_redteam",
+              masked_reviewer: "동료 평가자 3",
+              key_strength: "칼빈의 제3용법은 성령에 의한 율법 용도의 전환이지 율법 본질의 재정의가 아니라는 구별로 칼빈과 바르트의 단절선을 정확히 그었다.",
+              key_weakness: "고백 문서와 언약신학 논거가 근거 팩 밖에서 무표기로 들어오고, 객관적 속죄 비판은 바르트의 대속론을 다루지 않은 허수아비이며, 목회 황금률이 스스로 선언한 아포리아를 봉합한다."
+            }
+          ]
+        }
+      ];
+
+      /* ======================================================================
+         DATA 3: 5 EVOLUTION TURNING POINTS (Before -> After)
+         ====================================================================== */
+      const EVOLUTIONS = [
+        {
+          id: "evo-1",
+          num: "전환점 01",
+          title: "이분법의 해체 → 4층위 (1a·1b·2·3·4층) 분석 틀 확립",
+          trigger: "Phase 2 (p4_redteam) + Phase 6 (M11 해소)",
+          before: "초기 질문은 '율법 → 복음'과 '복음 → 율법'이 양립 가능한지 아닌지를 단일 평면의 양자택일로 물었다. 1차 원고 초안에서도 1층을 경험·선포(ordo experiendi / praedicandi)로 합병해 '제한적 양립'으로 묶어 에벨링의 임종 침상 테스트와 충돌하였다.",
+          after: "순서를 1a 실존 경험(제한적 수렴), 1b 선포 성격(임종 침상 테스트로 분기), 2층 인식 근거(내재적 교육 능력 공통 부정 대 교사 기능·선행 고발 분기), 3층 성화 윤리(교리 기준 3분류), 4층 존재·신론(환원 불가 아포리아)으로 정교하게 분해하고, 4.1절과 결론 전 절에 일관 반영하였다.",
+          evidence: "관련 근거 및 감사: [T02], [T03], [E17], [E21] 각주 124 · 1차 M11 · 2차 N4 교정"
+        },
+        {
+          id: "evo-2",
+          num: "전환점 02",
+          title: "양자 대립 → 비대칭적 3극 구도 및 내부 분화 정밀화",
+          trigger: "Phase 5 (E18·E19·E21) + Phase 6 (M6·M7·M8 해소)",
+          before: "루터와 고전 개혁주의를 하나의 단일 진영('율법 → 복음')으로 묶어 바르트와 양자 대립시켰다. 1차 원고에서도 아포리아 1·3에서는 3극 구도가 다시 이분법으로 붕괴하고 루터와 엘레르트를 무비판적으로 한 선택지에 합쳤다.",
+          after: "일치신조 제6조([E18]), 칼빈 1559 원문([E19]), 에벨링 각주 113([E21])을 정밀 대조해 루터(이중 용법), 일치신조(육신 제어·거울로서의 제3용법), 엘레르트(제3용법 전면 거부), 칼빈(성령론적 주된 용법), 바르트(제3용법 범주 자체 거부)의 입체적 지형과 교리 기준 3분류를 세웠다.",
+          evidence: "관련 근거 및 감사: [T02], [T03], [T04], [E18], [E19], [E21] 각주 113 · 1차 M6·M7·M8 해소"
+        },
+        {
+          id: "evo-3",
+          num: "전환점 03",
+          title: "갈 3:24 분수령의 교정: 통사 분수령 → 기능 분수령",
+          trigger: "Phase 6 (치명 결함 C1 해소 · KD II/2 §37.3 실사)",
+          before: "1라운드와 1차 원고 초안은 갈 3:24의 εἰς Χριστόν을 '목적적 독법(루터·개혁) 대 시간적 독법(바르트)'이라는 통사 분수령으로 규정했으나, 정작 루터에게도 한시적 직무와 종결을 귀속시켜 스스로 선언한 통사 대립과 정면 모순(치명 C1)을 일으켰다.",
+          after: "두 전통이 '율법 자체의 내재적 교육 능력 부정'에서는 수렴함을 2층 접점으로 분리하고, 실재하는 대립을 '율법의 교사 기능이 복음에 의해 만들어지는 적극적 인도인가([T03]), 복음 바깥에서는 진노의 감금·구류일 뿐인가([E16])'라는 원문 기반 기능 분수령으로 재정식화하였다. 통사 논쟁은 후속 과제로 유보하였다.",
+          evidence: "관련 근거 및 감사: [T03] WA 39/I, 46, 22f., [E16] KD II/2 §37.3, [E20] · 1차 치명 C1 · M1·M2 · 2차 N3 교정"
+        },
+        {
+          id: "evo-4",
+          num: "전환점 04",
+          title: "3극 전수 최강형 (Steelman) 및 대칭적 위험 감사 달성",
+          trigger: "Phase 3 (SPB 교훈) + Phase 6 (M5·M12·M13 해소)",
+          before: "1라운드에서는 개혁주의 3단 도식과 목회 황금률로 아포리아를 조기 봉합(SPB +1.267)하고 바르트 대속론을 허수아비화하였다. 1차 원고 수정본에서도 바르트가 에벨링의 행위자(Täter) 비판에 응답하지 못하고 칼빈 극이 위험 감사에서 면제되는 반대 방향 비대칭이 남았다.",
+          after: "KD IV/1 §59.2(an unserer Stelle, für uns, ohne uns)로 바르트 최강형과 반론 단락을 세우고, TRE Aufeinanderfolge([T03]) 오역을 바로잡아 루터 순서의 기독론적 토대를 복원하였다. 5.2절에서 루터·칼빈·바르트 3극 모두의 위험을, 5.3절에서 세 가지 조기 봉합 유형 모두를 동일 기준으로 감사·기각하였다.",
+          evidence: "관련 근거 및 감사: [T03], [E04], [E16] KD IV/1 §59.2, [E21] · 1차 M5·M12·M13 · 2차 N2·N5 교정"
+        },
+        {
+          id: "evo-5",
+          num: "전환점 05",
+          title: "순서 논쟁의 본질 재정의: 인간론 충돌과 거울상 통제 장치 대리전",
+          trigger: "Phase 5 (E21 전문 통합) + Phase 6 (M13 결론 재작성)",
+          before: "논쟁을 '율법을 먼저 말할 것인가, 복음을 먼저 말할 것인가'라는 설교·교의학 서술 어순의 문제로 보거나, 3극 긴장의 유지 자체를 거울상 위험에 대한 완성된 해답처럼 제시하였다.",
+          after: "순서 논쟁의 심층에 에벨링 대 바르트의 인간론 충돌(행위자 Täter 대 순수 수령자 nur Empfänger)과 '지금 여기서 무엇이 하나님의 구체적 명령인지를 무엇이 통제하는가'라는 거울상 통제 장치 대리전(자연율법 우상화 대 복음의 율법화)이 놓여 있음을 규명하고, 3극 긴장 유지를 해답이 아닌 열린 신학적 태도(양극성 Polarität의 견딤)로 완결하였다.",
+          evidence: "관련 근거 및 감사: [E05], [E06], [E16], [E21] III.3.c (S. 74-75) · 1차 M10·M12·M13 해소"
+        }
+      ];
+
+      /* ======================================================================
+         DATA 4: 26 EVIDENCE ITEMS (T01-T05, E01-E21)
+         Zero local hard paths! All tildes/em-dashes sanitized.
+         ====================================================================== */
+      const PILLAR_LABELS = {
+        all: "전체 Pillar (26)",
+        tre: "TRE 개념사 (5)",
+        german_journal: "독일어권 저널 (3)",
+        semantic_scholar: "Semantic Scholar (5)",
+        google_scholar: "Google Scholar (7)",
+        primary_supplement: "보충 1차 원전 (6)"
+      };
+
+      const CAMP_LABELS = {
+        all: "전체 진영 (26)",
+        lutheran_reformed: "루터 · 개혁 (11)",
+        barthian: "바르트 (5)",
+        comparative_aporia: "비교 · 아포리아 (10)"
+      };
+
+      const EVIDENCE_PACK = [
+        {
+          id: "T01",
+          pillar: "tre",
+          pillarLabel: "TRE 개념사",
+          camp: "lutheran_reformed",
+          campLabel: "루터 · 개혁",
+          year: "TRE Bd. 13",
+          author: "Theologische Realenzyklopädie (TRE)",
+          title: "Gesetz und Evangelium (I. Systematisch-theologisch: 1.1 Altprotestantische Orthodoxie)",
+          venue: "TRE Bd. 13, S. 126 (I.1.1)",
+          citation: "TRE Bd. 13, S. 126, \"Gesetz und Evangelium,\" Section I.1.1.",
+          summary: "루터교 정통주의 교의학은 율법과 복음을 순서대로(nacheinander) 구별하며, 이 구별이 약화될 때마다 형식적으로 늘 율법이 승리하는 경향을 보인다.",
+          keyPoints: [
+            "구원의 방편(media salutis) 맥락에서 인식 방식, 대상(행위 대 약속), 목표(의 대 은혜), 직무(요구·고발 대 위로)를 엄격히 구별한다.",
+            "율법과 복음의 구별(discrimen legis et evangelii)이 약화될 때마다 복음이 도덕 지침으로 축소되거나 율법이 승리하는 경향이 나타났다."
+          ],
+          excerpt: "Gesetz und Evangelium erscheinen dabei als zwei Größen, die (jede für sich und nacheinander, in dieser Reihenfolge) gewürdigt und sodann auch in das rechte Verhältnis zueinander gesetzt werden müssen... Von systematischem Interesse ist es, daß bei einer Vernachlässigung dieses Lehrstücks regelmäßig das Gesetz gesiegt hat."
+        },
+        {
+          id: "T02",
+          pillar: "tre",
+          pillarLabel: "TRE 개념사",
+          camp: "comparative_aporia",
+          campLabel: "비교 · 아포리아",
+          year: "TRE Bd. 13",
+          author: "Theologische Realenzyklopädie (TRE)",
+          title: "Gesetz und Evangelium (I.2.1.1 Elert & I.2.2.1 Barth: Evangelium und Gesetz)",
+          venue: "TRE Bd. 13, S. 126 (I.2.1.1 & I.2.2.1)",
+          citation: "TRE Bd. 13, S. 126, \"Gesetz und Evangelium,\" Sections I.2.1.1 & I.2.2.1.",
+          summary: "엘레르트의 실체적 대립·제3용법 거부와 바르트의 1935년 순서 역전(복음의 필연적 형식) 및 죽음-생명 순서 제한적 인정을 대조한다.",
+          keyPoints: [
+            "엘레르트(W. Elert)는 율법과 복음을 단일 계시 상위 개념 아래 두면 실체적 대립(einander widerstreiten)이 은폐된다고 비판하며 제3용법을 거부한다.",
+            "바르트(K. Barth)는 율법을 '내용이 은혜인 복음의 필연적 형식'으로 규정하되, 죄인의 실존 구원 질서에서는 '율법-복음'(죽음-생명) 순서에 제한적 의미를 인정한다."
+          ],
+          excerpt: "Gesetz und Evangelium seien 'zwei Worte Gottes', die 'ihrem eigenen Sachgehalt nach einander widerstreiten'... K. Barth folgert: Das Gesetz ist 'nichts anderes als die notwendige Form des Evangeliums, dessen Inhalt die Gnade ist' (13)... an dieser Stelle gesteht K. Barth der Reihenfolge 'Gesetz-Evangelium' Recht und Sinn zu. Sie ist für ihn identisch mit der Reihenfolge 'Tod-Leben'."
+        },
+        {
+          id: "T03",
+          pillar: "tre",
+          pillarLabel: "TRE 개념사",
+          camp: "lutheran_reformed",
+          campLabel: "루터 · 개혁",
+          year: "TRE Bd. 21",
+          author: "Theologische Realenzyklopädie (TRE)",
+          title: "Luther, Martin (II.6.5 Gesetz und Evangelium)",
+          venue: "TRE Bd. 21, S. 513 (II.6.5)",
+          citation: "TRE Bd. 21, S. 513, \"Luther, Martin,\" Section II.6.5.",
+          summary: "루터의 율법과 복음 구별 및 선후 순서(Aufeinanderfolge) 자체가 예수 그리스도 안에서의 하나님 행위에 근거하며, 복음이 율법을 교사로 만든다(WA 39/I,46,22f).",
+          keyPoints: [
+            "율법과 복음의 올바른 구별은 참된 신학자의 표지이자 기독교 교리 전체의 요약(summa totius Christianae doctrinae)이다.",
+            "루터는 이중 용법(usus civilis · usus theologicus)을 강조하며, 율법이 그리스도께로 인도하는 교사가 되는 것도 복음의 빛 아래서만 가능하다고 본다(WA 39/I,46,22f)."
+          ],
+          excerpt: "„Evangelium facit ex lege paedagogum in Christum, non fit ab ipsa lege per sese“ (WA 39/I,46,22f)... Gottes Handeln in Jesus Christus begründet sowohl die Unterscheidung als auch die Aufeinanderfolge von Gesetz und Evangelium..."
+        },
+        {
+          id: "T04",
+          pillar: "tre",
+          pillarLabel: "TRE 개념사",
+          camp: "lutheran_reformed",
+          campLabel: "루터 · 개혁",
+          year: "TRE Bd. 7",
+          author: "Theologische Realenzyklopädie (TRE)",
+          title: "Calvin, Johannes (II.2.5 Heiliger Geist, Rechtfertigung und tertius usus legis)",
+          venue: "TRE Bd. 7, S. 568 (II.2.5)",
+          citation: "TRE Bd. 7, S. 568, \"Calvin, Johannes,\" Section II.2.5.",
+          summary: "칼빈은 그리스도 안에서 칭의와 성화를 불가분리하게 결합하며, 루터와 달리 성령 사역 안에서 율법의 제3용법에 지배적 중요성을 부여한다.",
+          keyPoints: [
+            "칭의(iustificatio)와 성화(sanctificatio)를 구별하되 그리스도 안에서 불가분리하게 결합한다.",
+            "성령의 사역 안에서 신자가 자유롭게 율법에 순종하도록 준비되므로 제3용법(tertius usus legis)이 지배적 중요성을 가진다."
+          ],
+          excerpt: "Im Werk des Heiligen Geistes spielt das Gesetz eine besondere Rolle. Jetzt erhält (im Gegensatz zu seiner Stellung in Luthers Theologie) der tertius usus legis eine beherrschende Bedeutung... wird der Christ durch den Heiligen Geist bereit und willig gemacht zum Gehorsam gegenüber dem Gesetz in Freiheit."
+        },
+        {
+          id: "T05",
+          pillar: "tre",
+          pillarLabel: "TRE 개념사",
+          camp: "barthian",
+          campLabel: "바르트",
+          year: "TRE Bd. 5",
+          author: "Theologische Realenzyklopädie (TRE)",
+          title: "Barth, Karl (2.3 Dogmatische Theologie: Christozentrische Umkehrung von Evangelium und Gesetz)",
+          venue: "TRE Bd. 5, S. 251 (2.3)",
+          citation: "TRE Bd. 5, S. 251, \"Barth, Karl,\" Section 2.3.",
+          summary: "바르트 교회교의학에서 죄론이 기독론 뒤에 배치되는 것은 1935년 순서 역전의 직접 결과이며, 죄는 패배한 것으로서만 비로소 인식된다.",
+          keyPoints: [
+            "KD에서 죄론이 기독론 뒤에 배치되는 구조는 1935년 '복음과 율법'의 프로그램적 역전 결과이다.",
+            "율법이 무엇인지 알기 위해 먼저 복음을 알아야 하며, 죄 역시 그리스도 안에서 패배한 것으로서만 비로소 인식된다."
+          ],
+          excerpt: "Man muß, 'um zu wissen, was Gesetz ist, allererst um das Evangelium wissen und nicht umgekehrt' (Evangelium u. Gesetz [1935], 1956 [TEH NS 50] 5). Sünde wird folglich erst da als Sünde erkannt, wo sie als besiegt thematisch wird."
+        },
+        {
+          id: "E01",
+          pillar: "german_journal",
+          pillarLabel: "독일어권 저널",
+          camp: "lutheran_reformed",
+          campLabel: "루터 · 개혁",
+          year: "1990",
+          author: "Hermann Götz Göckeritz",
+          title: "Das Gesetz in der Unterscheidung von Gesetz und Evangelium",
+          venue: "NZSTh 32, no. 2 (1990): 181-",
+          citation: "Göckeritz, Hermann Götz. \"Das Gesetz in der Unterscheidung von Gesetz und Evangelium.\" Neue Zeitschrift für Systematische Theologie und Religionsphilosophie 32, no. 2 (1990): 181-.",
+          summary: "율법과 복음의 구별 안에서 율법 자체의 신학적 지위가 어떻게 규정되는지 독일 조직신학 맥락에서 분석한 Crossref 검증 논문이다.",
+          keyPoints: [
+            "율법과 복음의 구별 구조 속에서 율법 자체의 신학적 지위를 해명한다."
+          ],
+          excerpt: "DOI: 10.1515/nzst.1990.32.2.181 (IxTheo 타임아웃 시 Crossref 신학 저널 ISSN 기반으로 검증 확보)."
+        },
+        {
+          id: "E02",
+          pillar: "german_journal",
+          pillarLabel: "독일어권 저널",
+          camp: "comparative_aporia",
+          campLabel: "비교 · 아포리아",
+          year: "1993",
+          author: "Edgar Thaidigsmann",
+          title: "Jedem das Seine. Zum Thema »Gesetz und Evangelium«",
+          venue: "NZSTh 35, no. 3 (1993): 237-",
+          citation: "Thaidigsmann, Edgar. \"Jedem das Seine. Zum Thema »Gesetz und Evangelium«.\" Neue Zeitschrift für Systematische Theologie und Religionsphilosophie 35, no. 3 (1993): 237-.",
+          summary: "'각자에게 그의 것을'이라는 정의 개념을 중심으로 율법과 복음 사이의 요구와 수여의 신학적 긴장을 다룬 독일 조직신학 논문이다.",
+          keyPoints: [
+            "율법과 복음의 관계에서 정의, 요구, 수여의 신학적 긴장을 다룬다."
+          ],
+          excerpt: "DOI: 10.1515/nzst.1993.35.3.237 (Crossref 신학 저널 검증 확보)."
+        },
+        {
+          id: "E03",
+          pillar: "german_journal",
+          pillarLabel: "독일어권 저널",
+          camp: "comparative_aporia",
+          campLabel: "비교 · 아포리아",
+          year: "1974",
+          author: "Martin Schloemann",
+          title: "»Gesetzlichkeit« Über die Tragweite eines theologischen Werturteils",
+          venue: "NZSTh 16, no. 3 (1974): 209-",
+          citation: "Schloemann, Martin. \"»Gesetzlichkeit« Über die Tragweite eines theologischen Werturteils. Ein sprachanalytischer Beitrag zum Thema Gesetz und Evangelium.\" Neue Zeitschrift für Systematische Theologie und Religionsphilosophie 16, no. 3 (1974): 209-.",
+          summary: "율법주의(Gesetzlichkeit)라는 신학적 가치판단의 언어분석적 사정거리를 검토하여, 상대 진영을 향한 낙인 남용을 경계하는 방법론적 근거이다.",
+          keyPoints: [
+            "율법과 복음 논쟁에서 상대 진영을 향해 던져지는 '율법주의' 비난의 개념적 범위를 분석한다."
+          ],
+          excerpt: "DOI: 10.1515/nzst.1974.16.3.209 (1차 감사 M10에서 바르트 겨냥 편향 인용을 제거하고 자기 점검 원리로 복원)."
+        },
+        {
+          id: "E04",
+          pillar: "semantic_scholar",
+          pillarLabel: "Semantic Scholar",
+          camp: "barthian",
+          campLabel: "바르트",
+          year: "2019",
+          author: "Randall C. Zachman",
+          title: "Barth and Reformation Theology",
+          venue: "The Oxford Handbook of Karl Barth (2019)",
+          citation: "Zachman, Randall C. \"Barth and Reformation Theology.\" In The Oxford Handbook of Karl Barth, 2019. DOI: 10.1093/oxfordhb/9780199689781.013.7.",
+          summary: "바르트가 종교개혁의 복음 중심을 계승하면서도 루터·칼빈의 '숨어 계신 하나님'과 독립적 '율법으로서의 말씀' 설정을 비판하게 된 경위를 분석한다.",
+          keyPoints: [
+            "바르트는 예수 그리스도 안에서의 복음 선포를 중심으로 삼는 루터의 통찰을 지지한다.",
+            "그러나 루터와 칼빈이 숨어 계신 하나님(Deus absconditus)을 구별하거나 그리스도와 분리된 독립적 '율법으로서의 말씀'을 설정할 때 비판적으로 선회한다."
+          ],
+          excerpt: "Semantic Scholar 바이링구얼 쿼리 확보 · 5.2절 칼빈 극 위험 감사(M13)에서도 교차 근거로 활용."
+        },
+        {
+          id: "E05",
+          pillar: "semantic_scholar",
+          pillarLabel: "Semantic Scholar",
+          camp: "comparative_aporia",
+          campLabel: "비교 · 아포리아",
+          year: "2018",
+          author: "G. V. van Wyk",
+          title: "Wet en evangelie (Law and Gospel)",
+          venue: "HTS Teologiese Studies 74, no. 4 (2018)",
+          citation: "van Wyk, G. V. \"Wet en evangelie.\" HTS Teologiese Studies/Theological Studies 74, no. 4 (2018). DOI: 10.4102/hts.v74i4.4956.",
+          summary: "루터의 수동적 수령성과 바르트의 유비적·정치적 복음 용법을 대조하며, WCRC·루터파 사이의 신학적 차이가 단순 언어 차이를 넘어섬을 논증한다.",
+          keyPoints: [
+            "바르트는 유비적 사유에 기초해 복음의 정치적·실천적 용법을 옹호하는 반면, 루터는 그리스도 선포와 삶의 경험 대조 및 믿음의 수동적 수령성을 강조한다.",
+            "루터파와 바르트주의 개혁파 사이에는 해소되지 않은 근본적 신학 차이가 존재한다."
+          ],
+          excerpt: "DOI: 10.4102/hts.v74i4.4956 (1차 감사 m3에서 수용성·수령성 역어 기준 통일)."
+        },
+        {
+          id: "E06",
+          pillar: "semantic_scholar",
+          pillarLabel: "Semantic Scholar",
+          camp: "comparative_aporia",
+          campLabel: "비교 · 아포리아",
+          year: "2002",
+          author: "Jesse Couenhoven",
+          title: "Law and Gospel, or the Law of the Gospel? Karl Barth's Political Theology Compared with Luther and Calvin",
+          venue: "Journal of Religious Ethics (2002)",
+          citation: "Couenhoven, Jesse. \"Law and Gospel, or the Law of the Gospel? Karl Barth's Political Theology Compared with Luther and Calvin.\" Journal of Religious Ethics (2002).",
+          summary: "루터의 두 왕국론 및 칼빈의 율법 이해와 비교하여 바르트 정치신학의 '복음의 율법' 구조가 낳는 윤리적·정치적 함의를 검토한다.",
+          keyPoints: [
+            "루터의 두 왕국론과 칼빈의 율법 이해가 바르트의 기독론적 정치신학 및 '복음과 율법' 구도와 어떻게 다른 윤리적 함의를 낳는지 비교한다."
+          ],
+          excerpt: "DOI: 10.1111/1467-9795.00103 (Semantic Scholar 피인용 5회 논문)."
+        },
+        {
+          id: "E07",
+          pillar: "semantic_scholar",
+          pillarLabel: "Semantic Scholar",
+          camp: "comparative_aporia",
+          campLabel: "비교 · 아포리아",
+          year: "1976",
+          author: "Bertold Klappert",
+          title: "Promissio und Bund: Gesetz und Evangelium bei Luther und Barth",
+          venue: "Vandenhoeck & Ruprecht (1976)",
+          citation: "Klappert, Bertold. Promissio und Bund: Gesetz und Evangelium bei Luther und Barth. Vandenhoeck & Ruprecht, 1976.",
+          summary: "루터의 '약속(Promissio)'과 바르트의 '언약(Bund)' 범주를 중심으로 두 신학자의 율법과 복음 선후(Nacheinander)의 기독론적 토대를 비교한 고전 연구서이다.",
+          keyPoints: [
+            "루터와 바르트에게서 율법과 복음의 선후·순차(Nacheinander)가 각각 어떤 기독론적 토대를 갖는지 분석한다."
+          ],
+          excerpt: "DOI: 10.13109/9783666562372 (1차 감사 M4 및 2차 N6을 거쳐 Nacheinander 역어를 '선후·순차'로 교정하고 과잉 귀속 제거)."
+        },
+        {
+          id: "E08",
+          pillar: "semantic_scholar",
+          pillarLabel: "Semantic Scholar",
+          camp: "comparative_aporia",
+          campLabel: "비교 · 아포리아",
+          year: "2025",
+          author: "Irene Ludji",
+          title: "'Law and Gospel' or 'Gospel and Law'? An attempt to Trans(form) Theologia Viatorum in the Living Church",
+          venue: "Dunamis 9, no. 2 (2025)",
+          citation: "Ludji, Irene. \"'Law and Gospel' or 'Gospel and Law'? An attempt to Trans(form) Theologia Viatorum in the Living Church.\" Dunamis 9, no. 2 (2025).",
+          summary: "루터의 '율법과 복음'과 바르트의 '복음과 율법'을 순례자 신학(theologia viatorum)과 실천적 교회론 안에서 상보(manus in manu)적으로 연결하려 한 최신 연구이다.",
+          keyPoints: [
+            "하나님에 대한 의무(율법)와 은혜의 수용(복음)을 실천적 교회론 안에서 상호 보완적으로 연결할 수 있다고 제안한다."
+          ],
+          excerpt: "DOI: 10.30648/dun.v9i2.1478 (1차 감사 M9에 따라 1층 목회 실천에만 유효하며 3·4층 근거로 확장하지 않도록 교정)."
+        },
+        {
+          id: "E09",
+          pillar: "google_scholar",
+          pillarLabel: "Google Scholar",
+          camp: "lutheran_reformed",
+          campLabel: "루터 · 개혁",
+          year: "1986",
+          author: "Gerhard Ebeling",
+          title: "Über die Reformation hinaus? Zur Luther-Kritik Karl Barths (1차 팩 요지 등록 ID)",
+          venue: "ZThK (1986): 33-75 [E21 전문과 동일 문헌]",
+          citation: "Ebeling, Gerhard. \"Über die Reformation hinaus? Zur Luther-Kritik Karl Barths.\" Zeitschrift für Theologie und Kirche (1986): 33-75.",
+          summary: "바르트의 루터 비판과 순서 역전을 루터 신학 관점에서 정밀 비판한 기념비적 논문의 0단계 1차 등록 ID이다(전문 발췌는 E21에 통합 수록).",
+          keyPoints: [
+            "바르트의 순서 역전이 종교개혁의 근본적 율법-복음 구별을 넘어서는지, 루터의 실존적·구원론적 긴장을 약화시키는지 묻는다.",
+            "26개 근거 ID 중 E21과 동일 문헌이므로 실제 문헌 종수는 25종으로 계수한다(1차 감사 m10 정리)."
+          ],
+          excerpt: "0단계 Google Scholar Semantic 정찰에서 서지 확보 후, Phase 5에서 전문 PDF(E21)로 확장 통합됨."
+        },
+        {
+          id: "E10",
+          pillar: "google_scholar",
+          pillarLabel: "Google Scholar",
+          camp: "comparative_aporia",
+          campLabel: "비교 · 아포리아",
+          year: "1986",
+          author: "Christof Gestrich",
+          title: "Die hermeneutische Differenz zwischen Barth und Luther angesichts der neuzeitlichen Situation",
+          venue: "ZThK (1986): 136-157",
+          citation: "Gestrich, Christof. \"Die hermeneutische Differenz zwischen Barth und Luther angesichts der neuzeitlichen Situation.\" Zeitschrift für Theologie und Kirche (1986): 136-157.",
+          summary: "근대적 상황 속에서 바르트와 루터의 대립이 단순한 교리 어순 차이가 아니라 근대 주체와 계시를 다루는 해석학적 출발점의 차이임을 해부한다.",
+          keyPoints: [
+            "루터와 바르트의 대립은 근대 주체와 계시를 다루는 해석학적 차이(hermeneutische Differenz)에서 비롯된다."
+          ],
+          excerpt: "JSTOR 43740046 (ZThK 1986 바르트 특집호 수록 논문)."
+        },
+        {
+          id: "E11",
+          pillar: "google_scholar",
+          pillarLabel: "Google Scholar",
+          camp: "lutheran_reformed",
+          campLabel: "루터 · 개혁",
+          year: "2024",
+          author: "Burkhard Nonnenmacher",
+          title: "Gesetz und Evangelium bei Luther und Barth: Zur Aktualität ihrer Positionen in der Dogmatik und Ethik der Gegenwart",
+          venue: "JEAC 6 (2024): 50-64",
+          citation: "Nonnenmacher, Burkhard. \"Gesetz und Evangelium bei Luther und Barth: Zur Aktualität ihrer Positionen in der Dogmatik und Ethik der Gegenwart.\" Journal of Ethics in Antiquity and Christianity 6 (2024): 50-64.",
+          summary: "현대 교의학과 윤리학의 관점에서 루터와 바르트를 비교하며, 루터의 매개(mediation)와 응답하는 인간(answering) 개념의 현재적 강점을 재조명한다.",
+          keyPoints: [
+            "루터의 매개와 응답하는 인간 개념이 바르트와 대비되는 현대적 신학·윤리적 강점을 지닌다고 논증한다."
+          ],
+          excerpt: "JEAC 2024 최신 오픈액세스 연구 논문."
+        },
+        {
+          id: "E12",
+          pillar: "google_scholar",
+          pillarLabel: "Google Scholar",
+          camp: "lutheran_reformed",
+          campLabel: "루터 · 개혁",
+          year: "2018",
+          author: "Jonathan A. Linebaugh",
+          title: "God's Two Words: Law and Gospel in Lutheran and Reformed Traditions",
+          venue: "Eerdmans (2018) [편저 여부 확인 필요]",
+          citation: "Linebaugh, Jonathan A. God's Two Words: Law and Gospel in Lutheran and Reformed Traditions. Eerdmans, 2018.",
+          summary: "루터파(엘레르트 등)와 개혁파(칼빈·바빙크·바르트) 전통에서 율법의 제3용법과 하나님의 두 말씀 구조가 어떻게 다르게 수용되는지 비교한다.",
+          keyPoints: [
+            "루터파와 개혁파가 율법의 제3용법과 두 말씀 구조를 어떻게 다르게 수용하는지 비교한다(2차 감사 N1 및 1차 m10 기준 반영)."
+          ],
+          excerpt: "1차 감사 m10 권고에 따라 편저 여부 [확인 필요] 표기를 보존함."
+        },
+        {
+          id: "E13",
+          pillar: "google_scholar",
+          pillarLabel: "Google Scholar",
+          camp: "comparative_aporia",
+          campLabel: "비교 · 아포리아",
+          year: "2012",
+          author: "I. John Hesselink",
+          title: "Law and Gospel or Gospel and Law? Karl Barth, Martin Luther and John Calvin",
+          venue: "NGTT 53, no. 1_2 (2012): 62-80",
+          citation: "Hesselink, I. John. \"Law and Gospel or Gospel and Law? Karl Barth, Martin Luther and John Calvin.\" Dutch Reformed Theological Journal (NGTT) 53, no. 1_2 (2012): 62-80.",
+          summary: "바르트의 '복음과 율법' 순서 역전이 루터뿐 아니라 고전 개혁주의(칼빈)의 율법 제3용법과도 미묘한 긴장을 형성함을 분석한 핵심 비교 논문이다.",
+          keyPoints: [
+            "바르트의 순서 역전은 루터파 대립뿐 아니라 칼빈의 제3용법 및 율법-복음 구조와도 미묘한 긴장을 형성한다(1차 M6, 2차 N1·N2 과잉 귀속 제거)."
+          ],
+          excerpt: "DOI: 10.5952/53-1-119 (Google Scholar & Semantic Scholar 교차 확보)."
+        },
+        {
+          id: "E14",
+          pillar: "google_scholar",
+          pillarLabel: "Google Scholar",
+          camp: "barthian",
+          campLabel: "바르트",
+          year: "2016",
+          author: "Derek Woodard-Lehman",
+          title: "The Law as the Task of the Gospel: Karl Barth and the Possibility of an Apostolic Pragmatism",
+          venue: "Journal of Jewish Ethics 2, no. 1 (2016): 62-85",
+          citation: "Woodard-Lehman, Derek. \"The Law as the Task of the Gospel: Karl Barth and the Possibility of an Apostolic Pragmatism.\" Journal of Jewish Ethics 2, no. 1 (2016): 62-85.",
+          summary: "1930년대 독일 교회투쟁과 바르멘 선언 맥락에서 창조질서 신학과 자연율법에 대항해 복음의 우선성을 확보하려 한 바르트의 윤리·정치적 동기를 해명한다.",
+          keyPoints: [
+            "바르멘 선언과 루터파 비판자들(알트하우스 등)의 맥락 속에서 바르트가 율법을 '복음의 과제'로 정식화한 신학적 동기를 옹호한다."
+          ],
+          excerpt: "Journal of Jewish Ethics Vol. 2, No. 1 (2016): 62-85."
+        },
+        {
+          id: "E15",
+          pillar: "google_scholar",
+          pillarLabel: "Google Scholar",
+          camp: "lutheran_reformed",
+          campLabel: "루터 · 개혁",
+          year: "1990",
+          author: "이형기 (李亨基)",
+          title: "“율법과 복음” 그리고 “복음과 율법”: 루터와 칼빈을 중심하여",
+          venue: "장신논단 6 (1990): 240-264",
+          citation: "이형기. \"“율법과 복음” 그리고 “복음과 율법”: 루터와 칼빈을 중심하여.\" 장신논단 6 (1990): 240-264.",
+          summary: "성경의 요구(명령)와 선물(은혜)이라는 이중 구조가 루터와 칼빈에게서 각각 어떻게 '율법과 복음' 및 '복음과 율법' 문제로 전개되는지 고찰한 국내 대표 논문이다.",
+          keyPoints: [
+            "구원론적 수용과 성화·율법 순종의 관점에서 루터와 칼빈 전통의 요구와 선물 이중 구조를 비교한다."
+          ],
+          excerpt: "국내 개혁주의 신학계 비교 연구 문헌 (1차 감사 M3에서 70인역 과잉 귀속 제거)."
+        },
+        {
+          id: "E16",
+          pillar: "primary_supplement",
+          pillarLabel: "보충 1차 원전",
+          camp: "barthian",
+          campLabel: "바르트",
+          year: "1942 / 1953",
+          author: "Karl Barth",
+          title: "Kirchliche Dogmatik II/2 (§36.1, §37.2, §37.3) & IV/1 (§59.2)",
+          venue: "Kirchliche Dogmatik (Zürich: EVZ)",
+          citation: "Barth, Karl. Kirchliche Dogmatik II/2 (1942), §§ 36.1, 37.2, 37.3 (S. 567, 635-636, 650-655); KD IV/1 (1953), § 59.2 (S. 244, 275, 305).",
+          summary: "언약궤 비유, 출 20:2 선행 문장(Vordersatz), 허락(Erlaubnis)으로서의 계명, 갈 3:24 진노의 구류, 그리고 '우리 대신 심판받으신 재판관(für uns, ohne uns)' 객관적 속죄 원전이다.",
+          keyPoints: [
+            "KD II/2, 567: 복음적 직설법의 마침표가 곧 명령법의 느낌표가 되며, 언약궤가 돌판을 품듯 복음이 율법을 내포한다.",
+            "KD II/2, 650-655: 계명은 자유를 부여하는 '허락(Erlaubnis)'이며, 갈 3:24의 Pädagoge는 그리스도까지(bis auf Christus)의 진노의 감금·구류(Verschluß und Arrest)로 해석된다.",
+            "KD IV/1, 244, 275, 305: 하나님의 아들이 우리 자리에 서서(an unserer Stelle) 우리 협력 없이(für uns, ohne uns) 심판을 대신 받으심으로 객관적 화해를 완결하였다."
+          ],
+          excerpt: "Das eine Wort Gottes ist Evangelium und Gesetz... Es ist zuerst Evangelium und dann Gesetz... Indem der evangelische Indikativ gilt, wird der Punkt, mit dem er schließt, ein Ausrufzeichen, wird er selbst zum Imperativ. [KD IV/1, 275] Indem es für uns geschehen ist, ist es ohne uns geschehen: ohne unser Mitwirken und Hinzutun."
+        },
+        {
+          id: "E17",
+          pillar: "primary_supplement",
+          pillarLabel: "보충 1차 원전",
+          camp: "barthian",
+          campLabel: "바르트",
+          year: "1935 / 1981",
+          author: "Karl Barth / Albrecht Peters",
+          title: "Evangelium und Gesetz (1935) 및 Albrecht Peters HST 2 대조 분석",
+          venue: "TEH 32 (1935) · 한국어판 pp. 105-116 / Peters HST 2 (1981), pp. 106-110",
+          citation: "Barth, Karl. Evangelium und Gesetz (1935), 한국어 번역 pp. 105-116; 대조: Peters, Albrecht. Gesetz und Evangelium (HST 2), 1981, 106-110.",
+          summary: "교의학 서술은 '복음 → 율법'으로 역전시키되, 죄인의 실존적 전이(죽음에서 생명으로)에 한해 '율법 → 복음' 순서의 타당성을 기적적 단일 사건으로 제한 인정하는 원문이다.",
+          keyPoints: [
+            "1935년 강연(pp. 114-116): 율법-복음, 죄-의, 죽음-생명의 선후 관계는 합리적·변증법적 필연성이 아니라 예수 그리스도의 약속 안에서 믿어지는 단일 사건으로 제한된다.",
+            "페터스(HST 2, pp. 106-110): 바르트의 핵심 결단이 기독론적 전제(하나님의 한 말씀은 먼저 복음이고 그 다음 율법)에 있음을 확인한다(1차 감사 M14 반영)."
+          ],
+          excerpt: "하나님은 율법으로 말미암아 죽이는 데서 복음으로써 살리신다. 이제는 '율법과 복음'이라는 이 순서가 타당하고 의미가 있어진다... 죽음과 생명의 선후 관계와 동일한 것이라고 할 수 있다. 그런데 이는 선후 관계로서는 우리가 도저히 이해할 수 없는 관계임을 의미한다."
+        },
+        {
+          id: "E18",
+          pillar: "primary_supplement",
+          pillarLabel: "보충 1차 원전",
+          camp: "lutheran_reformed",
+          campLabel: "루터 · 개혁",
+          year: "1577",
+          author: "Formula Concordiae (BSLK)",
+          title: "Konkordienformel (1577), Art. VI: De tertio usu legis (Epitome & Solida Declaratio)",
+          venue: "BSLK Ep. VI (793-795); SD VI (962-970) · Wenz Bd. 2 대조",
+          citation: "Formula Concordiae (1577), Art. VI: De tertio usu legis. BSLK, 793-795, 962-970. Cross-checked with Wenz Bd. 2, 213-215 & Peters HST 2.",
+          summary: "중생자에게도 옛 아담(육신)이 남아 있으므로 확실한 규칙과 거울(wie in einem Spiegel)로서 율법의 제3용법을 공식 수용한 루터교 고백 문헌 원문이다.",
+          keyPoints: [
+            "Epitome VI, 1: 중생자에게도 육신(caro)이 붙어 있으므로 확실한 규칙(certa regula)으로서 제3용법이 필요하다.",
+            "Solida Declaratio VI: 신자는 율법의 저주와 강제에서 자유하나, 기록된 율법을 거울로 삼아 선행의 불완전성을 인식한다.",
+            "벤츠(Wenz Bd. 2, S. 213)와 엘레르트(1948) 논쟁처럼 루터 본인의 명시 정식화가 부재함에도 일치신조가 이를 공식 수용하였다."
+          ],
+          excerpt: "[FC Ep. VI, 1] Tertio, ut homines iam renati, quibus tamen omnibus multum adhuc carnis adhaeret, eam ipsam ob causam certam aliquam regulam habeant... [SD VI, 20-21] daß es zugleich wie in einem Spiegel zeiget und weiset, daß sie uns in diesem Leben noch unvollkommen und unrein sein."
+        },
+        {
+          id: "E19",
+          pillar: "primary_supplement",
+          pillarLabel: "보충 1차 원전",
+          camp: "lutheran_reformed",
+          campLabel: "루터 · 개혁",
+          year: "1559",
+          author: "Johannes Calvin",
+          title: "Institutio Christianae Religionis (1559), II.7.6-12 & III.11.1",
+          venue: "1559 Latin Critical Edition (II.7.6-12; III.11.1)",
+          citation: "Calvin, Johannes. Institutio Christianae Religionis (1559), II.7.6-12; III.11.1.",
+          summary: "율법의 제3용법을 주된 용법(praecipuus)이자 최선의 도구(optimum organum)로 규정하고, 그리스도 연합 안의 이중 은혜(duplex gratia)를 천명하는 라틴어 정본이다.",
+          keyPoints: [
+            "Inst. II.7.12: 성령이 마음에 율법을 새기셨음에도 신자는 주님의 뜻을 더 확실히 배우는 최선의 도구로서 제3용법(주된 용법)의 유익을 얻는다.",
+            "Inst. III.11.1: 그리스도 참여를 통해 칭의(화해)와 성화(삶의 순결 추구)의 이중 은혜(duplex gratia)를 함께 받는다."
+          ],
+          excerpt: "[Inst. II.7.12] Tertius usus, qui et praecipuus est, et in proprium Legis finem propius spectat, erga fideles locum habet... Est enim illis optimum organum... [Inst. III.11.1] cuius participatione duplicem potissimum gratiam recipiamus."
+        },
+        {
+          id: "E20",
+          pillar: "primary_supplement",
+          pillarLabel: "보충 1차 원전",
+          camp: "lutheran_reformed",
+          campLabel: "루터 · 개혁",
+          year: "1535",
+          author: "Martin Luther",
+          title: "In epistolam S. Pauli ad Galatas Commentarius (1535), WA 40/I",
+          venue: "WA 40/I, 207, 17-18; 208, 1-5; Gal 3:19-24 (480-540 일부 확인 필요)",
+          citation: "Luther, Martin. In epistolam S. Pauli ad Galatas Commentarius (1535). WA 40/I, 207, 17-18; 208, 1-5; Gal 3:19-24 (480-540).",
+          summary: "율법과 복음의 구별이 참된 신학자의 표지(WA 40/I, 207)이며, 복음은 하늘에, 율법은 땅에 두어 구별해야 한다는 루터 갈라디아서 대주석 1차 원문이다.",
+          keyPoints: [
+            "WA 40/I, 207, 17-18: 복음을 율법에서 올바르게 구별할 줄 아는 자는 하나님께 감사하고 자신이 참된 신학자임을 알아야 한다.",
+            "WA 40/I, 208: 하늘의 의(복음)와 땅의 의(율법)를 빛과 어둠처럼 철저히 구별해야 한다.",
+            "갈 3:24(WA 40/I, 480-540): 믿음이 도래하면 정죄의 지배가 종결된다(세부 줄 번호는 [확인 필요] 보존, 1차 감사 M2 반영)."
+          ],
+          excerpt: "[WA 40/I, 207, 17-18; 208, 1-5] Qui igitur bene novit discernere Evangelium a lege, is gratias agat Deo et sciat se esse Theologum... ut Evangelium ponas in coelo, legem in terra... Itaque lex paedagogus noster fuit in Christo, ut ex fide iustificemur."
+        },
+        {
+          id: "E21",
+          pillar: "primary_supplement",
+          pillarLabel: "보충 1차 원전",
+          camp: "comparative_aporia",
+          campLabel: "비교 · 아포리아",
+          year: "1986",
+          author: "Gerhard Ebeling",
+          title: "Über die Reformation hinaus? Zur Luther-Kritik Karl Barths (ZThK 1986, S. 33-75 전문 통합)",
+          venue: "ZThK Beiheft 6 (1986): 33-75 (I-III장, 각주 1-130)",
+          citation: "Ebeling, Gerhard. \"Über die Reformation hinaus? Zur Luther-Kritik Karl Barths.\" Zeitschrift für Theologie und Kirche, Beiheft 6 (1986): 33-75.",
+          summary: "근본구별(Fundamentalunterscheidung), 바르트 3부작 역전 프로그램(1935→1938→1946), 제3용법 양측 불가(각주 113), 정치개신교주의와 임종 침상 테스트, 인간론 양극성(Täter 대 nur Empfänger)까지 통합 수록한 완결 근거이다.",
+          keyPoints: [
+            "III.2.b (S. 60-61): 바르트의 3부작 역전 프로그램(1935 usus theologicus 거부 → 1938 usus politicus 거부 → 1946 usus politicus evangelii 선언)은 닫힌 통일성의 대가로 근본구별을 소실시킨다.",
+            "III.3.b (S. 68-69, 각주 113): tertius usus legis는 복음과의 구별을 전제하므로 서로 다른 이유에서 루터와 바르트 양측 모두에서 성립할 수 없다.",
+            "III.3.b-c (S. 72-75, 각주 124): 정치개신교주의는 임종 침상(Sterbebett)의 근본 상황을 견디기 어려우며, 행위자(Täter) 대 순수 수령자(nur Empfänger)의 양극성(Polarität)을 신학적으로 견뎌야 한다."
+          ],
+          excerpt: "[S. 60-61] Dieser Mangel bei Barth ist der Preis für die geschlossene Einheit und logische Stimmigkeit... [Anm. 113] Jedoch impliziert dieser Terminus eine Unterscheidung vom Evangelium, die Barth entschieden ablehnt. [S. 74-75] Gott gegenüber ist der Mensch (auch mit all seinen Taten und Missetaten in der Welt) nur Empfänger... je tiefer wir in die Polarität von Luther und Barth eindringen."
+        }
+      ];
+
+      /* ======================================================================
+         DATA 5: 1ST & 2ND AUDIT FINDINGS (35 TOTAL: C1, M1-M14, m1-m14, N1-N6)
+         ====================================================================== */
+      const AUDIT_ITEMS = [
+        // Critical (1)
+        {
+          code: "C1",
+          category: "critical",
+          categoryLabel: "1차 치명",
+          round: "1차",
+          location: "2.4절 · 1.2표 · 5장 · 6장",
+          issue: "갈 3:24 '목적적 대 시간적 통사 분수령' 자기모순: 루터에게도 한시적 직무(종결)를 귀속시키면서 통사 대립을 선언함.",
+          resolution: "2.4절·표·아포리아 2·결론을 '복음이 만들어 내는 적극적 인도([T03]) 대 복음 바깥 진노의 감금·구류([E16])'라는 기능 분수령으로 전면 재정식화하고, 통사 논쟁은 후속 과제로 유보함.",
+          status: "해소 완료"
+        },
+        // Major (14)
+        {
+          code: "M1",
+          category: "major",
+          categoryLabel: "1차 중대",
+          round: "1차",
+          location: "2.4절 (84행)",
+          issue: "바르트에게 팩 밖 논거인 갈 3:19 ἄχρις οὗ 호응 및 미발췌 '통설 거부'를 귀속함.",
+          resolution: "ἄχρις οὗ는 저자 자신의 3:19 주해로 분리하고, 바르트 서술은 팩 key_points('실용적 교육자가 아니라') 범위로 정정함.",
+          status: "해소 완료"
+        },
+        {
+          code: "M2",
+          category: "major",
+          categoryLabel: "1차 중대",
+          round: "1차",
+          location: "2.4절 · 5장 (83, 206행)",
+          issue: "archivist 요약 삽입어인 라틴어 usque ad Christum을 루터 원문처럼 백틱 제시함.",
+          resolution: "usque ad Christum 백틱 표기를 전수 삭제하고 팩에 실린 라틴어 원문만 남기며 요약 [확인 필요] 표기를 유지함.",
+          status: "해소 완료"
+        },
+        {
+          code: "M3",
+          category: "major",
+          categoryLabel: "1차 중대",
+          round: "1차",
+          location: "2.1절 (50, 52행)",
+          issue: "70인역 의미 이동 가설을 [E01], [E15]에 과잉 귀속하고 יָרָה 어원을 무근거 단정함.",
+          resolution: "[E01], [E15] 각주를 제거하고 70인역 의미 이동을 '일부 연구 가설'로 약화하며, νόμος 다의성은 성경 본문 자체로 입증함.",
+          status: "해소 완료"
+        },
+        {
+          code: "M4",
+          category: "major",
+          categoryLabel: "1차 중대",
+          round: "1차",
+          location: "1.2표 · 4.1절 (38, 158행)",
+          issue: "클라페르트 [E07]에 '4층 분기' 저자 해석을 과잉 귀속하고 Nacheinander를 '연속성'으로 오역 계승함.",
+          resolution: "Nacheinander를 '선후·순차'로 교정하고 4층 분기 판정을 저자 판단으로 분리하며 4층 근거 목록에서 [E07]을 제외함.",
+          status: "해소 완료"
+        },
+        {
+          code: "M5",
+          category: "major",
+          categoryLabel: "1차 중대",
+          round: "1차",
+          location: "3.1절 · 5장 (96행)",
+          issue: "[T03] Aufeinanderfolge를 '연속성'으로 오역해 루터 순서 자체의 기독론적 토대(최강형 증거)를 상실함.",
+          resolution: "'구별과 선후 순서(Aufeinanderfolge)'로 바로잡고 TRE 원문을 병기해 3.1절과 아포리아 4에서 바르트 비판([E04])과 대면시킴.",
+          status: "해소 완료"
+        },
+        {
+          code: "M6",
+          category: "major",
+          categoryLabel: "1차 중대",
+          round: "1차",
+          location: "3.2절 (114행)",
+          issue: "헤셀링크 [E13]에 '용도 전환' 테제를 과잉 귀속하고 1라운드 미결 쟁점을 일방 봉합함.",
+          resolution: "1라운드 미결 쟁점임을 명시하고 연속 해석을 공정 소개하며, 단절 판정을 [T04] 원문과 [E21] 각주 113에 정박해 저자 판단으로 밝힘.",
+          status: "해소 완료"
+        },
+        {
+          code: "M7",
+          category: "major",
+          categoryLabel: "1차 중대",
+          round: "1차",
+          location: "5장 아포리아 1 (203행)",
+          issue: "아포리아 1에서 3극 구도가 이분법으로 붕괴하고 칼빈에게 엘레르트의 '서로 다투는 두 말씀'을 귀속함.",
+          resolution: "아포리아 1을 바르트, 루터·정통주의·엘레르트(실체적 대립 별도 표기), 칼빈·고전 개혁주의의 3갈래로 재작성하고 각 대가를 분리 기재함.",
+          status: "해소 완료"
+        },
+        {
+          code: "M8",
+          category: "major",
+          categoryLabel: "1차 중대",
+          round: "1차",
+          location: "5장 아포리아 3 (209행)",
+          issue: "아포리아 3에서 루터와 엘레르트를 한 선택지로 묶고 계보 기준과 교리 기준이 혼선됨.",
+          resolution: "3층을 교리 기준 3분류(부재: 루터·엘레르트, 채택: 일치신조·칼빈, 범주 거부: 바르트)로 재편하고 루터 본인 대가와 표 머리글 기준을 명시함.",
+          status: "해소 완료"
+        },
+        {
+          code: "M9",
+          category: "major",
+          categoryLabel: "1차 중대",
+          round: "1차",
+          location: "6장 결론 (239행)",
+          issue: "4.1절에서 1층 한정으로 판정한 루지 [E08]을 결론에서 3층 수렴 근거로 재사용함.",
+          resolution: "결론 3층 근거에서 [E08]을 삭제하고 1층 한정 판정과 전 절을 정합시킴.",
+          status: "해소 완료"
+        },
+        {
+          code: "M10",
+          category: "major",
+          categoryLabel: "1차 중대",
+          round: "1차",
+          location: "5.2절 (223행)",
+          issue: "낙인 경계 논문인 슐뢰만 [E03]을 바르트 겨냥 '율법화' 비판 근거로 반대 방향 동원함.",
+          resolution: "정치개신교주의 근거에서 [E03]을 삭제하고, 율법화 판정을 확정 낙인이 아닌 구조적 위험으로 한정하는 자기 점검 문장으로 적용함.",
+          status: "해소 완료"
+        },
+        {
+          code: "M11",
+          category: "major",
+          categoryLabel: "1차 중대",
+          round: "1차",
+          location: "1.2표 · 6장 (35, 239행)",
+          issue: "1층 경험(ordo experiendi)과 선포(ordo praedicandi)를 합병해 '제한적 양립' 판정이 임종 침상 테스트([E21])와 충돌함.",
+          resolution: "1층을 1a 경험의 순서(제한적 수렴)와 1b 선포의 순서·성격(분기)으로 분할하고 초록·표·4.1·5.3·결론에 일관 반영함.",
+          status: "해소 완료"
+        },
+        {
+          code: "M12",
+          category: "major",
+          categoryLabel: "1차 중대",
+          round: "1차",
+          location: "4.4절 · 5.3절 (190, 229행)",
+          issue: "에벨링의 행위자(Täter) 비판에 대한 바르트 측 반론 부재 및 루터·에벨링식 봉합 미검사 비대칭.",
+          resolution: "에벨링 귀속을 명시하고 KD IV/1 S. 275(ohne unser Mitwirken) 및 Erlaubnis 기반 바르트 반론 단락을 추가했으며, 5.3절에 루터·에벨링식 봉합 기각을 추가함.",
+          status: "해소 완료"
+        },
+        {
+          code: "M13",
+          category: "major",
+          categoryLabel: "1차 중대",
+          round: "1차",
+          location: "5.2절 · 5.3절 · 6장 (231, 245행)",
+          issue: "결론이 '3극 긴장 유지'를 아포리아 5의 해답처럼 제시하고 칼빈 극이 위험 감사에서 면제됨.",
+          resolution: "5.2절에 칼빈 극 고유 위험([E04])을 추가해 어느 극도 면제하지 않았으며, 결론을 '해답이 아닌 열린 신학적 태도'로 고치고 S1·S3를 자가 적용함.",
+          status: "해소 완료"
+        },
+        {
+          code: "M14",
+          category: "major",
+          categoryLabel: "1차 중대",
+          round: "1차",
+          location: "3.3절 (128행)",
+          issue: "페터스 [E17] 근거를 과잉 확장해 아포리아 4의 미결 항목(죽음-생명 양립 여부)을 3.3절에서 선결함.",
+          resolution: "페터스 인용을 기독론적 전제 확인 범위로 축소하고 실존 순서와의 관계는 아포리아 4의 열린 문제로 이월함.",
+          status: "해소 완료"
+        },
+        // Minor Round 1 (14)
+        {
+          code: "m1",
+          category: "minor1",
+          categoryLabel: "1차 경미",
+          round: "1차",
+          location: "2.4절 · 5장",
+          issue: "개역개정 '초등교사'와 개역 '몽학선생' 역어 혼용.",
+          resolution: "'초등교사'로 통일(5회)하고 첫 등장 시 '몽학선생'을 1회만 병기함.",
+          status: "해소 완료"
+        },
+        {
+          code: "m2",
+          category: "minor1",
+          categoryLabel: "1차 경미",
+          round: "1차",
+          location: "3.2 · 4.2 · 5장",
+          issue: "Deus absconditus 역어 3종(감추어진·숨은·숨으신 하나님) 혼용.",
+          resolution: "'숨어 계신 하나님' 4회로 전수 통일함.",
+          status: "해소 완료"
+        },
+        {
+          code: "m3",
+          category: "minor1",
+          categoryLabel: "1차 경미",
+          round: "1차",
+          location: "3.4 · 4.1 · 5.3장",
+          issue: "'수동적 수용(성)'과 '순수 수령(자)'이 한 문장에 혼용됨.",
+          resolution: "3.4절에서 '수동적 수령성'과 '순수 수령자'로 용어를 통일 정의함.",
+          status: "해소 완료"
+        },
+        {
+          code: "m4",
+          category: "minor1",
+          categoryLabel: "1차 경미",
+          round: "1차",
+          location: "3.3절 (120, 128행)",
+          issue: "'제1바르멘 선언 직후' 표현 부정확(1934년 5월 제1논제와 1935년 10월 강연 시차).",
+          resolution: "'바르멘 신학 선언(1934) 제1논제 이후'로 전수 교정함.",
+          status: "해소 완료"
+        },
+        {
+          code: "m5",
+          category: "minor1",
+          categoryLabel: "1차 경미",
+          round: "1차",
+          location: "3.1절 (100행)",
+          issue: "루터 삼중 용법 부재 논쟁을 페터스에게 과잉 귀속함.",
+          resolution: "벤츠(Wenz Bd. 2, S. 213)와 엘레르트(1948) 논쟁으로 귀속을 바로잡고 페터스는 교차 확인으로 낮춤.",
+          status: "해소 완료"
+        },
+        {
+          code: "m6",
+          category: "minor1",
+          categoryLabel: "1차 경미",
+          round: "1차",
+          location: "3.3절 (128행)",
+          issue: "[E17] 발췌의 서로 다른 두 문장을 줄임표 없이 단일 인용으로 병합함.",
+          resolution: "두 문장을 원문 순서대로 분리 인용하여 정합성을 확보함.",
+          status: "해소 완료"
+        },
+        {
+          code: "m7",
+          category: "minor1",
+          categoryLabel: "1차 경미",
+          round: "1차",
+          location: "4.4절 (188행)",
+          issue: "에벨링 72쪽 원문 인용에 각주 122 의역('유비적으로 방향 지어져야')을 인용부호 안에 섞음.",
+          resolution: "인용부호를 제거하고 원문(nur mit dem Evangelium zu regieren sei)을 병기하며 각주 122 출처를 구분함.",
+          status: "해소 완료"
+        },
+        {
+          code: "m8",
+          category: "minor1",
+          categoryLabel: "1차 경미",
+          round: "1차",
+          location: "1.1 · 3.1절 (25, 98행)",
+          issue: "메타 진단에 [T02], [T03]을 연결하고, '율법 승리'를 [E01]에 중복 귀속함.",
+          resolution: "25행 인용을 관찰 접점으로 이동하고 98행에서 [E01]을 분리함.",
+          status: "해소 완료"
+        },
+        {
+          code: "m9",
+          category: "minor1",
+          categoryLabel: "1차 경미",
+          round: "1차",
+          location: "3.3절 (120행)",
+          issue: "KD II/2 §36 계명론을 '선택론 내부'로 부정확하게 기술함.",
+          resolution: "'신론 안에서 선택론에 이어 윤리학을 통합'으로 교정함.",
+          status: "해소 완료"
+        },
+        {
+          code: "m10",
+          category: "minor1",
+          categoryLabel: "1차 경미",
+          round: "1차",
+          location: "메타·참고문헌",
+          issue: "E09·E21 동일 문헌 이중 계수('총 26건'), S. 231 미사용 쪽수, E12 편저 여부 미표기.",
+          resolution: "'26개 근거 ID(25종 문헌)'로 명시하고 E09-E21 관계를 정리하며 S. 231 삭제 및 E12 [확인 필요]를 표기함.",
+          status: "해소 완료"
+        },
+        {
+          code: "m11",
+          category: "minor1",
+          categoryLabel: "1차 경미",
+          round: "1차",
+          location: "5.2절 (225행)",
+          issue: "볼드 닫힘 기호가 따옴표 뒤 한글과 붙어 GFM 볼드 렌더링이 깨짐.",
+          resolution: "볼드 구간을 따옴표 안쪽으로 배치해 CommonMark 좌우 경계 규칙을 충족함.",
+          status: "해소 완료"
+        },
+        {
+          code: "m12",
+          category: "minor1",
+          categoryLabel: "1차 경미",
+          round: "1차",
+          location: "2.4절 (79행)",
+          issue: "헬라어 τῶν παραβάσεων χάριν προσετέθη 백틱 누락.",
+          resolution: "백틱 코드 스팬으로 통일(코드 스팬 밖 원어 0건 확인).",
+          status: "해소 완료"
+        },
+        {
+          code: "m13",
+          category: "minor1",
+          categoryLabel: "1차 경미",
+          round: "1차",
+          location: "3.2절 (114행)",
+          issue: "미국 학자 Zachman을 독일식 '자크만'으로 표기함.",
+          resolution: "'잭먼(Randall C. Zachman)'으로 전수 통일함.",
+          status: "해소 완료"
+        },
+        {
+          code: "m14",
+          category: "minor1",
+          categoryLabel: "1차 경미",
+          round: "1차",
+          location: "4.2절 (168행)",
+          issue: "전문 PDF에는 실존하나 01b 팩 발췌 범위를 넘은 WA 39/I, 361; 552 인용 포함.",
+          resolution: "본문에서 미발췌 구절을 삭제하고 팩 발췌 범위(S. 58-59)로 축소하며 발췌 보강을 후속 과제로 이관함.",
+          status: "해소 완료"
+        },
+        // Minor Round 2 (6)
+        {
+          code: "N1",
+          category: "minor2",
+          categoryLabel: "2차 경미",
+          round: "2차",
+          location: "3.2절 (115행)",
+          issue: "연속 해석 단락에서 [E13], [E12], [E15]가 칼빈-바르트 윤리적 방향성 공유를 '보여 준다'고 과잉 진술함.",
+          resolution: "문헌 요지에 맞춰 '비교 분석한다' 수준으로 낮추고 공유 판정은 연속 해석 측 주장으로 귀속 정정함.",
+          status: "교정 완료"
+        },
+        {
+          code: "N2",
+          category: "minor2",
+          categoryLabel: "2차 경미",
+          round: "2차",
+          location: "5.2절 (230행)",
+          issue: "칼빈 극의 '정태적 율법주의·도덕적 자기 검열' 위험 진단을 [E13]에 과잉 귀속함.",
+          resolution: "위험 진단을 저자의 감사 판단으로 명시하고 [E13]은 미묘한 긴장 지적으로만 한정함.",
+          status: "교정 완료"
+        },
+        {
+          code: "N3",
+          category: "minor2",
+          categoryLabel: "2차 경미",
+          round: "2차",
+          location: "1.2표 (37행)",
+          issue: "2층 부분 접점에 '교사 기능의 복음 의존성 수렴'을 남겨 C1 기능 분수령과 표현 정밀도가 흐려짐.",
+          resolution: "'율법의 내재적 교육 능력 부정(공통 부정)'만 수렴으로 적고 교사 기능은 분기 쪽으로 명확히 이동함.",
+          status: "교정 완료"
+        },
+        {
+          code: "N4",
+          category: "minor2",
+          categoryLabel: "2차 경미",
+          round: "2차",
+          location: "5.3절 (244행)",
+          issue: "상호 비판적 경계 기능 범위를 분할 이전 표기인 '1층(목회·강단 실천)'으로 적어 1b 분기 판정과 혼선 가능.",
+          resolution: "'1b 선포 실천의 자기 점검 지침이며 1b의 분기 판정을 철회하지 않는다'로 정밀 명시함.",
+          status: "교정 완료"
+        },
+        {
+          code: "N5",
+          category: "minor2",
+          categoryLabel: "2차 경미",
+          round: "2차",
+          location: "5장 아포리아 1 (208행)",
+          issue: "칼빈 갈래 대가에 [T02](엘레르트의 바르트 비판)와 [E05]를 직접 연결해 유비 적용 성격이 불분명함.",
+          resolution: "'엘레르트의 변증법 신학 비판([T02])을 칼빈 갈래에 유비 적용하면'으로 저자 적용임을 명확히 표기함.",
+          status: "교정 완료"
+        },
+        {
+          code: "N6",
+          category: "minor2",
+          categoryLabel: "2차 경미",
+          round: "2차",
+          location: "6장 결론 (252행)",
+          issue: "결론 2층 수렴 근거에 [E07](기독론적 토대 비교 연구)이 잔존하여 4층 점검 방향과 엇갈림.",
+          resolution: "결론 2층 수렴 근거에서 [E07]을 정리하여 161행 비교 연구 성격과 전 절 정합성을 마감함.",
+          status: "교정 완료"
+        }
+      ];
+
+      /* ======================================================================
+         APP STATE
+         ====================================================================== */
+      const state = {
+        viewMode: "focus",        // "focus" | "expand"
+        activePhaseIndex: 0,      // 0..7
+        unmasked: false,          // false (A-D) | true (panel IDs & models)
+        activePanelLabel: "C",    // "C" | "A" | "D" | "B"
+        evoExpanded: new Set(["evo-1"]),
+        pillarFilter: "all",
+        campFilter: "all",
+        searchQuery: "",
+        openEvidenceIds: new Set(),
+        auditCategory: "all"      // "all" | "critical" | "major" | "minor1" | "minor2"
+      };
+
+      /* ======================================================================
+         UTILITY HELPERS
+         ====================================================================== */
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function badgeClassForGate(type) {
+        if (type === "pass") return "badge-pass";
+        if (type === "warn") return "badge-warn";
+        if (type === "alert") return "badge-alert";
+        return "badge-accent";
+      }
+
+      /* ======================================================================
+         RENDER 1: VIEW MODE (FOCUS vs FULL EXPAND)
+         ====================================================================== */
+      function syncViewMode() {
+        const isExpand = state.viewMode === "expand";
+        const btnFocus = document.getElementById("btn-mode-focus");
+        const btnExpand = document.getElementById("btn-mode-expand");
+
+        btnFocus.classList.toggle("is-active", !isExpand);
+        btnFocus.setAttribute("aria-pressed", String(!isExpand));
+        btnExpand.classList.toggle("is-active", isExpand);
+        btnExpand.setAttribute("aria-pressed", String(isExpand));
+
+        document.getElementById("timeline-focus-view").hidden = isExpand;
+        document.getElementById("timeline-expanded-view").hidden = !isExpand;
+
+        if (isExpand) {
+          EVOLUTIONS.forEach(function (ev) { state.evoExpanded.add(ev.id); });
+          renderEvolutions();
+        } else {
+          state.evoExpanded = new Set(["evo-1"]);
+          renderEvolutions();
+        }
+      }
+
+      /* ======================================================================
+         RENDER 2: 8-PHASE TIMELINE STEPPER
+         ====================================================================== */
+      function buildPhaseCardHtml(phase, index, showNav) {
+        const detailsHtml = phase.details.map(function (item) {
+          return "<li>" + escapeHtml(item) + "</li>";
+        }).join("");
+
+        const outputsHtml = phase.outputs.map(function (out) {
+          return "<code>" + escapeHtml(out) + "</code>";
+        }).join("");
+
+        const navHtml = showNav ? (
+          '<div class="phase-nav-group">' +
+            '<button type="button" class="btn-action" id="btn-phase-prev"' + (index === 0 ? " disabled" : "") + '>이전 단계</button>' +
+            '<button type="button" class="btn-action" id="btn-phase-next"' + (index === PHASES.length - 1 ? " disabled" : "") + '>다음 단계</button>' +
+          '</div>'
+        ) : '<span class="status-badge ' + badgeClassForGate(phase.gateType) + '">' + escapeHtml(phase.gate) + '</span>';
+
+        return (
+          '<div class="phase-detail-header">' +
+            '<div>' +
+              '<div class="phase-kicker">' + escapeHtml(phase.code) + ' · ' + escapeHtml(phase.time) + ' KST</div>' +
+              '<h3 class="phase-title">' + escapeHtml(phase.title) + '</h3>' +
+            '</div>' +
+            navHtml +
+          '</div>' +
+          '<div class="phase-meta-strip">' +
+            '<div><div class="meta-label">수행 주체 · 모델</div><div class="meta-value">' + escapeHtml(phase.actors) + '</div></div>' +
+            '<div><div class="meta-label">게이트 판정</div><div class="meta-value"><span class="status-badge ' + badgeClassForGate(phase.gateType) + '">' + escapeHtml(phase.gate) + '</span></div></div>' +
+            '<div><div class="meta-label">핵심 요약</div><div class="meta-value" style="font-weight:500;color:var(--color-text-main);">' + escapeHtml(phase.summary) + '</div></div>' +
+          '</div>' +
+          '<ul class="phase-detail-list">' + detailsHtml + '</ul>' +
+          '<div class="phase-outputs-row"><strong>주요 산출물</strong>: ' + outputsHtml + '</div>'
+        );
+      }
+
+      function renderTimeline() {
+        const rail = document.getElementById("stepper-rail");
+        rail.innerHTML = PHASES.map(function (phase, idx) {
+          const selected = idx === state.activePhaseIndex;
+          return (
+            '<button type="button" class="step-tab" role="tab" id="tab-' + phase.id + '" ' +
+              'aria-selected="' + selected + '" aria-controls="phase-detail-panel" ' +
+              'tabindex="' + (selected ? "0" : "-1") + '" data-phase-index="' + idx + '">' +
+              '<span class="step-tab-code">' + escapeHtml(phase.id) + '</span>' +
+              '<span class="step-tab-name">' + escapeHtml(phase.shortName) + '</span>' +
+              '<span class="step-tab-time">' + escapeHtml(phase.time.slice(6, 11)) + '</span>' +
+            '</button>'
+          );
+        }).join("");
+
+        const panel = document.getElementById("phase-detail-panel");
+        panel.setAttribute("aria-labelledby", "tab-" + PHASES[state.activePhaseIndex].id);
+        panel.innerHTML = buildPhaseCardHtml(PHASES[state.activePhaseIndex], state.activePhaseIndex, true);
+
+        const prevBtn = document.getElementById("btn-phase-prev");
+        const nextBtn = document.getElementById("btn-phase-next");
+        if (prevBtn) {
+          prevBtn.addEventListener("click", function () {
+            if (state.activePhaseIndex > 0) {
+              state.activePhaseIndex -= 1;
+              renderTimeline();
+            }
+          });
+        }
+        if (nextBtn) {
+          nextBtn.addEventListener("click", function () {
+            if (state.activePhaseIndex < PHASES.length - 1) {
+              state.activePhaseIndex += 1;
+              renderTimeline();
+            }
+          });
+        }
+
+        const expandedContainer = document.getElementById("timeline-expanded-view");
+        if (!expandedContainer.hasChildNodes()) {
+          expandedContainer.innerHTML = PHASES.map(function (phase, idx) {
+            return '<article class="phase-detail-panel">' + buildPhaseCardHtml(phase, idx, false) + '</article>';
+          }).join("");
+        }
+      }
+
+      /* ======================================================================
+         RENDER 3: BLIND PEER CRITIQUE DASHBOARD + UNMASK
+         ====================================================================== */
+      function displayPanelName(standing) {
+        if (!state.unmasked) {
+          return "익명 입장 " + standing.label;
+        }
+        const meta = PANEL_META[standing.panel_id];
+        return standing.label + " · " + standing.panel_id + " (" + meta.model + ")";
+      }
+
+      function renderCritiqueDashboard() {
+        const btnBlind = document.getElementById("btn-mask-blind");
+        const btnReveal = document.getElementById("btn-mask-reveal");
+        btnBlind.classList.toggle("is-active", !state.unmasked);
+        btnBlind.setAttribute("aria-pressed", String(!state.unmasked));
+        btnReveal.classList.toggle("is-active", state.unmasked);
+        btnReveal.setAttribute("aria-pressed", String(state.unmasked));
+
+        const statusBadge = document.getElementById("unmask-status-badge");
+        statusBadge.textContent = state.unmasked
+          ? "현재 상태: 실명 공개 완료 (Unmasked)"
+          : "현재 상태: 블라인드 익명 모드";
+        statusBadge.className = "status-badge " + (state.unmasked ? "badge-warn" : "badge-accent");
+
+        document.getElementById("th-identity").textContent = state.unmasked
+          ? "입장 · 실제 패널 ID · 모델"
+          : "익명 입장 (A-D)";
+
+        // Summary table
+        const tbody = document.getElementById("critique-summary-tbody");
+        tbody.innerHTML = STANDINGS.map(function (st) {
+          const delta = st.self_mean_excluded - st.peer_overall_mean;
+          const deltaStr = (delta >= 0 ? "+" : "") + delta.toFixed(3);
+          const isSelected = st.label === state.activePanelLabel;
+          const rowClasses = ["is-row-clickable"];
+          if (isSelected) rowClasses.push("is-row-selected");
+          if (st.self_preference_warning) rowClasses.push("is-row-spb");
+
+          const meta = PANEL_META[st.panel_id];
+          const identityHtml = state.unmasked
+            ? '<strong>입장 ' + escapeHtml(st.label) + ' · ' + escapeHtml(st.panel_id) + '</strong><br><span style="font-size:12px;color:var(--color-text-secondary);">' + escapeHtml(meta.model) + ' · ' + escapeHtml(meta.role) + '</span>'
+            : '<strong>익명 입장 ' + escapeHtml(st.label) + '</strong>';
+
+          const spbHtml = st.self_preference_warning
+            ? '<span class="status-badge badge-alert">SPB 경고 ' + deltaStr + '</span>'
+            : '<span>' + deltaStr + ' (정상)</span>';
+
+          return (
+            '<tr class="' + rowClasses.join(" ") + '" data-panel-label="' + st.label + '">' +
+              '<td><strong>' + st.rank + '위</strong></td>' +
+              '<td>' + identityHtml + '</td>' +
+              '<td><strong>' + st.peer_overall_mean.toFixed(3) + '</strong> / 5.0</td>' +
+              '<td>' + st.peer_borda_points.toFixed(1) + '</td>' +
+              '<td>' + st.conflict_index_stddev.toFixed(3) + '</td>' +
+              '<td>' + st.self_mean_excluded.toFixed(3) + '</td>' +
+              '<td>' + spbHtml + '</td>' +
+            '</tr>'
+          );
+        }).join("");
+
+        // Panel selector tabs
+        const tabs = document.getElementById("panel-selector-tabs");
+        tabs.innerHTML = STANDINGS.map(function (st) {
+          const isSelected = st.label === state.activePanelLabel;
+          const subLabel = state.unmasked
+            ? st.panel_id + " · " + PANEL_META[st.panel_id].model
+            : "순위 " + st.rank + "위 · SD " + st.conflict_index_stddev.toFixed(3);
+          return (
+            '<button type="button" class="panel-tab-btn" role="tab" aria-selected="' + isSelected + '" data-panel-label="' + st.label + '">' +
+              '<div class="panel-tab-head">' +
+                '<span class="panel-tab-title">입장 ' + escapeHtml(st.label) + (st.self_preference_warning ? " (SPB)" : "") + '</span>' +
+                '<span class="panel-tab-score">' + st.peer_overall_mean.toFixed(3) + '</span>' +
+              '</div>' +
+              '<div class="panel-tab-sub">' + escapeHtml(subLabel) + '</div>' +
+            '</button>'
+          );
+        }).join("");
+
+        // Active panel detail grid
+        const active = STANDINGS.find(function (s) { return s.label === state.activePanelLabel; }) || STANDINGS[0];
+        const activeMeta = PANEL_META[active.panel_id];
+
+        const barsHtml = RUBRIC_LABELS.map(function (rubric) {
+          const val = active.rubric_means[rubric.key];
+          const sd = active.rubric_stddevs[rubric.key];
+          const ratio = Math.max(0, Math.min(1, val / 5.0));
+          const fillClass = val >= 4.5 ? "bar-fill is-top" : (val < 3.0 ? "bar-fill is-low" : "bar-fill");
+          return (
+            '<div>' +
+              '<div class="rubric-row-head">' +
+                '<span class="rubric-name">' + escapeHtml(rubric.label) + '</span>' +
+                '<span class="rubric-val">' + val.toFixed(3) + ' / 5.0 (SD ' + sd.toFixed(3) + ')</span>' +
+              '</div>' +
+              '<div class="bar-track" aria-hidden="true">' +
+                '<div class="' + fillClass + '" style="transform: scaleX(' + ratio.toFixed(3) + ');"></div>' +
+              '</div>' +
+            '</div>'
+          );
+        }).join("");
+
+        const spbBoxHtml = active.self_preference_warning ? (
+          '<div class="spb-alert-box">' +
+            '<div class="spb-alert-title">자기 선호 편향(SPB) 자동 경보 발령 (+1.267)</div>' +
+            '<div>자기 평가 평균 <strong>4.200</strong> 대 동료 평균 <strong>2.933</strong>의 격차가 임계치를 초과하였다. 동료 3인 모두 팩 밖 신앙고백 무표기 도입, 바르트 대속론의 허수아비화, 개혁주의 3단 도식·목회 황금률에 의한 아포리아 조기 봉합을 공통 지적하였으며, 이는 Phase 6 원고 집필에서 전면 교정되었다.</div>' +
+          '</div>'
+        ) : "";
+
+        const critiquesHtml = active.peer_notes.map(function (note) {
+          const reviewerLabel = state.unmasked
+            ? note.reviewer + " (" + PANEL_META[note.reviewer].model + " · " + PANEL_META[note.reviewer].role + ")"
+            : note.masked_reviewer + " (익명 처리됨)";
+          return (
+            '<div class="critique-item">' +
+              '<div class="critique-reviewer">' + escapeHtml(reviewerLabel) + '</div>' +
+              '<div class="critique-line"><strong>강점</strong>: ' + escapeHtml(note.key_strength) + '</div>' +
+              '<div class="critique-line"><strong>약점</strong>: ' + escapeHtml(note.key_weakness) + '</div>' +
+            '</div>'
+          );
+        }).join("");
+
+        const detailHintHtml = state.unmasked
+          ? '<div class="unmask-hint"><strong>실명 공개 정보</strong>: 입장 ' + escapeHtml(active.label) + ' = <code>' + escapeHtml(active.panel_id) + '</code> · ' + escapeHtml(activeMeta.model) + ' (' + escapeHtml(activeMeta.bucket) + ') · 역할: ' + escapeHtml(activeMeta.role) + '</div>'
+          : '<div class="unmask-hint">현재 익명 모드이다. 상단의 <strong>실명 공개 (Unmask)</strong> 버튼을 클릭하면 각 입장의 실제 패널 ID, 사용 모델, 동료 비평자 실명이 즉시 공개된다.</div>';
+
+        const grid = document.getElementById("panel-detail-grid");
+        grid.innerHTML = (
+          '<div>' +
+            '<div class="subblock-title">' + escapeHtml(displayPanelName(active)) + ' · 5대 루브릭 점수</div>' +
+            '<div class="rubric-bar-list">' + barsHtml + '</div>' +
+            spbBoxHtml +
+          '</div>' +
+          '<div>' +
+            '<div class="subblock-title">동료 3인의 핵심 강점 · 약점 비평</div>' +
+            '<div class="critique-list">' + critiquesHtml + '</div>' +
+            detailHintHtml +
+          '</div>'
+        );
+      }
+
+      /* ======================================================================
+         RENDER 4: 5 EVOLUTION TURNING POINTS (BEFORE -> AFTER)
+         ====================================================================== */
+      function renderEvolutions() {
+        const stack = document.getElementById("evolution-stack");
+        stack.innerHTML = EVOLUTIONS.map(function (ev) {
+          const isOpen = state.evoExpanded.has(ev.id);
+          return (
+            '<article class="evo-item">' +
+              '<button type="button" class="evo-trigger" aria-expanded="' + isOpen + '" aria-controls="body-' + ev.id + '" data-evo-id="' + ev.id + '">' +
+                '<div class="evo-trigger-left">' +
+                  '<span class="evo-num">' + escapeHtml(ev.num) + '</span>' +
+                  '<span class="evo-title">' + escapeHtml(ev.title) + '</span>' +
+                '</div>' +
+                '<div class="evo-trigger-right">' +
+                  '<span class="status-badge badge-accent">' + escapeHtml(ev.trigger) + '</span>' +
+                  '<span class="evo-toggle-mark" aria-hidden="true">' + (isOpen ? "접기 -" : "펼치기 +") + '</span>' +
+                '</div>' +
+              '</button>' +
+              '<div class="evo-body" id="body-' + ev.id + '"' + (isOpen ? "" : " hidden") + '>' +
+                '<div class="before-after-grid">' +
+                  '<div class="ba-col">' +
+                    '<div class="ba-label">Before · 초기 질문 및 1라운드 초안</div>' +
+                    '<p>' + escapeHtml(ev.before) + '</p>' +
+                  '</div>' +
+                  '<div class="ba-col ba-after">' +
+                    '<div class="ba-label">After · 최종 원고 드래프트 (03_manuscript_draft.md)</div>' +
+                    '<p>' + escapeHtml(ev.after) + '</p>' +
+                  '</div>' +
+                '</div>' +
+                '<div class="evo-evidence-line"><strong>전환 근거</strong>: ' + escapeHtml(ev.evidence) + '</div>' +
+              '</div>' +
+            '</article>'
+          );
+        }).join("");
+
+        const allOpen = state.evoExpanded.size === EVOLUTIONS.length;
+        document.getElementById("btn-evo-toggle-all").textContent = allOpen ? "5건 모두 접기" : "5건 모두 펼치기";
+      }
+
+      /* ======================================================================
+         RENDER 5: 26 EVIDENCE PACK FILTER EXPLORER
+         ====================================================================== */
+      function renderEvidenceControls() {
+        const pillarGroup = document.getElementById("pillar-filter-group");
+        pillarGroup.innerHTML = Object.keys(PILLAR_LABELS).map(function (key) {
+          const pressed = state.pillarFilter === key;
+          return (
+            '<button type="button" class="filter-chip" aria-pressed="' + pressed + '" data-pillar="' + key + '">' +
+              escapeHtml(PILLAR_LABELS[key]) +
+            '</button>'
+          );
+        }).join("");
+
+        const campGroup = document.getElementById("camp-filter-group");
+        campGroup.innerHTML = Object.keys(CAMP_LABELS).map(function (key) {
+          const pressed = state.campFilter === key;
+          return (
+            '<button type="button" class="filter-chip" aria-pressed="' + pressed + '" data-camp="' + key + '">' +
+              escapeHtml(CAMP_LABELS[key]) +
+            '</button>'
+          );
+        }).join("");
+      }
+
+      function renderEvidenceList() {
+        const query = state.searchQuery.trim().toLowerCase();
+        const filtered = EVIDENCE_PACK.filter(function (item) {
+          if (state.pillarFilter !== "all" && item.pillar !== state.pillarFilter) return false;
+          if (state.campFilter !== "all" && item.camp !== state.campFilter) return false;
+          if (!query) return true;
+          const haystack = [
+            item.id, item.author, item.title, item.venue, item.year,
+            item.pillarLabel, item.campLabel, item.summary,
+            item.keyPoints.join(" "), item.excerpt
+          ].join(" ").toLowerCase();
+          return haystack.indexOf(query) !== -1;
+        });
+
+        document.getElementById("evidence-count").textContent =
+          "표시 중: " + filtered.length + " / " + EVIDENCE_PACK.length + "건";
+
+        const container = document.getElementById("evidence-list");
+        if (filtered.length === 0) {
+          container.innerHTML = '<div class="empty-state">선택한 Pillar·진영 필터 또는 검색어와 일치하는 근거 항목이 없다. 필터 초기화를 눌러 전체 26건을 확인한다.</div>';
+          return;
+        }
+
+        container.innerHTML = filtered.map(function (item) {
+          const isOpen = state.openEvidenceIds.has(item.id) || state.viewMode === "expand";
+          const campBadgeClass = item.camp === "barthian"
+            ? "badge-warn"
+            : (item.camp === "lutheran_reformed" ? "badge-accent" : "badge-pass");
+
+          const pointsHtml = item.keyPoints.map(function (pt) {
+            return "<li>" + escapeHtml(pt) + "</li>";
+          }).join("");
+
+          return (
+            '<article class="evidence-row">' +
+              '<div class="evidence-row-top">' +
+                '<div class="evidence-id-block">' +
+                  '<span class="evidence-id">' + escapeHtml(item.id) + '</span>' +
+                  '<span class="status-badge">' + escapeHtml(item.pillarLabel) + '</span>' +
+                  '<span class="status-badge ' + campBadgeClass + '">' + escapeHtml(item.campLabel) + '</span>' +
+                '</div>' +
+                '<span class="evidence-year">' + escapeHtml(item.year) + '</span>' +
+              '</div>' +
+              '<h3 class="evidence-title">' + escapeHtml(item.title) + '</h3>' +
+              '<div class="evidence-meta"><strong>' + escapeHtml(item.author) + '</strong> · ' + escapeHtml(item.venue) + '</div>' +
+              '<p class="evidence-summary">' + escapeHtml(item.summary) + '</p>' +
+              '<button type="button" class="evidence-detail-toggle" aria-expanded="' + isOpen + '" data-evidence-id="' + item.id + '">' +
+                (isOpen ? "원문 발췌 · 서지 상세 접기 -" : "원문 발췌 · 서지 상세 보기 +") +
+              '</button>' +
+              '<div class="evidence-drawer"' + (isOpen ? "" : " hidden") + '>' +
+                '<div><strong>표준 서지</strong>: ' + escapeHtml(item.citation) + '</div>' +
+                '<ul class="phase-detail-list" style="margin-top:8px;margin-bottom:8px;">' + pointsHtml + '</ul>' +
+                '<blockquote class="evidence-excerpt">' + escapeHtml(item.excerpt) + '</blockquote>' +
+              '</div>' +
+            '</article>'
+          );
+        }).join("");
+      }
+
+      /* ======================================================================
+         RENDER 6: 1ST & 2ND AUDIT TRACKER
+         ====================================================================== */
+      const AUDIT_TABS_META = [
+        { key: "all", label: "전체 (35)" },
+        { key: "critical", label: "치명 1" },
+        { key: "major", label: "중대 14" },
+        { key: "minor1", label: "경미 14" },
+        { key: "minor2", label: "2차 경미 6" }
+      ];
+
+      function renderAuditTracker() {
+        const tabBar = document.getElementById("audit-tabs");
+        tabBar.innerHTML = AUDIT_TABS_META.map(function (tab) {
+          const selected = state.auditCategory === tab.key;
+          return (
+            '<button type="button" class="audit-tab" role="tab" aria-selected="' + selected + '" data-audit-cat="' + tab.key + '">' +
+              escapeHtml(tab.label) +
+            '</button>'
+          );
+        }).join("");
+
+        const items = AUDIT_ITEMS.filter(function (it) {
+          return state.auditCategory === "all" || it.category === state.auditCategory;
+        });
+
+        const tbody = document.getElementById("audit-tbody");
+        tbody.innerHTML = items.map(function (it) {
+          const catClass = it.category === "critical"
+            ? "badge-alert"
+            : (it.category === "major" ? "badge-warn" : "badge-accent");
+          return (
+            '<tr>' +
+              '<td class="audit-code-cell">' + escapeHtml(it.code) + '</td>' +
+              '<td><span class="status-badge ' + catClass + '">' + escapeHtml(it.categoryLabel) + '</span></td>' +
+              '<td>' + escapeHtml(it.location) + '</td>' +
+              '<td>' + escapeHtml(it.issue) + '</td>' +
+              '<td>' + escapeHtml(it.resolution) + '</td>' +
+              '<td><span class="status-badge badge-pass">' + escapeHtml(it.status) + '</span></td>' +
+            '</tr>'
+          );
+        }).join("");
+      }
+
+      /* ======================================================================
+         EVENT DELEGATION & KEYBOARD ACCESSIBILITY
+         ====================================================================== */
+      function bindEvents() {
+        // View mode toggle
+        document.getElementById("btn-mode-focus").addEventListener("click", function () {
+          state.viewMode = "focus";
+          syncViewMode();
+          renderEvidenceList();
+        });
+        document.getElementById("btn-mode-expand").addEventListener("click", function () {
+          state.viewMode = "expand";
+          syncViewMode();
+          renderEvidenceList();
+        });
+
+        // Print CTA
+        document.getElementById("btn-print").addEventListener("click", function () {
+          window.print();
+        });
+
+        // Timeline click + keyboard ArrowLeft / ArrowRight / Home / End
+        const rail = document.getElementById("stepper-rail");
+        rail.addEventListener("click", function (e) {
+          const btn = e.target.closest(".step-tab");
+          if (!btn) return;
+          state.activePhaseIndex = Number(btn.getAttribute("data-phase-index"));
+          renderTimeline();
+        });
+        rail.addEventListener("keydown", function (e) {
+          if (e.key === "ArrowRight") {
+            e.preventDefault();
+            state.activePhaseIndex = (state.activePhaseIndex + 1) % PHASES.length;
+            renderTimeline();
+            document.getElementById("tab-" + PHASES[state.activePhaseIndex].id).focus();
+          } else if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            state.activePhaseIndex = (state.activePhaseIndex - 1 + PHASES.length) % PHASES.length;
+            renderTimeline();
+            document.getElementById("tab-" + PHASES[state.activePhaseIndex].id).focus();
+          } else if (e.key === "Home") {
+            e.preventDefault();
+            state.activePhaseIndex = 0;
+            renderTimeline();
+            document.getElementById("tab-" + PHASES[0].id).focus();
+          } else if (e.key === "End") {
+            e.preventDefault();
+            state.activePhaseIndex = PHASES.length - 1;
+            renderTimeline();
+            document.getElementById("tab-" + PHASES[PHASES.length - 1].id).focus();
+          }
+        });
+
+        // Blind <-> Unmask toggle
+        document.getElementById("btn-mask-blind").addEventListener("click", function () {
+          state.unmasked = false;
+          renderCritiqueDashboard();
+        });
+        document.getElementById("btn-mask-reveal").addEventListener("click", function () {
+          state.unmasked = true;
+          renderCritiqueDashboard();
+        });
+
+        // Select panel via table row or tabs
+        document.getElementById("critique-summary-tbody").addEventListener("click", function (e) {
+          const row = e.target.closest("tr[data-panel-label]");
+          if (!row) return;
+          state.activePanelLabel = row.getAttribute("data-panel-label");
+          renderCritiqueDashboard();
+        });
+        document.getElementById("panel-selector-tabs").addEventListener("click", function (e) {
+          const btn = e.target.closest(".panel-tab-btn");
+          if (!btn) return;
+          state.activePanelLabel = btn.getAttribute("data-panel-label");
+          renderCritiqueDashboard();
+        });
+
+        // Evolution accordion + expand/collapse all
+        document.getElementById("evolution-stack").addEventListener("click", function (e) {
+          const btn = e.target.closest(".evo-trigger");
+          if (!btn) return;
+          const id = btn.getAttribute("data-evo-id");
+          if (state.evoExpanded.has(id)) {
+            state.evoExpanded.delete(id);
+          } else {
+            state.evoExpanded.add(id);
+          }
+          renderEvolutions();
+        });
+        document.getElementById("btn-evo-toggle-all").addEventListener("click", function () {
+          if (state.evoExpanded.size === EVOLUTIONS.length) {
+            state.evoExpanded.clear();
+          } else {
+            EVOLUTIONS.forEach(function (ev) { state.evoExpanded.add(ev.id); });
+          }
+          renderEvolutions();
+        });
+
+        // Evidence filters & search
+        document.getElementById("pillar-filter-group").addEventListener("click", function (e) {
+          const chip = e.target.closest(".filter-chip");
+          if (!chip) return;
+          state.pillarFilter = chip.getAttribute("data-pillar");
+          renderEvidenceControls();
+          renderEvidenceList();
+        });
+        document.getElementById("camp-filter-group").addEventListener("click", function (e) {
+          const chip = e.target.closest(".filter-chip");
+          if (!chip) return;
+          state.campFilter = chip.getAttribute("data-camp");
+          renderEvidenceControls();
+          renderEvidenceList();
+        });
+        document.getElementById("evidence-search").addEventListener("input", function (e) {
+          state.searchQuery = e.target.value;
+          renderEvidenceList();
+        });
+        document.getElementById("btn-evidence-reset").addEventListener("click", function () {
+          state.pillarFilter = "all";
+          state.campFilter = "all";
+          state.searchQuery = "";
+          document.getElementById("evidence-search").value = "";
+          renderEvidenceControls();
+          renderEvidenceList();
+        });
+        document.getElementById("evidence-list").addEventListener("click", function (e) {
+          const btn = e.target.closest(".evidence-detail-toggle");
+          if (!btn) return;
+          const id = btn.getAttribute("data-evidence-id");
+          if (state.openEvidenceIds.has(id)) {
+            state.openEvidenceIds.delete(id);
+          } else {
+            state.openEvidenceIds.add(id);
+          }
+          renderEvidenceList();
+        });
+
+        // Audit severity tabs
+        document.getElementById("audit-tabs").addEventListener("click", function (e) {
+          const btn = e.target.closest(".audit-tab");
+          if (!btn) return;
+          state.auditCategory = btn.getAttribute("data-audit-cat");
+          renderAuditTracker();
+        });
+      }
+
+      /* ======================================================================
+         INITIALIZE
+         ====================================================================== */
+      document.getElementById("shuffle-seed").textContent = "seed 878434";
+      renderTimeline();
+      renderCritiqueDashboard();
+      renderEvolutions();
+      renderEvidenceControls();
+      renderEvidenceList();
+      renderAuditTracker();
+      syncViewMode();
+      bindEvents();
+    })();
+  </script>
+</body>
+</html>
